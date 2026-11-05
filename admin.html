@@ -3,695 +3,1108 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ওয়ার্ড অ্যাডমিন প্যানেল</title>
+<title>অ্যাডমিন প্যানেল</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 *{box-sizing:border-box}
-body{
-  margin:0;padding:15px;
-  font-family:"Noto Sans Bengali",Arial,sans-serif;
-  background:#f0f5f1;color:#183c2c;
-}
-.box{
-  max-width:850px;margin:20px auto;
-  background:white;padding:22px;
-  border-radius:15px;
-  box-shadow:0 4px 20px #0001;
-}
-h2,h3{color:#17623e}
-input,textarea,select{
-  width:100%;padding:12px;margin:7px 0 14px;
-  border:1px solid #ccd9cf;border-radius:8px;
-  font:inherit;background:white;
-}
-textarea{min-height:100px;resize:vertical}
-label{font-weight:bold}
-button{
-  border:0;border-radius:8px;padding:11px 15px;
-  background:#17623e;color:white;
-  font:inherit;cursor:pointer;margin:4px;
-}
-button:disabled{opacity:.6;cursor:wait}
+body{margin:0;background:#f1f5f9;color:#203040;font-family:"Noto Sans Bengali",Arial,sans-serif}
+header{background:linear-gradient(120deg,#102a43,#176b87);color:white;padding:22px 12px;text-align:center}
+header h2{margin:0;font-size:25px}
+header p{margin:7px 0 0}
+.container{max-width:1100px;margin:20px auto;padding:0 12px}
+.card{background:white;border-radius:13px;padding:18px;margin-bottom:16px;box-shadow:0 3px 14px #0000000b}
+h3{color:#176b87;margin-top:0}
+label{display:block;margin:10px 0 5px;font-weight:bold}
+input,select,textarea{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:8px;font:inherit}
+textarea{min-height:90px}
+button{border:0;border-radius:8px;padding:10px 15px;background:#176b87;color:white;font:inherit;cursor:pointer}
+button:hover{opacity:.9}
 .danger{background:#c0392b}
-.edit{background:#2474a8}
-.gray{background:#64748b}
+.secondary{background:#e5edf3;color:#123}
+.success{background:#16845d}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+nav{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:15px}
+nav button{background:#e1ebf1;color:#123}
+nav button.active{background:#102a43;color:white}
 .hidden{display:none!important}
-.message{
-  padding:12px;text-align:center;
-  font-weight:bold;overflow-wrap:anywhere;
-}
-.card{
-  background:#f3f8f4;border-left:4px solid #32966b;
-  border-radius:9px;padding:13px;margin:10px 0;
-  overflow-wrap:anywhere;
-}
-.card p{white-space:pre-wrap}
-.actions{display:flex;flex-wrap:wrap;gap:5px}
-.section-title{
-  border-bottom:2px solid #dce9df;
-  padding-bottom:9px;margin-top:25px;
-}
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:10px;
-}
-.small{font-size:13px;color:#667}
-@media(max-width:500px){
-  .box{padding:14px}
-}
+.status{padding:10px;background:#eaf4f8;border-radius:8px;margin-top:10px}
+.tablewrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:10px;border-bottom:1px solid #ddd;text-align:left}
+th{background:#edf3f7}
+.smallbtn{padding:6px 9px;font-size:12px;margin:2px}
+.photo-preview{max-width:120px;max-height:120px;object-fit:cover;border-radius:9px;margin-top:10px;border:1px solid #ddd}
+@media(max-width:600px){.grid{grid-template-columns:1fr}.card{padding:13px}}
 </style>
 </head>
 
 <body>
 
-<div class="box">
+<header>
+<h2>পৌর সাংগঠনিক পশ্চিম ওয়ার্ড, নীলফামারী</h2>
+<p>অ্যাডমিন প্যানেল</p>
+</header>
 
-<h2 style="text-align:center">🔐 ওয়ার্ড অ্যাডমিন প্যানেল</h2>
-<div id="message" class="message"></div>
+<div class="container">
 
-<!-- LOGIN -->
-<div id="loginSection">
-
+<div class="card" id="loginBox">
 <h3>অ্যাডমিন লগইন</h3>
-
 <label>ইমেইল</label>
-<input type="email" id="email"
-placeholder="অ্যাডমিন ইমেইল">
-
+<input id="email" type="email">
 <label>পাসওয়ার্ড</label>
-<input type="password" id="password"
-placeholder="অ্যাডমিন পাসওয়ার্ড">
+<input id="password" type="password">
 
-<button id="loginBtn" onclick="login()">লগইন করুন</button>
-
+<div class="actions">
+<button onclick="login()">লগইন করুন</button>
 </div>
 
-<!-- DASHBOARD -->
+<div id="loginMsg" class="status hidden"></div>
+</div>
+
 <div id="dashboard" class="hidden">
 
-<p style="text-align:center;color:green;font-weight:bold">
-আপনি অ্যাডমিন হিসেবে লগইন করেছেন।
-</p>
+<div class="card">
+<button class="danger" onclick="logout()">লগআউট</button>
+<span id="userInfo"></span>
+</div>
 
-<h3 class="section-title">📁 বিভাগ নির্বাচন</h3>
+<nav>
+<button class="active" onclick="openTab('records',this)">তথ্য ব্যবস্থাপনা</button>
+<button onclick="openTab('notices',this)">নোটিশ বোর্ড</button>
+<button onclick="openTab('logo',this)">লোগো আপলোড</button>
+</nav>
 
-<label>কোন বিভাগের তথ্য যোগ করবেন?</label>
-<select id="section" onchange="updateAreas()">
+<!-- তথ্য ব্যবস্থাপনা -->
+<div id="records" class="tab">
+
+<div class="card">
+<h3>তথ্য যোগ / সম্পাদনা</h3>
+
+<div class="grid">
+<div>
+<label>বিভাগ</label>
+<select id="section" onchange="renderFields()">
 <option value="responsibility">দায়িত্বশীলবর্গ</option>
 <option value="manpower">জনশক্তি তালিকা</option>
 <option value="sudhi">সুধী তালিকা</option>
 <option value="programRecords">কর্মসূচি</option>
 <option value="financeRecords">বাইতুল মাল</option>
+<option value="paymentRecords">ঊর্ধ্বতন</option>
 <option value="projects">প্রজেক্ট</option>
 <option value="students">ছাত্রকল্যাণ</option>
 <option value="syllabus">সিলেবাস</option>
-<option value="paymentRecords">টাকা জমার তথ্য</option>
 </select>
-
-<div id="areaBox">
-<label>ওয়ার্ড / উপশাখা</label>
-<select id="area"></select>
 </div>
 
-<h3 class="section-title">📝 তথ্য লিখুন</h3>
+<div>
+<label>এলাকা</label>
+<select id="area" onchange="renderFields()"></select>
+</div>
+</div>
+
+<div id="fields" class="grid"></div>
 
 <input type="hidden" id="editId">
 
-<div id="formFields"></div>
+<div class="actions">
+<button class="success" onclick="saveRecord()">সংরক্ষণ করুন</button>
+<button class="secondary" onclick="clearForm()">নতুন তথ্য</button>
+</div>
 
-<button id="saveBtn" onclick="saveData()">
-তথ্য সংরক্ষণ করুন
-</button>
+<div id="recordMsg" class="status hidden"></div>
+</div>
 
-<button class="gray hidden" id="cancelBtn"
-onclick="cancelEdit()">সম্পাদনা বাতিল</button>
+<div class="card">
+<h3>সংরক্ষিত তথ্য</h3>
 
-<h3 class="section-title">📋 সংরক্ষিত তথ্য</h3>
+<div class="grid">
+<div>
+<label>বিভাগ নির্বাচন</label>
+<select id="filterSection" onchange="loadRecords()">
+<option value="responsibility">দায়িত্বশীলবর্গ</option>
+<option value="manpower">জনশক্তি তালিকা</option>
+<option value="sudhi">সুধী তালিকা</option>
+<option value="programRecords">কর্মসূচি</option>
+<option value="financeRecords">বাইতুল মাল</option>
+<option value="paymentRecords">ঊর্ধ্বতন</option>
+<option value="projects">প্রজেক্ট</option>
+<option value="students">ছাত্রকল্যাণ</option>
+<option value="syllabus">সিলেবাস</option>
+</select>
+</div>
 
-<button onclick="loadData()">🔄 তালিকা রিফ্রেশ</button>
-
-<div id="recordList">তথ্য লোড হচ্ছে...</div>
-
-<button class="danger" onclick="logout()"
-style="width:100%;margin-top:25px">
-লগআউট করুন
-</button>
-
+<div>
+<label>এলাকা</label>
+<select id="filterArea" onchange="loadRecords()">
+<option value="">সব এলাকা</option>
+</select>
 </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<div class="tablewrap">
+<table>
+<thead>
+<tr>
+<th>এলাকা</th>
+<th>তথ্য</th>
+<th>তারিখ</th>
+<th>কাজ</th>
+</tr>
+</thead>
+<tbody id="recordRows"></tbody>
+</table>
+</div>
+</div>
+</div>
+
+<!-- নোটিশ -->
+<div id="notices" class="tab hidden">
+
+<div class="card">
+<h3>নতুন নোটিশ</h3>
+
+<label>শিরোনাম</label>
+<input id="noticeTitle">
+
+<label>বিস্তারিত</label>
+<textarea id="noticeContent"></textarea>
+
+<input type="hidden" id="noticeId">
+
+<div class="actions">
+<button class="success" onclick="saveNotice()">নোটিশ প্রকাশ</button>
+<button class="secondary" onclick="clearNotice()">পরিষ্কার</button>
+</div>
+
+<div id="noticeMsg" class="status hidden"></div>
+</div>
+
+<div class="card">
+<h3>প্রকাশিত নোটিশ</h3>
+
+<div class="tablewrap">
+<table>
+<thead>
+<tr><th>শিরোনাম</th><th>বিস্তারিত</th><th>কাজ</th></tr>
+</thead>
+<tbody id="noticeRows"></tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+<!-- লোগো -->
+<div id="logo" class="tab hidden">
+<div class="card">
+<h3>ওয়েবসাইটের লোগো আপলোড</h3>
+<p>PNG অথবা JPG ছবি নির্বাচন করুন।</p>
+
+<input type="file" id="logoFile" accept="image/png,image/jpeg">
+
+<div class="actions">
+<button class="success" onclick="uploadLogo()">লোগো আপলোড</button>
+</div>
+
+<div id="logoMsg" class="status hidden"></div>
+
+<p>Storage bucket: <b>site-assets</b></p>
+<p>Public bucket এবং অ্যাডমিনের upload/update policy প্রয়োজন।</p>
+</div>
+</div>
+
+</div>
+</div>
 
 <script>
-"use strict";
 
-/* SUPABASE */
-const SUPABASE_URL =
-"https://domfcgqrkmczrqvlnbwu.supabase.co";
+const SUPABASE_URL="https://domfcgqrkmczrqvlnbwu.supabase.co";
+const SUPABASE_ANON_KEY="sb_publishable_V8v-tk6GjH7n9ihmC-NgGg_1Q--MKK2";
+const ADMIN_EMAIL="tkhitti16@gmail.com";
 
-const SUPABASE_ANON_KEY =
-"sb_publishable_V8v-tk6GjH7n9ihmC-NgGg_1Q--MKK2";
-
-const ADMIN_EMAIL = "tkhitti16@gmail.com";
-
-const supabaseClient = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_ANON_KEY
+const db=window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_ANON_KEY
 );
 
-const branches = [
-  "ওয়ার্ড",
-  "ওয়ার্ড সেক্রেটারিয়েট",
-  "বাজার উপশাখা",
-  "আলিয়া উপশাখা",
-  "মেলারডাঙ্গা উপশাখা",
-  "এলএসডি উপশাখা",
-  "গাছবাড়ি উপশাখা"
+const branches=[
+"বাজার উপশাখা",
+"আলিয়া উপশাখা",
+"মেলারডাঙ্গা উপশাখা",
+"এলএসডি উপশাখা",
+"গাছবাড়ি উপশাখা"
 ];
 
-const messageBox = document.getElementById("message");
+const areas=["ওয়ার্ড",...branches];
 
-let records = [];
-let editingRecord = null;
-
-function message(text,color="green"){
-  messageBox.style.color=color;
-  messageBox.textContent=text;
+function el(id){
+return document.getElementById(id);
 }
 
-function esc(value){
-  return String(value ?? "").replace(/[&<>"']/g,c=>({
-    "&":"&amp;",
-    "<":"&lt;",
-    ">":"&gt;",
-    '"':"&quot;",
-    "'":"&#39;"
-  }[c]));
+function escapeHTML(value){
+return String(value??"").replace(/[&<>"']/g,c=>({
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#39;"
+}[c]));
 }
 
-function showDashboard(){
-  document.getElementById("loginSection").classList.add("hidden");
-  document.getElementById("dashboard").classList.remove("hidden");
-  updateAreas();
-  loadData();
+function show(id,msg){
+el(id).textContent=msg;
+el(id).classList.remove("hidden");
 }
 
-function showLogin(){
-  document.getElementById("loginSection").classList.remove("hidden");
-  document.getElementById("dashboard").classList.add("hidden");
+function loginMessage(msg){
+show("loginMsg",msg);
 }
 
-/* LOGIN */
+/* লগইন */
 async function login(){
 
-  const email=document.getElementById("email").value.trim();
-  const password=document.getElementById("password").value;
-
-  if(!email || !password){
-    message("ইমেইল ও পাসওয়ার্ড দিন।","red");
-    return;
-  }
-
-  const btn=document.getElementById("loginBtn");
-  btn.disabled=true;
-  btn.textContent="লগইন হচ্ছে...";
-
-  const {data,error}=await supabaseClient.auth.signInWithPassword({
-    email,password
-  });
-
-  btn.disabled=false;
-  btn.textContent="লগইন করুন";
-
-  if(error){
-    message("লগইন ব্যর্থ হয়েছে। ইমেইল ও পাসওয়ার্ড যাচাই করুন।","red");
-    return;
-  }
-
-  if(data.user.email.toLowerCase()!==ADMIN_EMAIL.toLowerCase()){
-    await supabaseClient.auth.signOut();
-    message("এই অ্যাকাউন্টের অ্যাডমিন অনুমতি নেই।","red");
-    return;
-  }
-
-  message("সফলভাবে লগইন হয়েছে।");
-  showDashboard();
-}
-
-/* SESSION */
-async function checkSession(){
-  const {data,error}=await supabaseClient.auth.getSession();
-
-  if(error){
-    message("সেশন যাচাই করা যায়নি।","red");
-    return;
-  }
-
-  if(data.session){
-    const email=data.session.user.email;
-    if(email && email.toLowerCase()===ADMIN_EMAIL.toLowerCase()){
-      showDashboard();
-    }else{
-      await supabaseClient.auth.signOut();
-      showLogin();
-    }
-  }else{
-    showLogin();
-  }
-}
-
-/* AREA */
-function updateAreas(){
-
-  const section=document.getElementById("section").value;
-  const areaBox=document.getElementById("areaBox");
-  const area=document.getElementById("area");
-
-  const noArea=[
-    "financeRecords",
-    "students",
-    "syllabus"
-  ];
-
-  if(noArea.includes(section)){
-    areaBox.classList.add("hidden");
-  }else{
-    areaBox.classList.remove("hidden");
-  }
-
-  let list=branches;
-
-  if(section==="responsibility"){
-    list=branches;
-  }
-
-  area.innerHTML=list.map(x=>
-    `<option value="${esc(x)}">${esc(x)}</option>`
-  ).join("");
-
-  if(section==="programRecords" ||
-     section==="paymentRecords" ||
-     section==="projects"){
-    area.value="ওয়ার্ড";
-  }
-
-  renderFields();
-  loadData();
-}
-
-/* INPUT FIELD */
-function field(id,label,type="text",placeholder=""){
-  return `
-  <label>${label}</label>
-  <input id="${id}" type="${type}"
-  placeholder="${placeholder}">
-  `;
-}
-
-function renderFields(){
-
-  const section=document.getElementById("section").value;
-  const box=document.getElementById("formFields");
-
-  let html="";
-
-  if(["responsibility","manpower","sudhi"].includes(section)){
-
-    html+=field("name","ব্যক্তির নাম","text","পূর্ণ নাম");
-    html+=field("type","মান / শ্রেণি","text","যেমন: সাথী, কর্মী, সমর্থক");
-    html+=field("duty","দায়িত্ব","text","দায়িত্বের নাম");
-    html+=field("photo","ছবির লিংক (ঐচ্ছিক)","url","ছবির URL");
-    html+=`<label>বিস্তারিত</label>
-    <textarea id="details" placeholder="বিস্তারিত লিখুন"></textarea>`;
-
-  }else if(section==="programRecords"){
-
-    html+=field("name","কর্মসূচির নাম");
-    html+=field("date","তারিখ","date");
-    html+=`
-    <label>বাস্তবায়নের অবস্থা</label>
-    <select id="completed">
-      <option value="false">বাস্তবায়িত হয়নি</option>
-      <option value="true">বাস্তবায়িত হয়েছে</option>
-    </select>`;
-
-  }else if(section==="paymentRecords"){
-
-    html+=field("amount","টাকার পরিমাণ","number");
-    html+=field("date","তারিখ","date");
-    html+=field("reference","জমার বিবরণ");
-    html+=`
-    <label>সময়মতো জমা?</label>
-    <select id="timely">
-      <option value="true">হ্যাঁ</option>
-      <option value="false">না</option>
-    </select>`;
-
-  }else if(section==="financeRecords"){
-
-    html+=field("name","আয়/ব্যয়ের বিবরণ");
-    html+=`
-    <label>ধরন</label>
-    <select id="type">
-      <option value="আয়">আয়</option>
-      <option value="ব্যয়">ব্যয়</option>
-    </select>`;
-    html+=field("amount","টাকার পরিমাণ","number");
-    html+=field("date","তারিখ","date");
-
-  }else if(section==="projects"){
-
-    html+=field("name","প্রজেক্টের নাম");
-    html+=field("branch","উপশাখা","text","ওয়ার্ড অথবা উপশাখার নাম");
-    html+=`
-    <label>বড় প্রজেক্ট?</label>
-    <select id="bigProject">
-      <option value="false">না</option>
-      <option value="true">হ্যাঁ</option>
-    </select>`;
-    html+=`<label>বিস্তারিত</label>
-    <textarea id="details"></textarea>`;
-
-  }else if(section==="students"){
-
-    html+=field("name","শিক্ষার্থীর নাম");
-    html+=field("details","বিস্তারিত","text","শ্রেণি, প্রতিষ্ঠান ইত্যাদি");
-
-  }else if(section==="syllabus"){
-
-    html+=field("name","বই / সিলেবাসের নাম");
-    html+=`
-    <label>শ্রেণি</label>
-    <select id="type">
-      <option value="সাথী">সাথী</option>
-      <option value="কর্মী">কর্মী</option>
-    </select>`;
-    html+=field("details","বই / PDF / লিংক");
-  }
-
-  box.innerHTML=html;
-}
-
-/* FORM DATA */
-function readForm(){
-
-  const section=document.getElementById("section").value;
-  const value=id=>document.getElementById(id)?.value ?? "";
-
-  let data={};
-
-  if(["responsibility","manpower","sudhi"].includes(section)){
-    data={
-      name:value("name").trim(),
-      type:value("type").trim(),
-      duty:value("duty").trim(),
-      photo:value("photo").trim(),
-      details:value("details").trim()
-    };
-
-  }else if(section==="programRecords"){
-    data={
-      name:value("name").trim(),
-      date:value("date"),
-      branch:value("area"),
-      completed:value("completed")==="true"
-    };
-
-  }else if(section==="paymentRecords"){
-    data={
-      amount:Number(value("amount")),
-      date:value("date"),
-      branch:value("area"),
-      reference:value("reference").trim(),
-      timely:value("timely")==="true"
-    };
-
-  }else if(section==="financeRecords"){
-    data={
-      name:value("name").trim(),
-      type:value("type"),
-      amount:Number(value("amount")),
-      date:value("date")
-    };
-
-  }else if(section==="projects"){
-    data={
-      name:value("name").trim(),
-      branch:value("branch").trim()||value("area"),
-      bigProject:value("bigProject")==="true",
-      details:value("details").trim()
-    };
-
-  }else if(section==="students"){
-    data={
-      name:value("name").trim(),
-      details:value("details").trim()
-    };
-
-  }else if(section==="syllabus"){
-    data={
-      name:value("name").trim(),
-      type:value("type"),
-      details:value("details").trim()
-    };
-  }
-
-  return data;
-}
-
-function validData(data){
-  return Object.values(data).some(v=>
-    v!=="" && v!==null && v!==undefined
-  );
-}
-
-/* SAVE */
-async function saveData(){
-
-  const {data:sessionData}=await supabaseClient.auth.getSession();
-
-  if(!sessionData.session ||
-     sessionData.session.user.email.toLowerCase()!==ADMIN_EMAIL.toLowerCase()){
-    message("অ্যাডমিন লগইন প্রয়োজন।","red");
-    showLogin();
-    return;
-  }
-
-  const section=document.getElementById("section").value;
-  const area=document.getElementById("area").value;
-  const data=readForm();
-
-  if(!validData(data)){
-    message("তথ্য পূরণ করুন।","red");
-    return;
-  }
-
-  if(["responsibility","manpower","sudhi"].includes(section) &&
-     !data.name){
-    message("নাম লিখুন।","red");
-    return;
-  }
-
-  const saveBtn=document.getElementById("saveBtn");
-  saveBtn.disabled=true;
-  saveBtn.textContent="সংরক্ষণ হচ্ছে...";
-
-  let result;
-
-  if(editingRecord){
-    result=await supabaseClient
-      .from("app_data")
-      .update({
-        section,
-        area,
-        data,
-        updated_at:new Date().toISOString()
-      })
-      .eq("id",editingRecord.id);
-  }else{
-    result=await supabaseClient
-      .from("app_data")
-      .insert([{section,area,data}]);
-  }
-
-  saveBtn.disabled=false;
-  saveBtn.textContent="তথ্য সংরক্ষণ করুন";
-
-  if(result.error){
-    message("সংরক্ষণ হয়নি: "+result.error.message,"red");
-    return;
-  }
-
-  message(editingRecord?"তথ্য সম্পাদনা হয়েছে।":"তথ্য সফলভাবে সংরক্ষিত হয়েছে।");
-
-  cancelEdit();
-  await loadData();
-}
-
-/* LOAD */
-async function loadData(){
-
-  const list=document.getElementById("recordList");
-  if(!list)return;
-
-  list.innerHTML="তথ্য লোড হচ্ছে...";
-
-  const section=document.getElementById("section").value;
-  const area=document.getElementById("area").value;
-
-  let query=supabaseClient
-    .from("app_data")
-    .select("*")
-    .eq("section",section)
-    .order("created_at",{ascending:false});
-
-  if(!["financeRecords","students","syllabus"].includes(section)){
-    query=query.eq("area",area);
-  }
-
-  const {data,error}=await query;
-
-  if(error){
-    list.textContent="তথ্য লোড হয়নি: "+error.message;
-    return;
-  }
-
-  records=data||[];
-
-  if(records.length===0){
-    list.innerHTML="<p>এই বিভাগে এখনো কোনো তথ্য নেই।</p>";
-    return;
-  }
-
-  list.innerHTML=records.map(row=>{
-
-    const d=row.data||{};
-
-    let title=d.name||d.title||"তথ্য";
-    let details=[];
-
-    if(d.type)details.push("ধরন: "+d.type);
-    if(d.duty)details.push("দায়িত্ব: "+d.duty);
-    if(d.branch)details.push("উপশাখা: "+d.branch);
-    if(d.date)details.push("তারিখ: "+d.date);
-    if(d.amount!==undefined)details.push("পরিমাণ: "+d.amount+" টাকা");
-    if(d.reference)details.push("বিবরণ: "+d.reference);
-    if(d.details)details.push(d.details);
-    if(d.completed!==undefined)details.push(d.completed?"বাস্তবায়িত":"বাস্তবায়িত হয়নি");
-    if(d.timely!==undefined)details.push(d.timely?"সময়মতো জমা":"সময়মতো জমা হয়নি");
-    if(d.bigProject)details.push("বড় প্রজেক্ট");
-
-    return `
-    <div class="card">
-      <b>${esc(title)}</b>
-      <p>${esc(details.join("\n"))}</p>
-      <small>${esc(row.area||"")}</small>
-      <div class="actions">
-        <button class="edit" onclick="editData('${row.id}')">✏️ সম্পাদনা</button>
-        <button class="danger" onclick="deleteData('${row.id}')">🗑️ মুছুন</button>
-      </div>
-    </div>`;
-  }).join("");
-}
-
-/* EDIT */
-async function editData(id){
-
-  const row=records.find(x=>x.id===id);
-  if(!row)return;
-
-  editingRecord=row;
-
-  document.getElementById("section").value=row.section;
-  updateAreas();
-
-  if(row.area){
-    document.getElementById("area").value=row.area;
-  }
-
-  renderFields();
-
-  const d=row.data||{};
-
-  const fields=[
-    "name","type","duty","photo","details","date",
-    "completed","amount","reference","timely",
-    "branch","bigProject"
-  ];
-
-  fields.forEach(key=>{
-    const el=document.getElementById(key);
-    if(el){
-      if(typeof d[key]==="boolean")el.value=String(d[key]);
-      else el.value=d[key]??"";
-    }
-  });
-
-  document.getElementById("saveBtn").textContent="পরিবর্তন সংরক্ষণ করুন";
-  document.getElementById("cancelBtn").classList.remove("hidden");
-
-  window.scrollTo({top:0,behavior:"smooth"});
-}
-
-/* DELETE */
-async function deleteData(id){
-
-  if(!confirm("আপনি কি এই তথ্যটি মুছে ফেলতে চান?"))return;
-
-  const {data:sessionData}=await supabaseClient.auth.getSession();
-
-  if(!sessionData.session ||
-     sessionData.session.user.email.toLowerCase()!==ADMIN_EMAIL.toLowerCase()){
-    message("অ্যাডমিন লগইন প্রয়োজন।","red");
-    return;
-  }
-
-  const {error}=await supabaseClient
-    .from("app_data")
-    .delete()
-    .eq("id",id);
-
-  if(error){
-    message("মুছে ফেলা যায়নি: "+error.message,"red");
-    return;
-  }
-
-  message("তথ্য মুছে ফেলা হয়েছে।");
-  loadData();
-}
-
-/* CANCEL EDIT */
-function cancelEdit(){
-  editingRecord=null;
-  document.getElementById("formFields").innerHTML="";
-  document.getElementById("saveBtn").textContent="তথ্য সংরক্ষণ করুন";
-  document.getElementById("cancelBtn").classList.add("hidden");
-  renderFields();
-}
-
-/* LOGOUT */
-async function logout(){
-  await supabaseClient.auth.signOut();
-  showLogin();
-  message("লগআউট হয়েছে।");
-}
-
-/* AUTH LISTENER */
-supabaseClient.auth.onAuthStateChange((event,session)=>{
-  if(session){
-    if(session.user.email.toLowerCase()===ADMIN_EMAIL.toLowerCase()){
-      showDashboard();
-    }else{
-      showLogin();
-    }
-  }else{
-    showLogin();
-  }
+let email=el("email").value.trim();
+let password=el("password").value;
+
+let {data,error}=await db.auth.signInWithPassword({
+email,password
 });
 
-document.addEventListener("DOMContentLoaded",checkSession);
+if(error){
+loginMessage("লগইন ব্যর্থ: "+error.message);
+return;
+}
+
+if(data.user.email.toLowerCase()!==ADMIN_EMAIL){
+await db.auth.signOut();
+loginMessage("আপনার অ্যাডমিন অনুমতি নেই।");
+return;
+}
+
+openDashboard(data.user);
+}
+
+function openDashboard(user){
+
+el("loginBox").classList.add("hidden");
+el("dashboard").classList.remove("hidden");
+
+el("userInfo").textContent=" লগইন: "+user.email;
+
+loadRecords();
+loadNotices();
+}
+
+async function logout(){
+await db.auth.signOut();
+location.reload();
+}
+
+async function checkLogin(){
+
+let {data:{session}}=await db.auth.getSession();
+
+if(session){
+
+if(session.user.email.toLowerCase()===ADMIN_EMAIL){
+openDashboard(session.user);
+}else{
+await db.auth.signOut();
+}
+
+}
+}
+
+db.auth.onAuthStateChange((event)=>{
+
+if(event==="SIGNED_OUT"){
+el("dashboard").classList.add("hidden");
+el("loginBox").classList.remove("hidden");
+}
+
+});
+
+/* ট্যাব */
+function openTab(id,btn){
+
+document.querySelectorAll(".tab").forEach(x=>{
+x.classList.add("hidden");
+});
+
+el(id).classList.remove("hidden");
+
+document.querySelectorAll("nav button").forEach(x=>{
+x.classList.remove("active");
+});
+
+btn.classList.add("active");
+
+if(id==="notices")loadNotices();
+}
+
+/* এলাকা */
+function fillAreas(){
+
+el("area").innerHTML=areas.map(x=>
+`<option value="${escapeHTML(x)}">${escapeHTML(x)}</option>`
+).join("");
+
+el("filterArea").innerHTML=
+'<option value="">সব এলাকা</option>'+
+areas.map(x=>
+`<option value="${escapeHTML(x)}">${escapeHTML(x)}</option>`
+).join("");
+
+}
+
+fillAreas();
+
+/* মাস */
+function months(){
+
+let list=[];
+let d=new Date();
+
+let y=d.getFullYear();
+let m=d.getMonth()+1;
+
+while(y<=2050){
+
+list.push(y+"-"+String(m).padStart(2,"0"));
+
+m++;
+
+if(m===13){
+m=1;
+y++;
+}
+
+}
+
+return list;
+}
+
+/* ইনপুট ফিল্ড */
+function inputField(label,key,type="text",options=null){
+
+let id="f_"+key;
+
+let input=options
+?`<select id="${id}">${options.map(x=>
+`<option value="${escapeHTML(x)}">${escapeHTML(x)}</option>`
+).join("")}</select>`
+
+:type==="textarea"
+?`<textarea id="${id}"></textarea>`
+
+:`<input id="${id}" type="${type}">`;
+
+return `<div><label>${label}</label>${input}</div>`;
+}
+
+/* ছবি নির্বাচন */
+function photoField(){
+
+return `
+<div>
+<label>ছবি নির্বাচন করুন</label>
+
+<input
+type="file"
+id="f_photo_file"
+accept="image/png,image/jpeg,image/webp"
+onchange="previewPhoto()"
+>
+
+<input type="hidden" id="f_photo">
+
+<div id="photoPreviewBox"></div>
+</div>
+`;
+}
+
+/* ছবি প্রিভিউ */
+function previewPhoto(){
+
+let file=el("f_photo_file").files[0];
+
+if(!file)return;
+
+if(!["image/png","image/jpeg","image/webp"].includes(file.type)){
+
+alert("শুধু PNG, JPG অথবা WEBP ছবি নির্বাচন করুন।");
+
+el("f_photo_file").value="";
+
+return;
+}
+
+if(file.size>5*1024*1024){
+
+alert("ছবির সাইজ ৫ MB-এর কম হতে হবে।");
+
+el("f_photo_file").value="";
+
+return;
+}
+
+let url=URL.createObjectURL(file);
+
+el("photoPreviewBox").innerHTML=
+`<img class="photo-preview" src="${url}" alt="নির্বাচিত ছবি">`;
+
+}
+
+/* ফর্ম তৈরি */
+function renderFields(){
+
+let s=el("section").value;
+let a=el("area").value;
+
+let html="";
+let monthList=months();
+
+/* দায়িত্বশীলবর্গ */
+if(s==="responsibility"){
+
+html+=inputField("নাম","name");
+
+html+=inputField("দায়িত্ব","responsibility");
+
+html+=photoField();
+
+}
+
+/* জনশক্তি তালিকা */
+if(s==="manpower"){
+
+html+=inputField("নাম","name");
+
+html+=inputField(
+"ধরন",
+"type",
+"text",
+["সাথী","কর্মী","সমর্থক"]
+);
+
+html+=inputField("দায়িত্ব","responsibility");
+
+html+=photoField();
+
+}
+
+/* সুধী */
+if(s==="sudhi"){
+
+html+=inputField("নাম","name");
+html+=inputField("মোবাইল","phone","tel");
+
+}
+
+/* ছাত্রকল্যাণ */
+if(s==="students"){
+
+html+=inputField("নাম","name");
+html+=inputField("শ্রেণি / প্রতিষ্ঠান","class");
+html+=inputField("মোবাইল","phone","tel");
+
+}
+
+/* কর্মসূচি */
+if(s==="programRecords"){
+
+let names=a==="ওয়ার্ড"
+?["সেক্রেটারিয়েট বৈঠক","কর্মী বৈঠক","সাধারণ সভা","কুরআন তালিম"]
+:["কর্মী বৈঠক","সাধারণ সভা","কুরআন তালিম","সামষ্টিক পাঠ"];
+
+html+=inputField("মাস","month","text",monthList);
+
+html+=inputField("কর্মসূচি","program","text",names);
+
+html+=inputField("সম্পন্ন হয়েছে?","completed","text",["হ্যাঁ","না"]);
+
+html+=inputField("বিবরণ","details","textarea");
+
+}
+
+/* বাইতুল মাল */
+if(s==="financeRecords"){
+
+html+=inputField("মাস","month","text",monthList);
+
+html+=inputField("ধরন","type","text",["আয়","ব্যয়"]);
+
+html+=inputField("খাত","source","text",["এয়ানত","ছাত্রকল্যাণ","ঊর্ধ্বতন","অন্যান্য"]);
+
+html+=inputField("পদ্ধতি","mode","text",["সিঙ্গেল","যৌথ"]);
+
+html+=inputField("টাকার পরিমাণ","amount","number");
+
+html+=inputField("বিবরণ","details","textarea");
+
+}
+
+/* ঊর্ধ্বতন */
+if(s==="paymentRecords"){
+
+html+=inputField("মাস","month","text",monthList);
+
+html+=inputField("ধার্যকৃত টাকা","assessed","number");
+
+html+=inputField("পরিশোধ টাকা","paid","number");
+
+html+=inputField("বকেয়া টাকা","due","number");
+
+html+=inputField("সময়মতো পরিশোধ?","timely","text",["হ্যাঁ","না"]);
+
+html+=inputField("বিবরণ","details","textarea");
+
+}
+
+/* প্রজেক্ট */
+if(s==="projects"){
+
+html+=inputField("প্রজেক্টের নাম","name");
+
+html+=inputField("অবস্থা","status","text",["পরিকল্পনা","বাস্তবায়নাধীন","সম্পন্ন"]);
+
+html+=inputField("বড় প্রজেক্ট?","bigProject","text",["না","হ্যাঁ"]);
+
+html+=inputField("বিবরণ","details","textarea");
+
+}
+
+/* সিলেবাস */
+if(s==="syllabus"){
+
+html+=inputField("শ্রেণি","category","text",["সাথী","কর্মী","সমর্থক"]);
+
+html+=inputField("বইয়ের নাম","name");
+
+html+=inputField("PDF / বইয়ের লিংক","url");
+
+html+=inputField("বিবরণ","details","textarea");
+
+}
+
+el("fields").innerHTML=html;
+
+}
+
+/* ফর্মের তথ্য সংগ্রহ */
+function getFormData(){
+
+let data={};
+
+el("fields").querySelectorAll(
+"input:not([type=file]),select,textarea"
+).forEach(x=>{
+
+let key=x.id.substring(2);
+let value=x.value;
+
+if(["completed","timely","bigProject"].includes(key)){
+value=value==="হ্যাঁ";
+}
+
+if(["amount","assessed","paid","due"].includes(key)){
+value=Number(value||0);
+}
+
+data[key]=value;
+
+});
+
+/*
+গুরুত্বপূর্ণ সংশোধন:
+দায়িত্ব duty নামে সেভ হবে।
+responsibility ও role নামে সেভ হবে না।
+*/
+
+if(data.responsibility!==undefined){
+
+data.duty=data.responsibility;
+
+delete data.responsibility;
+delete data.role;
+
+}
+
+if(data.assessed!==undefined && data.due===undefined){
+
+data.due=Math.max(0,data.assessed-(data.paid||0));
+
+}
+
+return data;
+
+}
+
+/* ফর্ম পরিষ্কার */
+function clearForm(){
+
+el("editId").value="";
+
+renderFields();
+
+}
+
+/* ছবি Supabase Storage-এ আপলোড */
+async function uploadPersonPhoto(section,file){
+
+let safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
+
+let filePath=
+"people/"+section+"/"+Date.now()+"_"+safeName;
+
+let {error}=await db.storage
+.from("site-assets")
+.upload(filePath,file,{
+upsert:false,
+contentType:file.type,
+cacheControl:"3600"
+});
+
+if(error)throw error;
+
+let {data}=db.storage
+.from("site-assets")
+.getPublicUrl(filePath);
+
+return data.publicUrl;
+
+}
+
+/* তথ্য সংরক্ষণ */
+async function saveRecord(){
+
+let section=el("section").value;
+let area=el("area").value;
+
+let data=getFormData();
+
+let id=el("editId").value;
+
+try{
+
+/* নতুন ছবি থাকলে আপলোড */
+let photoInput=el("f_photo_file");
+
+if(photoInput && photoInput.files.length){
+
+let file=photoInput.files[0];
+
+if(!["image/png","image/jpeg","image/webp"].includes(file.type)){
+
+show("recordMsg","ছবির ফরম্যাট সঠিক নয়। PNG, JPG অথবা WEBP ব্যবহার করুন।");
+
+return;
+
+}
+
+if(file.size>5*1024*1024){
+
+show("recordMsg","ছবির সাইজ ৫ MB-এর বেশি হতে পারবে না।");
+
+return;
+
+}
+
+show("recordMsg","ছবি আপলোড হচ্ছে, অনুগ্রহ করে অপেক্ষা করুন...");
+
+data.photo=await uploadPersonPhoto(section,file);
+
+}
+
+/*
+এখানে দায়িত্ব ইতোমধ্যে duty নামে রয়েছে।
+তাই role বা responsibility নামে আর সেভ করা হচ্ছে না।
+*/
+
+/* Supabase-এ সংরক্ষণ */
+let query=id
+
+?db.from("app_data").update({
+section,
+area,
+data,
+updated_at:new Date().toISOString()
+}).eq("id",id)
+
+:db.from("app_data").insert({
+section,
+area,
+data
+});
+
+let {error}=await query;
+
+if(error){
+
+show("recordMsg","সংরক্ষণ ব্যর্থ: "+error.message);
+
+return;
+
+}
+
+show("recordMsg","তথ্য সফলভাবে সংরক্ষিত হয়েছে।");
+
+clearForm();
+
+loadRecords();
+
+}catch(error){
+
+show(
+"recordMsg",
+"ছবি বা তথ্য সংরক্ষণ ব্যর্থ: "+error.message+"। Storage upload permission পরীক্ষা করুন।"
+);
+
+}
+
+}
+
+/* সংরক্ষিত তথ্য দেখানো */
+async function loadRecords(){
+
+let section=el("filterSection").value;
+let area=el("filterArea").value;
+
+let query=db.from("app_data")
+.select("id,section,area,data,created_at")
+.eq("section",section)
+.order("created_at",{ascending:false});
+
+if(area){
+query=query.eq("area",area);
+}
+
+let {data,error}=await query;
+
+if(error){
+
+el("recordRows").innerHTML=
+`<tr><td colspan="4">${escapeHTML(error.message)}</td></tr>`;
+
+return;
+
+}
+
+el("recordRows").innerHTML=(data||[]).map(r=>`
+
+<tr>
+
+<td>${escapeHTML(r.area)}</td>
+
+<td>${escapeHTML(JSON.stringify(r.data))}</td>
+
+<td>
+${r.created_at
+?new Date(r.created_at).toLocaleDateString("bn-BD")
+:"—"}
+</td>
+
+<td>
+
+<button class="smallbtn" onclick="editRecord('${r.id}')">
+সম্পাদনা
+</button>
+
+<button class="smallbtn danger" onclick="deleteRecord('${r.id}')">
+মুছুন
+</button>
+
+</td>
+
+</tr>
+
+`).join("")||'<tr><td colspan="4">কোনো তথ্য নেই।</td></tr>';
+
+}
+
+/* তথ্য সম্পাদনা */
+async function editRecord(id){
+
+let {data,error}=await db.from("app_data")
+.select("*")
+.eq("id",id)
+.single();
+
+if(error){
+return alert(error.message);
+}
+
+el("section").value=data.section;
+el("area").value=data.area;
+
+renderFields();
+
+el("editId").value=id;
+
+let saved=data.data||{};
+
+/* সাধারণ তথ্য বসানো */
+Object.entries(saved).forEach(([key,value])=>{
+
+/*
+দায়িত্বের পুরোনো ও নতুন নাম আলাদাভাবে
+নিচে পরিচালনা করা হবে।
+*/
+if(["duty","role","responsibility","photo","phone"].includes(key)){
+return;
+}
+
+let input=el("f_"+key);
+
+if(input && input.type!=="file"){
+
+input.value=
+typeof value==="boolean"
+?(value?"হ্যাঁ":"না")
+:value;
+
+}
+
+});
+
+/* দায়িত্বের তথ্য বসানো */
+let responsibilityInput=el("f_responsibility");
+
+if(responsibilityInput){
+
+responsibilityInput.value=
+saved.duty ||
+saved.responsibility ||
+saved.role ||
+"";
+
+}
+
+/* আগের ছবির URL ধরে রাখা */
+if(saved.photo){
+
+let photoInput=el("f_photo");
+
+if(photoInput){
+photoInput.value=saved.photo;
+}
+
+let box=el("photoPreviewBox");
+
+if(box){
+
+box.innerHTML=`
+<p>বর্তমান ছবি:</p>
+<img
+class="photo-preview"
+src="${escapeHTML(saved.photo)}"
+alt="বর্তমান ছবি"
+>
+`;
+
+}
+
+}
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
+
+/* তথ্য মুছে ফেলা */
+async function deleteRecord(id){
+
+if(!confirm("তথ্যটি মুছে ফেলবেন?"))return;
+
+let {error}=await db.from("app_data")
+.delete()
+.eq("id",id);
+
+if(error){
+alert(error.message);
+}else{
+loadRecords();
+}
+
+}
+
+/* নোটিশ */
+function clearNotice(){
+
+el("noticeTitle").value="";
+el("noticeContent").value="";
+el("noticeId").value="";
+
+}
+
+async function saveNotice(){
+
+let title=el("noticeTitle").value.trim();
+let content=el("noticeContent").value.trim();
+
+let id=el("noticeId").value;
+
+if(!title||!content){
+
+show("noticeMsg","শিরোনাম ও বিস্তারিত লিখুন।");
+
+return;
+
+}
+
+let query=id
+
+?db.from("posts").update({
+title,content
+}).eq("id",id)
+
+:db.from("posts").insert({
+title,content
+});
+
+let {error}=await query;
+
+if(error){
+
+show("noticeMsg","নোটিশ সংরক্ষণ ব্যর্থ: "+error.message);
+
+return;
+
+}
+
+show("noticeMsg","নোটিশ প্রকাশিত হয়েছে।");
+
+clearNotice();
+
+loadNotices();
+
+}
+
+async function loadNotices(){
+
+let {data,error}=await db.from("posts")
+.select("id,title,content,created_at")
+.order("created_at",{ascending:false});
+
+if(error){
+
+el("noticeRows").innerHTML=
+`<tr><td colspan="3">${escapeHTML(error.message)}</td></tr>`;
+
+return;
+
+}
+
+el("noticeRows").innerHTML=(data||[]).map(n=>`
+
+<tr>
+
+<td>${escapeHTML(n.title)}</td>
+
+<td>${escapeHTML(n.content)}</td>
+
+<td>
+
+<button class="smallbtn" onclick="editNotice('${n.id}')">
+সম্পাদনা
+</button>
+
+<button class="smallbtn danger" onclick="deleteNotice('${n.id}')">
+মুছুন
+</button>
+
+</td>
+
+</tr>
+
+`).join("")||'<tr><td colspan="3">কোনো নোটিশ নেই।</td></tr>';
+
+}
+
+async function editNotice(id){
+
+let {data,error}=await db.from("posts")
+.select("*")
+.eq("id",id)
+.single();
+
+if(error)return alert(error.message);
+
+el("noticeId").value=id;
+el("noticeTitle").value=data.title;
+el("noticeContent").value=data.content;
+
+document.querySelectorAll("nav button")[1].click();
+
+}
+
+async function deleteNotice(id){
+
+if(!confirm("নোটিশ মুছে ফেলবেন?"))return;
+
+let {error}=await db.from("posts")
+.delete()
+.eq("id",id);
+
+if(error){
+alert(error.message);
+}else{
+loadNotices();
+}
+
+}
+
+/* লোগো আপলোড */
+async function uploadLogo(){
+
+let file=el("logoFile").files[0];
+
+if(!file){
+
+show("logoMsg","আগে একটি ছবি নির্বাচন করুন।");
+
+return;
+
+}
+
+if(!["image/png","image/jpeg"].includes(file.type)){
+
+show("logoMsg","শুধু PNG অথবা JPG ছবি গ্রহণযোগ্য।");
+
+return;
+
+}
+
+let {error}=await db.storage
+.from("site-assets")
+.upload("logo.png",file,{
+upsert:true,
+contentType:file.type,
+cacheControl:"0"
+});
+
+if(error){
+
+show(
+"logoMsg",
+"আপলোড ব্যর্থ: "+error.message+"। Supabase Storage bucket ও policy পরীক্ষা করুন।"
+);
+
+return;
+
+}
+
+show("logoMsg","লোগো আপলোড সফল হয়েছে।");
+
+}
+
+checkLogin();
 
 </script>
+
 </body>
 </html>
