@@ -3,131 +3,454 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#17623e">
 <title>পৌর সাংগঠনিক পশ্চিম ওয়ার্ড, নীলফামারী</title>
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
+
 :root{
---bg:#f2f8f3;--card:#fff;--text:#183c2c;
---primary:#17623e;--secondary:#32966b;--border:#dce9df;
+ --bg:#edf5f0;
+ --card:#ffffff;
+ --text:#193b30;
+ --primary:#075c43;
+ --secondary:#168766;
+ --border:#d8e8df;
+ --soft:#e3f1e9;
 }
+
 body{
-font-family:"Noto Sans Bengali","SolaimanLipi",Arial,sans-serif;
-background:var(--bg);color:var(--text);min-height:100vh;
+ font-family:"Noto Sans Bengali","SolaimanLipi",Arial,sans-serif;
+ background:var(--bg);
+ color:var(--text);
+ min-height:100vh;
+ position:relative;
 }
+
+/* কাবা ঘরের জলছাপ */
 body:before{
-content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
-opacity:.22;background-repeat:no-repeat;background-position:center bottom;
-background-size:100% 240px;
-background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1100 220'%3E%3Cg fill='%237da98a' opacity='.5'%3E%3Cpath d='M0 130 Q120 175 250 140 Q390 115 500 185 Q610 115 750 140 Q930 175 1100 130 V220 H0Z'/%3E%3Cpath d='M300 140V80 Q300 30 350 10 Q400 30 400 80V140Z M700 140V80 Q700 30 750 10 Q800 30 800 80V140Z'/%3E%3Cpath d='M280 140V65H320V140 M780 140V65H820V140 M490 140V65H530V140 M570 140V65H610V140'/%3E%3Cpath d='M350 10V0 M750 10V0'/%3E%3C/g%3E%3C/svg%3E");
+ content:"";
+ position:fixed;
+ inset:0;
+ z-index:0;
+ pointer-events:none;
+ opacity:.055;
+ background-repeat:no-repeat;
+ background-position:center 55%;
+ background-size:min(75vw,650px);
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Cg fill='none' stroke='%23075c43' stroke-width='9' stroke-linejoin='round'%3E%3Cpath d='M105 170 L250 95 L395 170 L395 345 L250 425 L105 345 Z'/%3E%3Cpath d='M105 170 L250 250 L395 170 M250 250 V425 M105 345 L250 425 L395 345'/%3E%3Cpath d='M105 205 L250 285 L395 205' stroke-width='18'/%3E%3Cpath d='M105 230 L250 310 L395 230' stroke-width='5'/%3E%3Cpath d='M220 260 L280 292 L280 370 L220 338 Z' stroke-width='5'/%3E%3C/g%3E%3C/svg%3E");
 }
+
+body>*{
+ position:relative;
+ z-index:1;
+}
+
 header{
-background:linear-gradient(135deg,var(--primary),var(--secondary));
-color:white;text-align:center;padding:30px 12px 25px;
+ background:linear-gradient(135deg,var(--primary),var(--secondary));
+ color:#fff;
+ text-align:center;
+ padding:25px 12px 28px;
+ position:relative;
+ overflow:hidden;
+ border-bottom:4px solid var(--secondary);
 }
-header h1{font-size:clamp(22px,4vw,34px);line-height:1.6}
-.logo{max-width:150px;max-height:150px;object-fit:contain;margin:0 auto 12px;display:none}
-.container{width:min(1150px,95%);margin:20px auto}
+
+header:before{
+ content:"";
+ position:absolute;
+ width:260px;
+ height:260px;
+ border:1px solid #ffffff20;
+ border-radius:50%;
+ left:-130px;
+ top:-150px;
+ box-shadow:0 0 0 25px #ffffff0b,0 0 0 50px #ffffff08;
+}
+
+header:after{
+ content:"";
+ position:absolute;
+ width:220px;
+ height:220px;
+ border:1px solid #ffffff20;
+ border-radius:50%;
+ right:-110px;
+ bottom:-150px;
+ box-shadow:0 0 0 25px #ffffff0b,0 0 0 50px #ffffff08;
+}
+
+header h1{
+ font-size:clamp(22px,4vw,34px);
+ line-height:1.6;
+ position:relative;
+ z-index:2;
+}
+
+.logo{
+ max-width:145px;
+ max-height:145px;
+ object-fit:contain;
+ margin:0 auto 12px;
+ display:none;
+ position:relative;
+ z-index:2;
+ filter:drop-shadow(0 5px 10px #0003);
+}
+
+.container{
+ width:min(1100px,94%);
+ margin:22px auto;
+}
+
 .section{
-background:var(--card);border:1px solid var(--border);
-border-radius:16px;padding:18px;margin-bottom:18px;
-box-shadow:0 5px 20px #00000012;overflow:hidden;
+ background:var(--card);
+ border:1px solid var(--border);
+ border-radius:17px;
+ padding:19px;
+ margin-bottom:17px;
+ box-shadow:0 4px 15px #153d2b0c;
+ overflow:hidden;
 }
-h2{font-size:20px;color:var(--primary);margin-bottom:14px}
+
+h2{
+ font-size:20px;
+ color:var(--primary);
+ margin-bottom:15px;
+ padding-bottom:9px;
+ border-bottom:2px solid var(--soft);
+}
+
 h3{margin:12px 0}
+
 .page{display:none}
 .page.active{display:block}
+
 .btn,.back{
-background:var(--primary);color:white;border:0;
-padding:10px 15px;border-radius:9px;margin:5px 3px;cursor:pointer;
+ background:var(--primary);
+ color:white;
+ border:0;
+ padding:10px 16px;
+ border-radius:9px;
+ margin:5px 3px;
+ cursor:pointer;
+ font:inherit;
 }
-.back{margin-bottom:12px}
+
+.back{margin-bottom:13px}
+
 .menu-grid{
-display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:13px;
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(135px,1fr));
+ gap:13px;
 }
+
 .menu-item{
-background:var(--card);border:1px solid var(--border);
-border-radius:18px;min-height:145px;padding:15px 8px;
-text-align:center;color:var(--text);
-box-shadow:0 5px 20px #00000012;cursor:pointer;
+ background:var(--card);
+ border:1px solid var(--border);
+ border-radius:16px;
+ min-height:140px;
+ padding:16px 9px;
+ text-align:center;
+ color:var(--text);
+ box-shadow:0 3px 12px #153d2b0c;
+ cursor:pointer;
+ width:100%;
+ font:inherit;
+ transition:.2s;
 }
+
+.menu-item:active{
+ transform:scale(.97);
+}
+
 .menu-icon{
-width:70px;height:70px;margin:0 auto 10px;
-display:grid;place-items:center;font-size:39px;
-background:linear-gradient(145deg,#e2f2e8,#f8fffa);
-border-radius:20px;
+ width:65px;
+ height:65px;
+ margin:0 auto 10px;
+ display:grid;
+ place-items:center;
+ font-size:34px;
+ background:var(--soft);
+ border-radius:17px;
+ color:var(--primary);
 }
-.menu-item h3{font-size:15px}
+
+.menu-item h3{
+ font-size:15px;
+ font-weight:600;
+}
+
 .notice{
-background:var(--bg);padding:13px;border-radius:10px;
-margin:9px 0;border-left:4px solid var(--secondary);
-overflow-wrap:anywhere;
+ background:var(--soft);
+ padding:13px;
+ border-radius:10px;
+ margin:9px 0;
+ border-left:4px solid var(--secondary);
+ overflow-wrap:anywhere;
 }
-table{width:100%;border-collapse:collapse;min-width:300px}
-th,td{border:1px solid var(--border);padding:11px;text-align:center}
-th{background:var(--bg)}
+
+table{
+ width:100%;
+ border-collapse:collapse;
+ min-width:300px;
+}
+
+th,td{
+ border:1px solid var(--border);
+ padding:11px;
+ text-align:center;
+}
+
+th{
+ background:var(--soft);
+ color:var(--primary);
+}
+
 .table-wrap{overflow-x:auto}
+
 .timer{
-background:var(--card);border:1px solid var(--border);
-border-radius:12px;padding:13px;text-align:center;margin-bottom:16px;
+ background:var(--primary);
+ color:#fff;
+ border-radius:13px;
+ padding:13px;
+ text-align:center;
+ margin-bottom:16px;
+ box-shadow:0 4px 12px #00000012;
 }
-.timer strong{font-size:22px;color:var(--primary)}
-.quote{text-align:center;padding:22px 10px;line-height:2;font-size:19px;color:var(--primary)}
-.quote small{display:block;font-size:13px;color:var(--text)}
-.settings-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:8px}
-.theme-btn{padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--card);color:var(--text);cursor:pointer}
-footer{text-align:center;padding:25px;opacity:.7}
+
+.timer strong{
+ font-size:23px;
+ color:#fff;
+}
+
+.quote{
+ text-align:center;
+ padding:24px 12px;
+ line-height:2;
+ font-size:19px;
+ color:var(--primary);
+ min-height:145px;
+ background:var(--card);
+ border:1px solid var(--border);
+}
+
+.quote .arabic{
+ font-size:26px;
+ direction:rtl;
+ font-family:serif;
+ margin-bottom:8px;
+}
+
+.quote small{
+ display:block;
+ font-size:13px;
+ color:var(--text);
+}
+
+.settings-grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(125px,1fr));
+ gap:9px;
+}
+
+.theme-btn{
+ padding:12px;
+ border:1px solid var(--border);
+ border-radius:10px;
+ background:var(--card);
+ color:var(--text);
+ cursor:pointer;
+ font:inherit;
+}
+
+.theme-btn:active{
+ transform:scale(.97);
+}
+
+footer{
+ text-align:center;
+ padding:25px;
+ color:var(--text);
+ opacity:.7;
+}
+
 .person-photo{
-width:48px;height:48px;object-fit:cover;border-radius:50%;
-border:2px solid var(--border)
+ width:48px;
+ height:48px;
+ object-fit:cover;
+ border-radius:50%;
+ border:2px solid var(--border);
 }
+
 .person-table{min-width:680px}
 .person-table td{vertical-align:middle}
+
 .small-btn{
-border:0;border-radius:7px;padding:6px 9px;
-background:var(--primary);color:white;margin:2px;cursor:pointer
+ border:0;
+ border-radius:7px;
+ padding:6px 9px;
+ background:var(--primary);
+ color:white;
+ margin:2px;
+ cursor:pointer;
 }
+
 .ranking-card{
-display:flex;align-items:center;justify-content:space-between;
-gap:10px;background:var(--bg);border:1px solid var(--border);
-padding:13px;margin:9px 0;border-radius:13px
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:12px;
+ background:var(--soft);
+ border:1px solid var(--border);
+ padding:14px;
+ margin:10px 0;
+ border-radius:13px;
 }
+
 .rank-number{
-width:38px;height:38px;border-radius:50%;
-background:var(--primary);color:white;
-display:grid;place-items:center;font-weight:bold;flex-shrink:0
+ width:39px;
+ height:39px;
+ border-radius:12px;
+ background:var(--primary);
+ color:white;
+ display:grid;
+ place-items:center;
+ font-weight:bold;
+ flex-shrink:0;
 }
+
 .rank-info{flex:1;min-width:0}
-.rank-points{font-size:20px;font-weight:bold;color:var(--primary);white-space:nowrap}
-.loading{text-align:center;padding:18px;color:var(--primary)}
+
+.rank-points{
+ font-size:19px;
+ font-weight:bold;
+ color:var(--primary);
+ white-space:nowrap;
+}
+
+.loading{
+ text-align:center;
+ padding:18px;
+ color:var(--primary);
+}
+
+.subnav{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+ gap:10px;
+}
+
+.subnav button{
+ padding:17px 10px;
+ background:var(--soft);
+ border:1px solid var(--border);
+ border-radius:12px;
+ color:var(--text);
+ font:inherit;
+ cursor:pointer;
+}
+
+.month-grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(115px,1fr));
+ gap:8px;
+ margin-top:12px;
+}
+
+.month-btn{
+ padding:10px 6px;
+ border:1px solid var(--border);
+ background:var(--soft);
+ border-radius:9px;
+ color:var(--text);
+ font:inherit;
+ cursor:pointer;
+}
+
+.month-btn.active{
+ background:var(--primary);
+ color:white;
+}
+
+.summary{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
+ gap:10px;
+ margin:12px 0;
+}
+
+.summary>div{
+ background:var(--soft);
+ border:1px solid var(--border);
+ border-radius:12px;
+ padding:13px;
+ text-align:center;
+}
+
+.summary b{
+ display:block;
+ font-size:20px;
+ color:var(--primary);
+ margin-top:5px;
+}
+
+.check-row{
+ display:flex;
+ align-items:center;
+ gap:10px;
+ padding:11px;
+ background:var(--soft);
+ border-radius:9px;
+ margin:7px 0;
+}
+
+.check-row input{
+ width:20px;
+ height:20px;
+ accent-color:var(--primary);
+}
+
+select{
+ padding:10px;
+ border:1px solid var(--border);
+ border-radius:8px;
+ background:var(--card);
+ color:var(--text);
+ font:inherit;
+}
+
 @media(max-width:600px){
-.menu-grid{grid-template-columns:repeat(2,1fr)}
-.section{padding:13px}
-.person-table{font-size:13px}
-.person-table th,.person-table td{padding:6px}
-.person-photo{width:38px;height:38px}
-.ranking-card{padding:10px}
+ .menu-grid{grid-template-columns:repeat(2,1fr)}
+ .section{padding:14px}
+ .person-table{font-size:13px}
+ .person-table th,.person-table td{padding:6px}
+ .person-photo{width:38px;height:38px}
+ .ranking-card{padding:11px}
+ .quote .arabic{font-size:22px}
 }
 </style>
+
 </head>
 
 <body>
 
 <header>
-<img id="logo" class="logo">
+<img id="logo" class="logo" alt="ওয়ার্ডের লোগো">
 <h1>পৌর সাংগঠনিক পশ্চিম ওয়ার্ড</h1>
 <h1>নীলফামারী</h1>
-<p>সাংগঠনিক কার্যক্রম ও ব্যবস্থাপনা</p>
+<div class="header-subtitle">ঐক্য · শৃঙ্খলা · দায়িত্বশীলতা</div>
 </header>
 
 <div class="container">
 
 <div class="timer">
-আজকের ব্যবহার সময়<br>
+আজকের ব্যবহার সময়
 <strong id="todayTime">00:00:00</strong>
 </div>
 
 <div id="home" class="page active">
+
 <div class="section">
 <h2>🏆 উপশাখা র‍্যাংকিং</h2>
 <div id="rankingList" class="loading">র‍্যাংকিং লোড হচ্ছে...</div>
@@ -144,17 +467,51 @@ display:grid;place-items:center;font-weight:bold;flex-shrink:0
 </div>
 
 <div class="menu-grid">
-<div class="menu-item" onclick="openPage('responsibility')"><div class="menu-icon">👥</div><h3>দায়িত্বশীলবর্গ</h3></div>
-<div class="menu-item" onclick="openPage('manpower')"><div class="menu-icon">🧑‍🤝‍🧑</div><h3>জনশক্তি তালিকা</h3></div>
-<div class="menu-item" onclick="openPage('sudhi')"><div class="menu-icon">🤝</div><h3>সুধী তালিকা</h3></div>
-<div class="menu-item" onclick="openPage('program')"><div class="menu-icon">📅</div><h3>কর্মসূচি</h3></div>
-<div class="menu-item" onclick="openPage('finance')"><div class="menu-icon">💰</div><h3>বাইতুল মাল</h3></div>
-<div class="menu-item" onclick="openPage('project')"><div class="menu-icon">📊</div><h3>প্রজেক্ট</h3></div>
-<div class="menu-item" onclick="openPage('student')"><div class="menu-icon">🎓</div><h3>ছাত্রকল্যাণ</h3></div>
-<div class="menu-item" onclick="openPage('syllabus')"><div class="menu-icon">📚</div><h3>সিলেবাস</h3></div>
-<div class="menu-item" onclick="openPage('payments')"><div class="menu-icon">💳</div><h3>টাকা জমার তথ্য</h3></div>
-<div class="menu-item" onclick="openPage('usage')"><div class="menu-icon">⏱️</div><h3>ব্যবহারের সময়</h3></div>
-<div class="menu-item" onclick="openPage('settings')"><div class="menu-icon">⚙️</div><h3>সেটিংস</h3></div>
+
+<div class="menu-item" onclick="openPage('responsibility')">
+<div class="menu-icon">👥</div><h3>দায়িত্বশীলবর্গ</h3>
+</div>
+
+<div class="menu-item" onclick="openPage('manpower')">
+<div class="menu-icon">🧑‍🤝‍🧑</div><h3>জনশক্তি তালিকা</h3>
+</div>
+
+<div class="menu-item" onclick="openPage('sudhi')">
+<div class="menu-icon">🤝</div><h3>সুধী তালিকা</h3>
+</div>
+
+<div class="menu-item" onclick="openPage('program')">
+<div class="menu-icon">📅</div><h3>কর্মসূচি</h3>
+</div>
+
+<div class="menu-item" onclick="openPage('finance')">
+<div class="menu-icon">💰</div><h3>বাইতুল মাল</h3>
+</div>
+
+<div class="menu-item" onclick="openPage('project')">
+<div class="menu-icon">📊</div><h3>প্রজেক্ট</h3>
+</div>
+
+<div class="menu-item" onclick="openPage('student')">
+<div class="menu-icon">🎓</div><h3>ছাত্রকল্যাণ</h3>
+</div>
+
+<div class="menu-item" onclick="openPage('syllabus')">
+<div class="menu-icon">📚</div><h3>সিলেবাস</h3>
+</div>
+
+<div class="menu-item" onclick="openPage('payments')">
+<div class="menu-icon">💳</div><h3>উর্ধ্বতন</h3>
+</div>
+
+<div class="menu-item" onclick="openPage('usage')">
+<div class="menu-icon">⏱️</div><h3>ব্যবহারের সময়</h3>
+</div>
+
+<div class="menu-item" onclick="openPage('settings')">
+<div class="menu-icon">⚙️</div><h3>সেটিংস</h3>
+</div>
+
 </div>
 </div>
 
@@ -180,12 +537,7 @@ display:grid;place-items:center;font-weight:bold;flex-shrink:0
 
 <div id="payments" class="page">
 <button class="back" onclick="goHome()">← হোমে ফিরুন</button>
-<div class="section"><h2>ঊর্ধ্বতন টাকা জমার তথ্য</h2><div id="paymentList"></div></div>
-</div>
-
-<div id="notices" class="page">
-<button class="back" onclick="goHome()">← হোমে ফিরুন</button>
-<div class="section"><h2>নোটিশ বোর্ড</h2><div id="noticeManageList"></div></div>
+<div class="section"><h2>উর্ধ্বতন</h2><div id="paymentList"></div></div>
 </div>
 
 <div id="finance" class="page">
@@ -226,7 +578,7 @@ display:grid;place-items:center;font-weight:bold;flex-shrink:0
 <button class="back" onclick="goHome()">← হোমে ফিরুন</button>
 <div class="section">
 <h2>সেটিংস</h2>
-<h3>থিম পরিবর্তন</h3>
+<h3>🎨 থিম পরিবর্তন</h3>
 <div id="themeButtons" class="settings-grid"></div>
 <h3>মেনুর আকৃতি</h3>
 <select id="shapeSelect" onchange="changeShape(this.value)">
@@ -247,48 +599,31 @@ display:grid;place-items:center;font-weight:bold;flex-shrink:0
 <script>
 "use strict";
 
-/* =========================
-   SUPABASE সংযোগ
-========================= */
+const SUPABASE_URL="https://domfcgqrkmczrqvlnbwu.supabase.co";
+const SUPABASE_ANON_KEY="sb_publishable_V8v-tk6GjH7n9ihmC-NgGg_1Q--MKK2";
 
-const SUPABASE_URL = "https://domfcgqrkmczrqvlnbwu.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_V8v-tk6GjH7n9ihmC-NgGg_1Q--MKK2";
+const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 
-const supabaseClient = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_ANON_KEY
-);
+let appRecords=[],appDataLoaded=false,appDataError=null;
 
-/* Supabase থেকে পাওয়া তথ্য এখানে থাকবে */
-let appRecords = [];
-let appDataLoaded = false;
-let appDataError = null;
-
-const branches = [
- "বাজার উপশাখা",
- "আলিয়া উপশাখা",
- "মেলারডাঙ্গা উপশাখা",
- "এলএসডি উপশাখা",
- "গাছবাড়ি উপশাখা"
+const branches=[
+"বাজার উপশাখা",
+"আলিয়া উপশাখা",
+"মেলারডাঙ্গা উপশাখা",
+"এলএসডি উপশাখা",
+"গাছবাড়ি উপশাখা"
 ];
 
-const areas = ["ওয়ার্ড", ...branches];
-const areaState = {
- responsibility:"",
- manpower:"",
- sudhi:""
-};
+const areas=["ওয়ার্ড",...branches];
 
-/* =========================
-   সাধারণ সহায়ক ফাংশন
-========================= */
+const areaState={responsibility:"",manpower:"",sudhi:""};
 
-function getData(k,d=[]){
- try{return JSON.parse(localStorage.getItem(k))??d}
- catch(e){return d}
-}
+const monthNames=[
+"জানুয়ারি","ফেব্রুয়ারি","মার্চ","এপ্রিল","মে","জুন",
+"জুলাই","আগস্ট","সেপ্টেম্বর","অক্টোবর","নভেম্বর","ডিসেম্বর"
+];
 
-function escapeHTML(v){
+function esc(v){
  return String(v??"").replace(/[&<>"']/g,c=>({
  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
  }[c]));
@@ -297,38 +632,55 @@ function escapeHTML(v){
 function formatDate(v){
  if(!v)return "";
  const d=new Date(v);
- if(Number.isNaN(d.getTime()))return escapeHTML(v);
- return d.toLocaleDateString("bn-BD");
+ return Number.isNaN(d.getTime())?esc(v):d.toLocaleDateString("bn-BD");
 }
 
-function getSectionData(section){
- return appRecords
-  .filter(row=>row.section===section)
-  .map(row=>({
-   ...((row.data&&typeof row.data==="object")?row.data:{}),
-   _id:row.id,
-   _area:row.area||""
-  }));
+function getSectionData(s){
+ return appRecords.filter(r=>r.section===s).map(r=>({
+ ...((r.data&&typeof r.data==="object")?r.data:{}),
+ _id:r.id,_area:r.area||""
+ }));
 }
 
-function getAreaData(section,area){
- return appRecords
-  .filter(row=>row.section===section&&(row.area||"")===area)
-  .map(row=>({
-   ...((row.data&&typeof row.data==="object")?row.data:{}),
-   _id:row.id,
-   _area:row.area||""
-  }));
+function getAreaData(s,a){
+ return appRecords.filter(r=>r.section===s&&(r.area||"")===a).map(r=>({
+ ...((r.data&&typeof r.data==="object")?r.data:{}),
+ _id:r.id,_area:r.area||""
+ }));
 }
 
-/* =========================
-   SUPABASE থেকে সব তথ্য লোড
-========================= */
+function rowMonth(x){
+ if(x.month&&/^\d{4}-\d{2}$/.test(x.month))return x.month;
+ if(x.yearMonth&&/^\d{4}-\d{2}$/.test(x.yearMonth))return x.yearMonth;
+ if(x.date&&/^\d{4}-\d{2}/.test(x.date))return x.date.slice(0,7);
+ return "";
+}
+
+function currentMonthKey(){
+ const d=new Date();
+ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");
+}
+
+function monthText(key){
+ const [y,m]=key.split("-").map(Number);
+ return monthNames[m-1]+" "+y;
+}
+
+function monthsFromNow(){
+ const out=[];
+ const now=new Date();
+ let y=now.getFullYear(),m=now.getMonth()+1;
+ while(y<2050||(y===2050&&m<=12)){
+  out.push(y+"-"+String(m).padStart(2,"0"));
+  m++;
+  if(m===13){m=1;y++}
+ }
+ return out;
+}
 
 async function loadAppData(){
  try{
-  const {data,error}=await supabaseClient
-   .from("app_data")
+  const {data,error}=await supabaseClient.from("app_data")
    .select("id,section,area,data,created_at,updated_at")
    .order("created_at",{ascending:true});
 
@@ -341,42 +693,33 @@ async function loadAppData(){
   renderRanking();
 
   const active=document.querySelector(".page.active");
+
   if(active){
    const id=active.id;
 
-   if(["responsibility","manpower","sudhi"].includes(id)){
-    renderNavigation(id);
-   }
+   if(["responsibility","manpower","sudhi"].includes(id))renderNavigation(id);
    if(id==="program")renderPrograms();
    if(id==="payments")renderPayments();
    if(id==="finance")renderFinance();
    if(id==="project")renderProject();
-   if(id==="student")renderSimple("students");
+   if(id==="student")renderStudents();
+
    if(id==="syllabus"){
-    const current=document.querySelector("#syllabusContent h3");
-    if(current){
-     const type=current.textContent.replace(" সিলেবাস","");
-     showSyllabus(type);
-    }
+    const h=document.querySelector("#syllabusContent h3");
+    if(h)showSyllabus(h.textContent.replace(" সিলেবাস",""));
    }
   }
 
-  console.log("Supabase app_data loaded:",appRecords.length);
-
- }catch(error){
-  appDataError=error;
-  console.error("App data loading error:",error);
+ }catch(e){
+  appDataError=e;
+  console.error(e);
 
   if(!appDataLoaded){
-   document.getElementById("rankingList").innerHTML=
-    "তথ্য লোড করা যায়নি। ইন্টারনেট সংযোগ অথবা Supabase সেটিংস পরীক্ষা করুন।";
+   document.getElementById("rankingList").textContent=
+   "তথ্য লোড করা যায়নি। ইন্টারনেট বা Supabase সেটিংস পরীক্ষা করুন।";
   }
  }
 }
-
-/* =========================
-   পেজ পরিবর্তন
-========================= */
 
 async function openPage(id){
  document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
@@ -387,11 +730,11 @@ async function openPage(id){
  if(["responsibility","manpower","sudhi"].includes(id))renderNavigation(id);
  if(id==="program")renderPrograms();
  if(id==="payments")renderPayments();
- if(id==="notices")renderNoticeManagement();
  if(id==="finance")renderFinance();
+ if(id==="notices")renderNotices();
  if(id==="usage")renderUsage();
  if(id==="project")renderProject();
- if(id==="student")renderSimple("students");
+ if(id==="student")renderStudents();
 }
 
 function goHome(){
@@ -399,410 +742,477 @@ function goHome(){
  document.getElementById("home").classList.add("active");
 }
 
-/* =========================
-   দায়িত্বশীল, জনশক্তি ও সুধী
-========================= */
-
 function renderNavigation(type){
  const box=document.getElementById(type+"Navigation");
  const area=areaState[type];
 
  if(!area){
   box.innerHTML=areas.map(a=>`
-   <button class="menu-item" style="width:100%;margin:5px 0"
-   onclick="selectArea('${type}','${a}')">
-   <div class="menu-icon">🕌</div><h3>${escapeHTML(a)}</h3></button>
+   <button class="menu-item" onclick="selectArea('${type}','${esc(a)}')">
+    <div class="menu-icon">🕌</div><h3>${esc(a)}</h3>
+   </button>
   `).join("");
   return;
  }
 
  if(type==="responsibility"&&area==="ওয়ার্ড"){
   box.innerHTML=`
-  <button class="back" onclick="selectArea('responsibility','')">← আগের পেজ</button>
-  <h3>ওয়ার্ড</h3>
-  <div class="section">
-   <h3>ওয়ার্ড সেক্রেটারিয়েট</h3>
-   <button class="menu-item" style="width:100%"
-   onclick="selectArea('responsibility','ওয়ার্ড সেক্রেটারিয়েট')">
-   <div class="menu-icon">👥</div><h3>ওয়ার্ড সেক্রেটারিয়েট</h3></button>
-  </div>
-  <div class="section"><h3>উপশাখাসমূহ</h3>
-  ${branches.map(a=>`
-   <button class="menu-item" style="width:100%;margin:5px 0"
-   onclick="selectArea('responsibility','${a}')">
-   <div class="menu-icon">🕌</div><h3>${escapeHTML(a)}</h3></button>
-  `).join("")}
-  </div>`;
+   <button class="back" onclick="selectArea('responsibility','')">← আগের পেজ</button>
+   <h3>ওয়ার্ড</h3>
+   <div class="subnav">
+    <button onclick="selectArea('responsibility','ওয়ার্ড সেক্রেটারিয়েট')">👥<br>ওয়ার্ড সেক্রেটারিয়েট</button>
+    ${branches.map(a=>`<button onclick="selectArea('responsibility','${esc(a)}')">🕌<br>${esc(a)}</button>`).join("")}
+   </div>
+  `;
   return;
  }
 
  const data=getAreaData(type,area);
+ const isSudhi=type==="sudhi";
 
  box.innerHTML=`
- <button class="back" onclick="selectArea('${type}','')">← আগের পেজ</button>
- <h3>${escapeHTML(area)}</h3>
- <div class="table-wrap"><table class="person-table">
- <thead>
- <tr><th>সিরিয়াল</th><th>ছবি</th><th>নাম</th><th>মান</th><th>দায়িত্ব</th><th>বিস্তারিত</th></tr>
- </thead>
- <tbody>
- ${data.map((x,i)=>`
- <tr>
- <td>${i+1}</td>
- <td>${x.photo?`<img class="person-photo" src="${escapeHTML(x.photo)}" alt="ছবি" onerror="this.style.display='none'">`:"—"}</td>
- <td>${escapeHTML(x.name)}</td>
- <td>${escapeHTML(x.type||"—")}</td>
- <td>${escapeHTML(x.duty||"—")}</td>
- <td><button class="small-btn" onclick="showPersonDetails('${type}','${area}',${i})">দেখুন</button></td>
- </tr>
- `).join("")||'<tr><td colspan="6">কোনো তথ্য নেই</td></tr>'}
- </tbody></table></div>`;
+  <button class="back" onclick="selectArea('${type}','')">← আগের পেজ</button>
+  <h3>${esc(area)}</h3>
+  <div class="table-wrap">
+   <table class="person-table">
+    <thead>
+     <tr>
+      <th>সিরিয়াল</th>
+      ${isSudhi?"":"<th>ছবি</th>"}
+      <th>নাম</th>
+      ${isSudhi?"":"<th>মান</th><th>দায়িত্ব</th><th>বিস্তারিত</th>"}
+     </tr>
+    </thead>
+    <tbody>
+     ${data.map((x,i)=>`
+      <tr>
+       <td>${i+1}</td>
+       ${isSudhi?"":`<td>${x.photo?`<img class="person-photo" src="${esc(x.photo)}" alt="ছবি" onerror="this.style.display='none'">`:"—"}</td>`}
+       <td>${esc(x.name)}</td>
+       ${isSudhi?"":`
+        <td>${esc(x.type||"—")}</td>
+        <td>${esc(x.duty||"—")}</td>
+        <td><button class="small-btn" onclick="showPersonDetails('${type}','${esc(area)}',${i})">দেখুন</button></td>
+       `}
+      </tr>
+     `).join("")||`<tr><td colspan="${isSudhi?2:6}">কোনো তথ্য নেই</td></tr>`}
+    </tbody>
+   </table>
+  </div>
+ `;
 }
 
-function selectArea(type,area){
- areaState[type]=area;
- renderNavigation(type);
+function selectArea(t,a){
+ areaState[t]=a;
+ renderNavigation(t);
 }
 
-function showPersonDetails(type,area,i){
- const x=getAreaData(type,area)[i];
-
- if(x){
-  alert(
-   "নাম: "+(x.name||"—")+
-   "\nমান: "+(x.type||"—")+
-   "\nদায়িত্ব: "+(x.duty||"—")+
-   "\nবিস্তারিত: "+(x.details||"—")
-  );
- }
+function showPersonDetails(t,a,i){
+ const x=getAreaData(t,a)[i];
+ if(x)alert(
+  "নাম: "+(x.name||"—")+
+  "\nমান: "+(x.type||"—")+
+  "\nদায়িত্ব: "+(x.duty||"—")+
+  "\nবিস্তারিত: "+(x.details||"—")
+ );
 }
-
-/* =========================
-   উপশাখা র‍্যাংকিং
-========================= */
 
 function calculateBranchPoints(branch){
-
  const manpower=getAreaData("manpower",branch);
  const sudhi=getAreaData("sudhi",branch);
 
- const programs=getSectionData("programRecords")
-  .filter(x=>x.branch===branch&&(
-   x.completed===true||x.completed==="true"||x.completed==="হ্যাঁ"
-  ));
-
- const payments=getSectionData("paymentRecords")
-  .filter(x=>x.branch===branch&&(
-   x.timely===true||x.timely==="true"||x.timely==="হ্যাঁ"
-  ));
-
- const projects=getSectionData("projects")
-  .filter(x=>x.branch===branch&&(
-   x.bigProject===true||x.bigProject==="true"||x.bigProject==="হ্যাঁ"
-  ));
-
- const sathi=manpower.filter(x=>x.type==="সাথী").length;
- const worker=manpower.filter(x=>x.type==="কর্মী").length;
- const supporter=manpower.filter(x=>x.type==="সমর্থক").length;
-
- return (
-  sathi*10+
-  worker*3+
-  supporter*2+
-  sudhi.length*5+
-  programs.length*2+
-  payments.length*5+
-  projects.length*4
+ const programs=getSectionData("programRecords").filter(x=>
+  (x.branch===branch||x._area===branch)&&
+  (x.completed===true||x.completed==="true"||x.completed==="হ্যাঁ")
  );
+
+ const payments=getSectionData("paymentRecords").filter(x=>
+  (x.branch===branch||x._area===branch)&&
+  (x.timely===true||x.timely==="true"||x.timely==="হ্যাঁ")
+ );
+
+ const projects=getSectionData("projects").filter(x=>
+  (x.branch===branch||x._area===branch)&&
+  (x.bigProject===true||x.bigProject==="true"||x.bigProject==="হ্যাঁ")
+ );
+
+ return manpower.filter(x=>x.type==="সাথী").length*10+
+ manpower.filter(x=>x.type==="কর্মী").length*3+
+ manpower.filter(x=>x.type==="সমর্থক").length*2+
+ sudhi.length*5+
+ programs.length*2+
+ payments.length*5+
+ projects.length*4;
 }
 
 function renderRanking(){
  const box=document.getElementById("rankingList");
 
  if(!appDataLoaded){
-  if(appDataError){
-   box.innerHTML="র‍্যাংকিং লোড করা যায়নি।";
-  }else{
-   box.innerHTML="র‍্যাংকিং লোড হচ্ছে...";
-  }
+  box.textContent=appDataError?"র‍্যাংকিং লোড করা যায়নি।":"র‍্যাংকিং লোড হচ্ছে...";
   return;
  }
 
  const result=branches.map(name=>({
-  name,
-  points:calculateBranchPoints(name)
- }));
+  name,points:calculateBranchPoints(name)
+ })).sort((a,b)=>b.points-a.points);
 
- result.sort((a,b)=>b.points-a.points);
-
- let previous=null;
- let position=0;
+ let prev=null,pos=0;
 
  box.innerHTML=result.map((r,i)=>{
-  if(r.points!==previous)position=i+1;
-  previous=r.points;
+  if(r.points!==prev)pos=i+1;
+  prev=r.points;
 
   return `
-  <div class="ranking-card">
-   <div class="rank-number">${position}</div>
-   <div class="rank-info">
-    <b>${escapeHTML(r.name)}</b><br>
-    <small>উপশাখার অবস্থান</small>
+   <div class="ranking-card">
+    <div class="rank-number">${pos}</div>
+    <div class="rank-info">
+     <b>${esc(r.name)}</b><br>
+     <small>উপশাখার অবস্থান</small>
+    </div>
+    <div class="rank-points">${r.points} পয়েন্ট</div>
    </div>
-   <div class="rank-points">${r.points} পয়েন্ট</div>
-  </div>`;
+  `;
  }).join("");
 }
 
-/* =========================
-   কর্মসূচি
-========================= */
+let selectedProgramArea="",selectedProgramMonth=currentMonthKey();
+
+const branchPrograms=["কর্মী বৈঠক","সাধারণ সভা","কুরআন তালিম","সামষ্টিক পাঠ"];
+const wardPrograms=["সেক্রেটারিয়েট বৈঠক","কর্মী বৈঠক","সাধারণ সভা","কুরআন তালিম"];
 
 function renderPrograms(){
- const data=getSectionData("programRecords");
+ const box=document.getElementById("programList");
 
- document.getElementById("programList").innerHTML=
- data.map(x=>`
-  <div class="notice">
-   <b>${escapeHTML(x.name)}</b><br>
-   ${escapeHTML(x.branch)} — ${formatDate(x.date)}<br>
-   অবস্থা: ${
-    x.completed===true||x.completed==="true"||x.completed==="হ্যাঁ"
-    ?"বাস্তবায়িত":"বাস্তবায়িত হয়নি"
-   }
+ if(!selectedProgramArea){
+  box.innerHTML=`
+   <div class="subnav">
+    <button onclick="chooseProgramArea('ওয়ার্ড')">🏢<br>ওয়ার্ড</button>
+    ${branches.map(b=>`<button onclick="chooseProgramArea('${esc(b)}')">🕌<br>${esc(b)}</button>`).join("")}
+   </div>
+  `;
+  return;
+ }
+
+ const list=selectedProgramArea==="ওয়ার্ড"?wardPrograms:branchPrograms;
+ const key=selectedProgramMonth;
+
+ const data=getSectionData("programRecords").filter(x=>
+  (x.branch===selectedProgramArea||x._area===selectedProgramArea)&&rowMonth(x)===key
+ );
+
+ box.innerHTML=`
+  <button class="back" onclick="selectedProgramArea='';renderPrograms()">← আগের পেজ</button>
+  <h3>${esc(selectedProgramArea)} — কর্মসূচি</h3>
+  <div class="month-grid">
+   ${monthsFromNow().map(m=>`
+    <button class="month-btn ${m===key?"active":""}" onclick="selectedProgramMonth='${m}';renderPrograms()">${monthText(m)}</button>
+   `).join("")}
   </div>
- `).join("")||"কোনো কর্মসূচি নেই";
+  <h3>${monthText(key)}</h3>
+  ${list.map(name=>{
+   const rows=data.filter(x=>(x.programName||x.name)===name);
+   const done=rows.some(x=>x.completed===true||x.completed==="true"||x.completed==="হ্যাঁ");
+
+   return `<div class="notice"><b>${esc(name)}</b><br><span>${done?"✅ বাস্তবায়িত":"বাস্তবায়নের তথ্য নেই"}</span></div>`;
+  }).join("")}
+  <p>উপশাখার সম্পন্ন প্রতিটি কর্মসূচিতে ২ পয়েন্ট যোগ হয়। ওয়ার্ডের কর্মসূচিতে পয়েন্ট যোগ হয় না।</p>
+ `;
 }
 
-/* =========================
-   টাকা জমার তথ্য
-========================= */
+function chooseProgramArea(a){
+ selectedProgramArea=a;
+ selectedProgramMonth=currentMonthKey();
+ renderPrograms();
+}
 
 function renderPayments(){
- const data=getSectionData("paymentRecords");
+ const box=document.getElementById("paymentList");
 
- document.getElementById("paymentList").innerHTML=
- data.map(x=>`
-  <div class="notice">
-   ${escapeHTML(x.branch)} — ${escapeHTML(x.amount)} টাকা<br>
-   ${formatDate(x.date)} —
-   ${
-    x.timely===true||x.timely==="true"||x.timely==="হ্যাঁ"
-    ?"সময়মতো":"সময়মতো নয়"
-   }<br>
-   ${escapeHTML(x.reference)}
+ if(!selectedPaymentArea){
+  box.innerHTML=`
+   <div class="subnav">
+    <button onclick="choosePaymentArea('ওয়ার্ড')">🏢<br>ওয়ার্ড</button>
+    ${branches.map(b=>`<button onclick="choosePaymentArea('${esc(b)}')">🕌<br>${esc(b)}</button>`).join("")}
+   </div>
+  `;
+  return;
+ }
+
+ const key=selectedPaymentMonth;
+ const data=getAreaData("paymentRecords",selectedPaymentArea).filter(x=>rowMonth(x)===key);
+
+ box.innerHTML=`
+  <button class="back" onclick="selectedPaymentArea='';renderPayments()">← আগের পেজ</button>
+  <h3>${esc(selectedPaymentArea)} — উর্ধ্বতন</h3>
+  <div class="month-grid">
+   ${monthsFromNow().map(m=>`
+    <button class="month-btn ${m===key?"active":""}" onclick="selectedPaymentMonth='${m}';renderPayments()">${monthText(m)}</button>
+   `).join("")}
   </div>
- `).join("")||"কোনো তথ্য নেই";
+  <h3>${monthText(key)}</h3>
+  ${data.map(x=>`
+   <div class="notice">
+    ধার্যকৃত: ${Number(x.assessed??x.amount??0).toLocaleString("bn-BD")} টাকা<br>
+    পরিশোধ: ${Number(x.paid??0).toLocaleString("bn-BD")} টাকা<br>
+    বকেয়া: ${Number(x.due??Math.max(0,Number(x.assessed??x.amount??0)-Number(x.paid??0))).toLocaleString("bn-BD")} টাকা
+    ${x.timely?"<br>সময়মতো জমা":""}
+   </div>
+  `).join("")||"এই মাসের কোনো তথ্য নেই"}
+ `;
 }
 
-/* =========================
-   নোটিশ বোর্ড
-   আগের posts টেবিল অপরিবর্তিত
-========================= */
+let selectedPaymentArea="",selectedPaymentMonth=currentMonthKey();
 
-async function renderNotices(){
- const box=document.getElementById("noticeList");
- box.innerHTML="নোটিশ লোড হচ্ছে...";
-
- const {data,error}=await supabaseClient
-  .from("posts")
-  .select("id,title,content,created_at")
-  .order("created_at",{ascending:false});
-
- if(error){
-  console.error("Notice loading error:",error);
-  box.innerHTML="নোটিশ লোড করা যায়নি। ইন্টারনেট সংযোগ পরীক্ষা করুন।";
-  return;
- }
-
- if(!data||data.length===0){
-  box.innerHTML="এখনো কোনো নোটিশ প্রকাশ করা হয়নি।";
-  return;
- }
-
- box.innerHTML=data.slice(0,5).map(x=>`
-  <div class="notice">
-   <b>${escapeHTML(x.title)}</b><br>
-   ${escapeHTML(x.content)}<br>
-   <small>${x.created_at?new Date(x.created_at).toLocaleString("bn-BD"):""}</small>
-  </div>
- `).join("");
+function choosePaymentArea(a){
+ selectedPaymentArea=a;
+ selectedPaymentMonth=currentMonthKey();
+ renderPayments();
 }
 
-async function renderNoticeManagement(){
- const box=document.getElementById("noticeManageList");
- box.innerHTML="নোটিশ লোড হচ্ছে...";
-
- const {data,error}=await supabaseClient
-  .from("posts")
-  .select("id,title,content,created_at")
-  .order("created_at",{ascending:false});
-
- if(error){
-  console.error("Notice loading error:",error);
-  box.innerHTML="নোটিশ লোড করা যায়নি।";
-  return;
- }
-
- if(!data||data.length===0){
-  box.innerHTML="কোনো নোটিশ নেই।";
-  return;
- }
-
- box.innerHTML=data.map(x=>`
-  <div class="notice">
-   <b>${escapeHTML(x.title)}</b><br>
-   ${escapeHTML(x.content)}<br>
-   <small>${x.created_at?new Date(x.created_at).toLocaleString("bn-BD"):""}</small>
-  </div>
- `).join("");
-}
-
-/* =========================
-   বাইতুল মাল
-========================= */
+let selectedFinanceArea="",selectedFinanceMonth=currentMonthKey();
 
 function renderFinance(){
- const d=getSectionData("financeRecords");
+ const box=document.getElementById("financeList");
 
- const income=d
-  .filter(x=>x.type==="আয়")
-  .reduce((a,x)=>a+Number(x.amount||0),0);
+ if(!selectedFinanceArea){
+  box.innerHTML=`
+   <div class="subnav">
+    <button onclick="chooseFinanceArea('ওয়ার্ড')">🏢<br>ওয়ার্ড</button>
+    ${branches.map(b=>`<button onclick="chooseFinanceArea('${esc(b)}')">🕌<br>${esc(b)}</button>`).join("")}
+   </div>
+  `;
+  return;
+ }
 
- const expense=d
-  .filter(x=>x.type==="ব্যয়")
-  .reduce((a,x)=>a+Number(x.amount||0),0);
+ const key=selectedFinanceMonth;
+ const data=getAreaData("financeRecords",selectedFinanceArea).filter(x=>rowMonth(x)===key);
 
- document.getElementById("financeList").innerHTML=`
- <h3>মোট আয়: ${income} টাকা</h3>
- <h3>মোট ব্যয়: ${expense} টাকা</h3>
- <h3>অবশিষ্ট: ${income-expense} টাকা</h3>
- `+
- d.map(x=>`
-  <div class="notice">
-   ${escapeHTML(x.name)} —
-   ${escapeHTML(x.type)} —
-   ${escapeHTML(x.amount)} টাকা
-   ${x.date?"<br>"+formatDate(x.date):""}
+ const income=data.filter(x=>x.type==="আয়").reduce((s,x)=>s+Number(x.amount||0),0);
+ const expense=data.filter(x=>x.type==="ব্যয়").reduce((s,x)=>s+Number(x.amount||0),0);
+
+ box.innerHTML=`
+  <button class="back" onclick="selectedFinanceArea='';renderFinance()">← আগের পেজ</button>
+  <h3>${esc(selectedFinanceArea)} — বাইতুল মাল</h3>
+  <div class="month-grid">
+   ${monthsFromNow().map(m=>`
+    <button class="month-btn ${m===key?"active":""}" onclick="selectedFinanceMonth='${m}';renderFinance()">${monthText(m)}</button>
+   `).join("")}
   </div>
- `).join("");
+  <h3>${monthText(key)}</h3>
+  <div class="summary">
+   <div>মোট আয়<b>${income.toLocaleString("bn-BD")} টাকা</b></div>
+   <div>মোট ব্যয়<b>${expense.toLocaleString("bn-BD")} টাকা</b></div>
+   <div>অবশিষ্ট<b>${(income-expense).toLocaleString("bn-BD")} টাকা</b></div>
+  </div>
+  <h3>আয়ের উৎস</h3>
+  <p>এয়ানত · ছাত্রকল্যাণ</p>
+  <h3>ব্যয়ের উৎস</h3>
+  <p>উর্ধ্বতন · অন্যান্য</p>
+  <div class="notice">জমার ধরন: সিঙ্গেল অথবা যৌথ।</div>
+  ${data.map(x=>`
+   <div class="notice">
+    ${esc(x.source||x.name||"—")} — ${esc(x.type||"")} — ${Number(x.amount||0).toLocaleString("bn-BD")} টাকা<br>
+    ${esc(x.mode||"")} ${x.date?"— "+formatDate(x.date):""}
+   </div>
+  `).join("")||"এই মাসের কোনো হিসাব নেই"}
+ `;
 }
 
-/* =========================
-   প্রজেক্ট
-========================= */
+function chooseFinanceArea(a){
+ selectedFinanceArea=a;
+ selectedFinanceMonth=currentMonthKey();
+ renderFinance();
+}
 
 function renderProject(){
- const data=getSectionData("projects");
+ const d=getSectionData("projects");
 
  document.getElementById("projectList").innerHTML=
- data.map(x=>`
+ d.map(x=>`
   <div class="notice">
-   <b>${escapeHTML(x.name)}</b><br>
-   উপশাখা: ${escapeHTML(x.branch||"ওয়ার্ড")}<br>
-   ${x.bigProject===true||x.bigProject==="true"||x.bigProject==="হ্যাঁ"?"বড় প্রজেক্ট":""}
-   ${x.details?"<br>"+escapeHTML(x.details):""}
+   <b>${esc(x.name)}</b><br>
+   উপশাখা: ${esc(x.branch||x._area||"ওয়ার্ড")}<br>
+   ${x.bigProject?"বড় প্রজেক্ট":""}
+   ${x.details?"<br>"+esc(x.details):""}
   </div>
  `).join("")||"কোনো প্রজেক্ট নেই";
 }
 
-/* =========================
-   ছাত্রকল্যাণ
-========================= */
+function renderStudents(){
+ const box=document.getElementById("studentList");
 
-function renderSimple(key){
- const id=key==="students"?"studentList":key;
- const el=document.getElementById(id);
- if(!el)return;
-
- const data=getSectionData(key);
-
- el.innerHTML=data.map(x=>`
-  <div class="notice">
-   <b>${escapeHTML(x.name||"")}</b>
-   ${x.details?"<br>"+escapeHTML(x.details):""}
-  </div>
- `).join("")||"কোনো তথ্য নেই";
-}
-
-/* =========================
-   সিলেবাস
-========================= */
-
-function showSyllabus(type){
- const data=getSectionData("syllabus")
-  .filter(x=>x.type===type);
-
- document.getElementById("syllabusContent").innerHTML=`
- <h3>${escapeHTML(type)} সিলেবাস</h3>
- ${
-  data.map(x=>`
-   <div class="notice">
-    <b>${escapeHTML(x.name)}</b>
-    ${x.details?"<br>"+escapeHTML(x.details):""}
+ if(!selectedStudentArea){
+  box.innerHTML=`
+   <div class="subnav">
+    <button onclick="chooseStudentArea('ওয়ার্ড')">🏢<br>ওয়ার্ড</button>
+    ${branches.map(b=>`<button onclick="chooseStudentArea('${esc(b)}')">🕌<br>${esc(b)}</button>`).join("")}
    </div>
-  `).join("")||"কোনো সিলেবাস যোগ করা হয়নি।"
+  `;
+  return;
  }
+
+ const d=getAreaData("students",selectedStudentArea);
+
+ box.innerHTML=`
+  <button class="back" onclick="selectedStudentArea='';renderStudents()">← আগের পেজ</button>
+  <h3>${esc(selectedStudentArea)}</h3>
+  <div class="table-wrap">
+   <table>
+    <thead><tr><th>সিরিয়াল</th><th>নাম</th></tr></thead>
+    <tbody>
+     ${d.map((x,i)=>`<tr><td>${i+1}</td><td>${esc(x.name)}</td></tr>`).join("")||'<tr><td colspan="2">কোনো তথ্য নেই</td></tr>'}
+    </tbody>
+   </table>
+  </div>
  `;
 }
 
-/* =========================
-   আয়াত
-========================= */
+let selectedStudentArea="";
+
+function chooseStudentArea(a){
+ selectedStudentArea=a;
+ renderStudents();
+}
+
+async function renderNotices(){
+ const box=document.getElementById("noticeList");
+ box.textContent="নোটিশ লোড হচ্ছে...";
+
+ const {data,error}=await supabaseClient.from("posts")
+  .select("id,title,content,created_at")
+  .order("created_at",{ascending:false});
+
+ if(error){
+  console.error(error);
+  box.textContent="নোটিশ লোড করা যায়নি।";
+  return;
+ }
+
+ box.innerHTML=data?.length?
+ data.slice(0,5).map(x=>`
+  <div class="notice">
+   <b>${esc(x.title)}</b><br>
+   ${esc(x.content)}<br>
+   <small>${x.created_at?new Date(x.created_at).toLocaleString("bn-BD"):""}</small>
+  </div>
+ `).join(""):"এখনো কোনো নোটিশ প্রকাশ করা হয়নি।";
+}
+
+function showSyllabus(type){
+ const d=getSectionData("syllabus").filter(x=>x.type===type);
+
+ document.getElementById("syllabusContent").innerHTML=`
+  <h3>${esc(type)} সিলেবাস</h3>
+  ${d.map(x=>`
+   <div class="notice">
+    <b>${esc(x.name)}</b>
+    ${x.details?"<br>"+esc(x.details):""}
+   </div>
+  `).join("")||"কোনো সিলেবাস যোগ করা হয়নি।"}
+ `;
+}
 
 const quotes=[
- ["إِنَّ مَعَ الْعُسْرِ يُسْرًا","সূরা আল-ইনশিরাহ: ৬"],
- ["فَاذْكُرُونِي أَذْكُرْكُمْ","সূরা আল-বাকারা: ১৫২"],
- ["وَاللَّهُ مَعَ الصَّابِرِينَ","সূরা আল-বাকারা: ১৫৩"],
- ["الدِّينُ النَّصِيحَةُ","সহিহ মুসলিম"]
+["إِنَّ مَعَ الْعُسْرِ يُسْرًا","নিশ্চয়ই কষ্টের সাথেই স্বস্তি রয়েছে।","সূরা আল-ইনশিরাহ ৯৪:৬"],
+["فَاذْكُرُونِي أَذْكُرْكُمْ","তোমরা আমাকে স্মরণ করো, আমিও তোমাদের স্মরণ করব।","সূরা আল-বাকারা ২:১৫২"],
+["وَاللَّهُ مَعَ الصَّابِرِينَ","আল্লাহ ধৈর্যশীলদের সঙ্গে আছেন।","সূরা আল-বাকারা ২:১৫৩"],
+["وَقُل رَّبِّ زِدْنِي عِلْمًا","বলুন, হে আমার রব! আমার জ্ঞান বৃদ্ধি করুন।","সূরা ত্ব-হা ২০:১১৪"],
+["إِنَّ اللَّهَ مَعَ الْمُتَّقِينَ","নিশ্চয়ই আল্লাহ মুত্তাকিদের সঙ্গে আছেন।","সূরা আত-তাওবা ৯:৩৬"],
+["إِنَّ اللَّهَ يُحِبُّ الْمُحْسِنِينَ","নিশ্চয়ই আল্লাহ সৎকর্মশীলদের ভালোবাসেন।","সূরা আল-বাকারা ২:১৯৫"],
+["وَهُوَ مَعَكُمْ أَيْنَ مَا كُنتُمْ","তোমরা যেখানেই থাক, তিনি তোমাদের সঙ্গে আছেন।","সূরা আল-হাদীদ ৫৭:৪"],
+["لَا تَقْنَطُوا مِن رَّحْمَةِ اللَّهِ","আল্লাহর রহমত থেকে নিরাশ হয়ো না।","সূরা আয-যুমার ৩৯:৫৩"],
+["فَإِنَّ اللَّهَ غَفُورٌ رَّحِيمٌ","নিশ্চয়ই আল্লাহ ক্ষমাশীল, পরম দয়ালু।","সূরা আল-বাকারা ২:১৯৯"],
+["إِنَّ اللَّهَ يُحِبُّ التَّوَّابِينَ","নিশ্চয়ই আল্লাহ তওবাকারীদের ভালোবাসেন।","সূরা আল-বাকারা ২:২২২"],
+["وَتَوَكَّلْ عَلَى اللَّهِ","আল্লাহর ওপর ভরসা করুন।","সূরা আল-আহযাব ৩৩:৩"],
+["إِنَّ رَبِّي قَرِيبٌ مُّجِيبٌ","নিশ্চয়ই আমার রব নিকটবর্তী, দোয়া কবুলকারী।","সূরা হূদ ১১:৬১"],
+["وَاللَّهُ خَيْرُ الرَّازِقِينَ","আল্লাহই সর্বোত্তম রিজিকদাতা।","সূরা আল-জুমুআ ৬২:১১"],
+["وَاصْبِرْ وَمَا صَبْرُكَ إِلَّا بِاللَّهِ","ধৈর্য ধারণ করুন; আল্লাহর সাহায্য ছাড়া ধৈর্য সম্ভব নয়।","সূরা আন-নাহল ১৬:১২৭"],
+["إِنَّ اللَّهَ لَا يُضِيعُ أَجْرَ الْمُحْسِنِينَ","আল্লাহ সৎকর্মশীলদের প্রতিদান নষ্ট করেন না।","সূরা আত-তাওবা ৯:১২০"],
+["وَمَا تَوْفِيقِي إِلَّا بِاللَّهِ","আমার সাফল্য কেবল আল্লাহরই সাহায্যে।","সূরা হূদ ১১:৮৮"],
+["إِنَّ اللَّهَ بِكُلِّ شَيْءٍ عَلِيمٌ","নিশ্চয়ই আল্লাহ সব বিষয়ে সর্বজ্ঞ।","সূরা আল-আনফাল ৮:৭৫"],
+["فَاسْتَبِقُوا الْخَيْرَاتِ","তোমরা ভালো কাজে প্রতিযোগিতা করো।","সূরা আল-বাকারা ২:১৪৮"],
+["وَقُولُوا لِلنَّاسِ حُسْنًا","মানুষের সঙ্গে উত্তম কথা বলো।","সূরা আল-বাকারা ২:৮৩"],
+["إِنَّ اللَّهَ يُحِبُّ الْمُتَوَكِّلِينَ","নিশ্চয়ই আল্লাহ তাঁর ওপর ভরসাকারীদের ভালোবাসেন।","সূরা আলে ইমরান ৩:১৫৯"],
+["إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ","কাজের ফল নিয়তের ওপর নির্ভরশীল।","সহিহ বুখারি ১; সহিহ মুসলিম ১৯০৭"],
+["الدِّينُ النَّصِيحَةُ","দ্বীন হলো কল্যাণকামিতা।","সহিহ মুসলিম ৫৫"],
+["مَنْ لَا يَرْحَمْ لَا يُرْحَمْ","যে দয়া করে না, তার প্রতিও দয়া করা হয় না।","সহিহ বুখারি ৬০১৩; সহিহ মুসলিম ২৩১৯"],
+["الطُّهُورُ شَطْرُ الْإِيمَانِ","পবিত্রতা ঈমানের অর্ধেক।","সহিহ মুসলিম ২২৩"],
+["الْكَلِمَةُ الطَّيِّبَةُ صَدَقَةٌ","উত্তম কথা সদকা।","সহিহ বুখারি ২৯৮৯; সহিহ মুসলিম ১০০৯"],
+["مَنْ غَشَّنَا فَلَيْسَ مِنَّا","যে আমাদের সঙ্গে প্রতারণা করে, সে আমাদের দলভুক্ত নয়।","সহিহ মুসলিম ১০১"],
+["لَا تَغْضَبْ","রাগ করো না।","সহিহ বুখারি ৬১১৬"],
+["يَسِّرُوا وَلَا تُعَسِّرُوا","সহজ করো, কঠিন করো না।","সহিহ বুখারি ৬৯; সহিহ মুসলিম ১৭৩৪"],
+["مَنْ صَمَتَ نَجَا","যে নীরব থাকে, সে মুক্তি পায়।","জামে তিরমিজি ২৫০১"],
+["إِنَّ اللَّهَ جَمِيلٌ يُحِبُّ الْجَمَالَ","নিশ্চয়ই আল্লাহ সুন্দর, তিনি সৌন্দর্য ভালোবাসেন।","সহিহ মুসলিম ৯১"],
+["الرَّاحِمُونَ يَرْحَمُهُمُ الرَّحْمَنُ","দয়াশীলদের প্রতি পরম দয়াময় দয়া করেন।","জামে তিরমিজি ১৯২৪"],
+["مَنْ سَلَكَ طَرِيقًا يَلْتَمِسُ فِيهِ عِلْمًا","যে জ্ঞান অর্জনের পথে চলে, আল্লাহ তার জন্য জান্নাতের পথ সহজ করেন।","সহিহ মুসলিম ২৬৯৯"],
+["أَفْضَلُ الذِّكْرِ لَا إِلَهَ إِلَّا اللَّهُ","সর্বোত্তম জিকির হলো ‘লা ইলাহা ইল্লাল্লাহ’।","জামে তিরমিজি ৩৩৮৩"],
+["مَنْ لَا يَشْكُرُ النَّاسَ لَا يَشْكُرُ اللَّهَ","যে মানুষের কৃতজ্ঞতা প্রকাশ করে না, সে আল্লাহরও কৃতজ্ঞতা প্রকাশ করে না।","জামে তিরমিজি ১৯৫৪"],
+["اتَّقِ اللَّهَ حَيْثُمَا كُنْتَ","তুমি যেখানেই থাক, আল্লাহকে ভয় করো।","জামে তিরমিজি ১৯৮৭"]
 ];
 
 let qi=0;
 
 function rotateQuote(){
- document.getElementById("quoteText").textContent=quotes[qi][0];
- document.getElementById("quoteSource").textContent=quotes[qi][1];
+ const q=quotes[qi];
+ const box=document.getElementById("quoteText");
+
+ box.innerHTML=`
+  <div class="arabic">${esc(q[0])}</div>
+  <div>${esc(q[1])}</div>
+ `;
+
+ document.getElementById("quoteSource").textContent=q[2];
  qi=(qi+1)%quotes.length;
 }
 
 rotateQuote();
-setInterval(rotateQuote,7000);
-
-/* =========================
-   থিম
-========================= */
+setInterval(rotateQuote,9000);
 
 const light=[
- ["সবুজ","#f2f8f3","#fff","#183c2c","#17623e"],
- ["নীল","#f1f6fc","#fff","#172b4d","#123b70"],
- ["আকাশি","#eefaff","#fff","#075b91","#1686b5"],
- ["বেগুনি","#f6f1ff","#fff","#56318a","#7147aa"],
- ["গোলাপি","#fff2f6","#fff","#a42d5b","#d94c83"],
- ["সোনালি","#fff9e9","#fff","#79520c","#b88620"],
- ["টিল","#eaf8f6","#fff","#075b55","#168a80"],
- ["লাল","#fff2f0","#fff","#922d2d","#bd4545"],
- ["ধূসর","#f1f3f5","#fff","#39434d","#566575"],
- ["মেরিন","#edf4fa","#fff","#153653","#3679a6"]
+["সবুজ","#f2f8f3","#fff","#183c2c","#17623e"],
+["নীল","#f1f6fc","#fff","#172b4d","#123b70"],
+["আকাশি","#eefaff","#fff","#075b91","#1686b5"],
+["বেগুনি","#f6f1ff","#fff","#56318a","#7147aa"],
+["গোলাপি","#fff2f6","#fff","#a42d5b","#d94c83"],
+["সোনালি","#fff9e9","#fff","#79520c","#b88620"],
+["টিল","#eaf8f6","#fff","#075b55","#168a80"],
+["লাল","#fff2f0","#fff","#922d2d","#bd4545"],
+["ধূসর","#f1f3f5","#fff","#39434d","#566575"],
+["মেরিন","#edf4fa","#fff","#153653","#3679a6"]
 ];
 
 const dark=[
- ["ডার্ক নেভি","#101b2d","#1a2b43","#dceaff","#398ed1"],
- ["ডার্ক সবুজ","#101f19","#1b3328","#d8f4e2","#39a66b"],
- ["ডার্ক কালো","#171717","#252525","#eee","#888"],
- ["ডার্ক বেগুনি","#21172e","#30203f","#f0e2ff","#9b70d1"],
- ["ডার্ক টিল","#102725","#1b3937","#dcf6f3","#39aaa0"],
- ["ডার্ক লাল","#281919","#3a2424","#ffe4e4","#d56d6d"],
- ["ডার্ক নীল","#111e36","#1c3050","#e2edff","#528fd8"],
- ["ডার্ক ধূসর","#20252b","#303841","#f0f2f4","#8297a8"],
- ["ডার্ক বাদামি","#2a211b","#3d3026","#f7e8d8","#bd9162"],
- ["ডার্ক অলিভ","#252719","#363b25","#eff1d9","#a4ad5b"]
+["ডার্ক নেভি","#101b2d","#1a2b43","#dceaff","#398ed1"],
+["ডার্ক সবুজ","#101f19","#1b3328","#d8f4e2","#39a66b"],
+["ডার্ক কালো","#171717","#252525","#eee","#888"],
+["ডার্ক বেগুনি","#21172e","#30203f","#f0e2ff","#9b70d1"],
+["ডার্ক টিল","#102725","#1b3937","#dcf6f3","#39aaa0"],
+["ডার্ক লাল","#281919","#3a2424","#ffe4e4","#d56d6d"],
+["ডার্ক নীল","#111e36","#1c3050","#e2edff","#528fd8"],
+["ডার্ক ধূসর","#20252b","#303841","#f0f2f4","#8297a8"],
+["ডার্ক বাদামি","#2a211b","#3d3026","#f7e8d8","#bd9162"],
+["ডার্ক অলিভ","#252719","#363b25","#eff1d9","#a4ad5b"]
 ];
 
 function applyTheme(t){
  const r=document.documentElement;
 
- ["--bg","--card","--text","--primary","--secondary"]
- .forEach((k,i)=>r.style.setProperty(k,t[i+1]));
+ ["--bg","--card","--text","--primary","--secondary"].forEach((k,i)=>{
+  r.style.setProperty(k,t[i+1]);
+ });
+
+ // প্রতিটি থিমে হেডারের গ্রেডিয়েন্ট নতুন রং অনুযায়ী পরিবর্তিত হবে
+ document.querySelector("header").style.background=
+  `linear-gradient(135deg,${t[4]},${t[5]})`;
+
+ // নরম ব্যাকগ্রাউন্ডের রংও থিম অনুযায়ী পরিবর্তিত হবে
+ r.style.setProperty("--soft",t[1]);
+
+ // বর্ডারকে থিমের সঙ্গে মানানসই রাখা
+ r.style.setProperty("--border",t[1]);
+
+ document.querySelector('meta[name="theme-color"]').content=t[4];
 
  localStorage.setItem("selectedTheme",JSON.stringify(t));
 }
@@ -822,39 +1232,29 @@ function makeThemes(){
 
  if(saved){
   try{applyTheme(JSON.parse(saved))}
-  catch(e){}
+  catch(e){applyTheme(light[0])}
+ }else{
+  applyTheme(light[0]);
  }
 }
 
-/* =========================
-   মেনুর আকৃতি
-========================= */
-
-function changeShape(shape){
+function changeShape(s){
  document.querySelectorAll(".menu-item").forEach(el=>{
   el.style.clipPath="";
-  el.style.borderRadius="18px";
+  el.style.borderRadius="19px";
 
-  if(shape==="circle")el.style.borderRadius="50%";
-  if(shape==="triangle")el.style.clipPath="polygon(50% 0%,100% 100%,0% 100%)";
-  if(shape==="pentagon")el.style.clipPath="polygon(50% 0%,100% 38%,82% 100%,18% 100%,0% 38%)";
-  if(shape==="square")el.style.borderRadius="5px";
+  if(s==="circle")el.style.borderRadius="50%";
+  if(s==="triangle")el.style.clipPath="polygon(50% 0%,100% 100%,0% 100%)";
+  if(s==="pentagon")el.style.clipPath="polygon(50% 0%,100% 38%,82% 100%,18% 100%,0% 38%)";
+  if(s==="square")el.style.borderRadius="5px";
  });
 
- localStorage.setItem("menuShape",shape);
+ localStorage.setItem("menuShape",s);
 }
-
-/* =========================
-   ব্যবহারের সময়
-========================= */
 
 function dateKey(){
  const d=new Date();
-
- return "usage_"+
-  d.getFullYear()+"-"+
-  String(d.getMonth()+1).padStart(2,"0")+"-"+
-  String(d.getDate()).padStart(2,"0");
+ return "usage_"+d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
 }
 
 function formatTime(s){
@@ -899,57 +1299,46 @@ document.addEventListener("visibilitychange",()=>{
 });
 
 window.addEventListener("beforeunload",()=>{
- localStorage.setItem(
-  activeDate,
-  accumulated+Math.floor((Date.now()-sessionStart)/1000)
- );
+ localStorage.setItem(activeDate,accumulated+Math.floor((Date.now()-sessionStart)/1000));
 });
 
 setInterval(updateTimer,1000);
 updateTimer();
 
 function renderUsage(){
- const arr=[];
+ const a=[];
 
  for(let i=0;i<localStorage.length;i++){
   const k=localStorage.key(i);
 
-  if(k&&k.startsWith("usage_")){
-   arr.push({
-    date:k.slice(6),
-    time:Number(localStorage.getItem(k))
-   });
+  if(k?.startsWith("usage_")){
+   a.push({date:k.slice(6),time:Number(localStorage.getItem(k))});
   }
  }
 
- arr.sort((a,b)=>b.date.localeCompare(a.date));
+ a.sort((x,y)=>y.date.localeCompare(x.date));
 
  document.getElementById("usageList").innerHTML=
- arr.map(x=>`
-  <div class="notice">${x.date} — ${formatTime(x.time)}</div>
- `).join("")||"কোনো তথ্য নেই";
+ a.map(x=>`<div class="notice">${esc(x.date)} — ${formatTime(x.time)}</div>`).join("")||"কোনো তথ্য নেই";
 }
 
 function printUsageReport(){
- const arr=[];
+ const a=[];
 
  for(let i=0;i<localStorage.length;i++){
   const k=localStorage.key(i);
 
-  if(k&&k.startsWith("usage_")){
-   arr.push({
-    date:k.slice(6),
-    time:Number(localStorage.getItem(k))
-   });
+  if(k?.startsWith("usage_")){
+   a.push({date:k.slice(6),time:Number(localStorage.getItem(k))});
   }
  }
 
- arr.sort((a,b)=>a.date.localeCompare(b.date));
+ a.sort((x,y)=>x.date.localeCompare(y.date));
 
- const total=arr.reduce((s,x)=>s+x.time,0);
+ const total=a.reduce((s,x)=>s+x.time,0);
 
- const rows=arr.map(x=>`
-  <tr><td>${x.date}</td><td>${formatTime(x.time)}</td></tr>
+ const rows=a.map(x=>`
+  <tr><td>${esc(x.date)}</td><td>${formatTime(x.time)}</td></tr>
  `).join("");
 
  const w=window.open("","_blank");
@@ -957,39 +1346,50 @@ function printUsageReport(){
  if(!w)return alert("পপ-আপ অনুমতি দিন");
 
  w.document.write(`
- <html lang="bn">
- <head>
- <meta charset="UTF-8">
- <title>ব্যবহারের সময় রিপোর্ট</title>
- <style>
- body{font-family:Arial,sans-serif;padding:25px}
- h2{text-align:center}
- table{width:100%;border-collapse:collapse}
- td,th{border:1px solid #777;padding:9px;text-align:center}
- </style>
- </head>
- <body>
- <h2>পৌর সাংগঠনিক পশ্চিম ওয়ার্ড, নীলফামারী</h2>
- <h3>ওয়েবসাইট ব্যবহারের সময় রিপোর্ট</h3>
- <p>মোট ব্যবহার সময়: ${formatTime(total)}</p>
- <table>
- <tr><th>তারিখ</th><th>ব্যবহারের সময়</th></tr>
- ${rows}
- </table>
- <script>window.onload=()=>window.print()<\/script>
- </body>
- </html>
+  <html lang="bn">
+  <meta charset="UTF-8">
+  <title>ব্যবহারের সময় রিপোর্ট</title>
+  <style>
+   body{font-family:Arial;padding:25px}
+   h2{text-align:center}
+   table{width:100%;border-collapse:collapse}
+   td,th{border:1px solid #777;padding:9px;text-align:center}
+  </style>
+  <body>
+   <h2>পৌর সাংগঠনিক পশ্চিম ওয়ার্ড, নীলফামারী</h2>
+   <h3>ওয়েবসাইট ব্যবহারের সময় রিপোর্ট</h3>
+   <p>মোট ব্যবহার সময়: ${formatTime(total)}</p>
+   <table>
+    <tr><th>তারিখ</th><th>ব্যবহারের সময়</th></tr>
+    ${rows}
+   </table>
+   <script>window.onload=()=>window.print()<\/script>
+  </body>
+  </html>
  `);
 
  w.document.close();
 }
 
-/* =========================
-   ওয়েবসাইট চালু
-========================= */
+async function loadLogo(){
+ const img=document.getElementById("logo");
+
+ try{
+  const {data}=supabaseClient.storage.from("site-assets").getPublicUrl("logo.png");
+  const url=data?.publicUrl;
+
+  if(!url)return;
+
+  img.onload=()=>{img.style.display="block"};
+  img.onerror=()=>{img.style.display="none"};
+  img.src=url+"?v="+Date.now();
+
+ }catch(e){
+  img.style.display="none";
+ }
+}
 
 async function initialize(){
-
  makeThemes();
 
  const shape=localStorage.getItem("menuShape");
@@ -1000,48 +1400,39 @@ async function initialize(){
  }
 
  await loadAppData();
-
  await renderNotices();
-
- renderNoticeManagement();
- renderPrograms();
- renderPayments();
- renderFinance();
- renderProject();
- renderSimple("students");
+ await loadLogo();
  renderRanking();
 }
 
-/* প্রতি ৩০ সেকেন্ডে Supabase তথ্য রিফ্রেশ */
 setInterval(async()=>{
  await loadAppData();
 
- const active=document.querySelector(".page.active");
-
- if(active&&active.id==="home"){
+ if(document.querySelector(".page.active")?.id==="home"){
   await renderNotices();
  }
+
+ await loadLogo();
+
 },30000);
 
-/* Supabase Realtime চালু থাকলে পরিবর্তন দ্রুত ধরবে */
 try{
- supabaseClient
-  .channel("public-app-data-changes")
-  .on(
-   "postgres_changes",
-   {event:"*",schema:"public",table:"app_data"},
-   async()=>{
-    await loadAppData();
-   }
-  )
-  .subscribe();
-}catch(error){
- console.log("Realtime subscription unavailable:",error);
+ supabaseClient.channel("public-app-data-changes")
+ .on("postgres_changes",{
+  event:"*",schema:"public",table:"app_data"
+ },loadAppData).subscribe();
+
+ supabaseClient.channel("public-post-changes")
+ .on("postgres_changes",{
+  event:"*",schema:"public",table:"posts"
+ },renderNotices).subscribe();
+
+}catch(e){
+ console.log("Realtime unavailable",e);
 }
 
 initialize();
 
 </script>
-
 </body>
 </html>
