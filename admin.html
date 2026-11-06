@@ -90,7 +90,6 @@ header h2{font-size:21px}
 <button onclick="openTab('backgrounds',this)">ব্যাকগ্রাউন্ড ছবি</button>
 </nav>
 
-<!-- তথ্য ব্যবস্থাপনা -->
 <div id="records" class="tab">
 
 <div class="card">
@@ -173,7 +172,6 @@ header h2{font-size:21px}
 </div>
 </div>
 
-<!-- নোটিশ -->
 <div id="notices" class="tab hidden">
 
 <div class="card">
@@ -210,7 +208,6 @@ header h2{font-size:21px}
 
 </div>
 
-<!-- লোগো -->
 <div id="logo" class="tab hidden">
 <div class="card">
 <h3>ওয়েবসাইটের লোগো আপলোড</h3>
@@ -225,11 +222,9 @@ header h2{font-size:21px}
 <div id="logoMsg" class="status hidden"></div>
 
 <p>Storage bucket: <b>site-assets</b></p>
-<p>Public bucket এবং অ্যাডমিনের upload/update policy প্রয়োজন।</p>
 </div>
 </div>
 
-<!-- ব্যাকগ্রাউন্ড ছবি -->
 <div id="backgrounds" class="tab hidden">
 
 <div class="card">
@@ -292,7 +287,6 @@ onchange="previewBackground('ayatBackgroundFile','ayatBackgroundPreview')">
 </div>
 
 </div>
-
 </div>
 </div>
 
@@ -323,6 +317,9 @@ const monthNames=[
  "জুলাই","আগস্ট","সেপ্টেম্বর","অক্টোবর","নভেম্বর","ডিসেম্বর"
 ];
 
+/* বর্তমান মাসের প্রারম্ভিক অর্থ */
+let monthlyOpeningBalance=0;
+
 function el(id){
  return document.getElementById(id);
 }
@@ -346,11 +343,6 @@ function hide(id){
  el(id).classList.add("hidden");
 }
 
-function loginMessage(msg){
- show("loginMsg",msg);
-}
-
-/* বর্তমান মাস */
 function currentMonth(){
  const d=new Date();
  return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");
@@ -360,7 +352,6 @@ function monthLabel(value){
  if(!value)return "";
 
  const [y,m]=value.split("-").map(Number);
-
  return monthNames[m-1]+" "+y;
 }
 
@@ -368,8 +359,9 @@ function getMonthInput(){
  return `
   <div class="month-box" style="grid-column:1/-1">
    <label>মাস ও সাল নির্বাচন করুন</label>
-   <input type="month" id="f_month" value="${currentMonth()}" onchange="updateCalculations()">
-   <div class="help">এখানে শুধু মাস ও সাল নির্বাচন করবেন। দিনের তারিখ নির্বাচন করতে হবে না।</div>
+   <input type="month" id="f_month" value="${currentMonth()}"
+   onchange="loadMonthlyOpeningBalance();updateCalculations()">
+   <div class="help">এখানে শুধু মাস ও সাল নির্বাচন করবেন।</div>
   </div>
  `;
 }
@@ -424,15 +416,10 @@ async function notifyAssetUpdated(path){
   const {error}=await assetChannel.send({
    type:"broadcast",
    event:"asset-updated",
-   payload:{
-    path:path,
-    version:Date.now()
-   }
+   payload:{path:path,version:Date.now()}
   });
 
-  if(error)return false;
-
-  return true;
+  return !error;
 
  }catch(error){
   console.error(error);
@@ -447,7 +434,7 @@ async function login(){
  const password=el("password").value;
 
  if(!email||!password){
-  loginMessage("ইমেইল ও পাসওয়ার্ড লিখুন।");
+  show("loginMsg","ইমেইল ও পাসওয়ার্ড লিখুন।");
   return;
  }
 
@@ -456,13 +443,13 @@ async function login(){
  });
 
  if(error){
-  loginMessage("লগইন ব্যর্থ: "+error.message);
+  show("loginMsg","লগইন ব্যর্থ: "+error.message);
   return;
  }
 
  if(data.user.email.toLowerCase()!==ADMIN_EMAIL.toLowerCase()){
   await db.auth.signOut();
-  loginMessage("আপনার অ্যাডমিন অনুমতি নেই।");
+  show("loginMsg","আপনার অ্যাডমিন অনুমতি নেই।");
   return;
  }
 
@@ -568,7 +555,6 @@ function inputField(label,key,type="text",options=null){
  return `<div><label>${label}</label>${input}</div>`;
 }
 
-/* ছবি নির্বাচন */
 function photoField(){
 
  return `
@@ -608,12 +594,13 @@ function previewPhoto(){
 /* ফর্ম তৈরি */
 function renderFields(){
 
+ monthlyOpeningBalance=0;
+
  const s=el("section").value;
  const a=el("area").value;
 
  let html="";
 
- /* দায়িত্বশীলবর্গ */
  if(s==="responsibility"){
 
   html+=inputField("নাম","name");
@@ -621,30 +608,20 @@ function renderFields(){
   html+=photoField();
  }
 
- /* জনশক্তি */
  if(s==="manpower"){
 
   html+=inputField("নাম","name");
-
-  html+=inputField(
-   "ধরন",
-   "type",
-   "text",
-   ["সাথী","কর্মী","সমর্থক"]
-  );
-
+  html+=inputField("ধরন","type","text",["সাথী","কর্মী","সমর্থক"]);
   html+=inputField("দায়িত্ব","responsibility");
   html+=photoField();
  }
 
- /* সুধী */
  if(s==="sudhi"){
 
   html+=inputField("নাম","name");
   html+=inputField("মোবাইল","phone","tel");
  }
 
- /* ছাত্রকল্যাণ */
  if(s==="students"){
 
   html+=inputField("নাম","name");
@@ -652,7 +629,6 @@ function renderFields(){
   html+=inputField("মোবাইল","phone","tel");
  }
 
- /* কর্মসূচি */
  if(s==="programRecords"){
 
   const names=a==="ওয়ার্ড"
@@ -660,16 +636,8 @@ function renderFields(){
    :["কর্মী বৈঠক","সাধারণ সভা","কুরআন তালিম","সামষ্টিক পাঠ"];
 
   html+=getMonthInput();
-
   html+=inputField("কর্মসূচি","program","text",names);
-
-  html+=inputField(
-   "সম্পন্ন হয়েছে?",
-   "completed",
-   "text",
-   ["হ্যাঁ","না"]
-  );
-
+  html+=inputField("সম্পন্ন হয়েছে?","completed","text",["হ্যাঁ","না"]);
   html+=inputField("বিবরণ","details","textarea");
  }
 
@@ -679,11 +647,8 @@ function renderFields(){
   html+=getMonthInput();
 
   html+=`<div class="calculated" style="grid-column:1/-1">
-   <b>বাইতুল মালের হিসাব</b><br>
-   ${a==="ওয়ার্ড"
-    ?"এখানে ওয়ার্ডের মাসিক কালেকশন, উপশাখা থেকে ঊর্ধ্বতন আদায় এবং ঊর্ধ্বতন পরিশোধের হিসাব লিখবেন।"
-    :"এখানে উপশাখার মাসিক কালেকশন, ছাত্রকল্যাণের চালের টাকার মূল্য এবং ঊর্ধ্বতন পরিশোধের হিসাব লিখবেন।"
-   }
+   <b>বাইতুল মালের মাসিক হিসাব</b><br>
+   আগের মাসের বর্তমান অর্থ এই মাসের হিসাবে স্বয়ংক্রিয়ভাবে যোগ হবে।
   </div>`;
 
   html+=inputField("মাসিক কালেকশন (টাকা)","monthlyCollection","number");
@@ -706,19 +671,16 @@ function renderFields(){
 
   }
 
-  html+=inputField(
-   "ঊর্ধ্বতন পরিশোধ (টাকা)",
-   "higherPaid",
-   "number"
-  );
+  html+=inputField("ঊর্ধ্বতন পরিশোধ (টাকা)","higherPaid","number");
 
   html+=`
    <div class="calculated" style="grid-column:1/-1">
-    <b>বর্তমান অর্থের পরিমাণ</b><br>
+    <b>এই মাসের বর্তমান অর্থ</b><br>
     <strong id="currentAmountPreview">০ টাকা</strong>
+    <div class="help" id="financeOpeningText">আগের মাসের অর্থ: ০ টাকা</div>
     <div class="help">
-     বর্তমান অর্থ = মাসিক কালেকশন + অতিরিক্ত আদায়/চালের মূল্য − ঊর্ধ্বতন পরিশোধ।
-     হিসাবটি স্বয়ংক্রিয়ভাবে তৈরি হবে।
+     হিসাব = আগের মাসের বর্তমান অর্থ + মাসিক কালেকশন
+     + অতিরিক্ত আদায়/চালের মূল্য − ঊর্ধ্বতন পরিশোধ।
     </div>
    </div>
   `;
@@ -732,59 +694,34 @@ function renderFields(){
   html+=getMonthInput();
 
   html+=inputField("ধার্যকৃত টাকা","assessed","number");
-
   html+=inputField("পরিশোধ টাকা","paid","number");
 
   html+=`
    <div class="calculated" style="grid-column:1/-1">
-    <b>স্বয়ংক্রিয় বকেয়া হিসাব</b><br>
+    <b>এই মাসের মোট বকেয়া</b><br>
     <strong id="duePreview">০ টাকা</strong>
-    <div class="help">বকেয়া = ধার্যকৃত টাকা − পরিশোধ টাকা।</div>
+    <div class="help" id="paymentOpeningText">আগের মাসের বকেয়া: ০ টাকা</div>
+    <div class="help">
+     বকেয়া = আগের মাসের বকেয়া + এই মাসের ধার্যকৃত টাকা − এই মাসের পরিশোধ।
+    </div>
    </div>
   `;
 
-  html+=inputField(
-   "সময়মতো পরিশোধ?",
-   "timely",
-   "text",
-   ["হ্যাঁ","না"]
-  );
-
+  html+=inputField("সময়মতো পরিশোধ?","timely","text",["হ্যাঁ","না"]);
   html+=inputField("বিবরণ","details","textarea");
  }
 
- /* প্রজেক্ট */
  if(s==="projects"){
 
   html+=inputField("প্রজেক্টের নাম","name");
-
-  html+=inputField(
-   "অবস্থা",
-   "status",
-   "text",
-   ["পরিকল্পনা","বাস্তবায়নাধীন","সম্পন্ন"]
-  );
-
-  html+=inputField(
-   "বড় প্রজেক্ট?",
-   "bigProject",
-   "text",
-   ["না","হ্যাঁ"]
-  );
-
+  html+=inputField("অবস্থা","status","text",["পরিকল্পনা","বাস্তবায়নাধীন","সম্পন্ন"]);
+  html+=inputField("বড় প্রজেক্ট?","bigProject","text",["না","হ্যাঁ"]);
   html+=inputField("বিবরণ","details","textarea");
  }
 
- /* সিলেবাস */
  if(s==="syllabus"){
 
-  html+=inputField(
-   "শ্রেণি",
-   "category",
-   "text",
-   ["সাথী","কর্মী","সমর্থক"]
-  );
-
+  html+=inputField("শ্রেণি","category","text",["সাথী","কর্মী","সমর্থক"]);
   html+=inputField("বইয়ের নাম","name");
   html+=inputField("PDF / বইয়ের লিংক","url");
   html+=inputField("বিবরণ","details","textarea");
@@ -793,14 +730,82 @@ function renderFields(){
  el("fields").innerHTML=html;
 
  updateCalculations();
+
+ if(["financeRecords","paymentRecords"].includes(s)){
+  loadMonthlyOpeningBalance();
+ }
 }
 
-/* টাকা হিসাব */
+/* সংখ্যা */
 function readNumber(id){
  const input=el(id);
  return input?Math.max(0,Number(input.value||0)):0;
 }
 
+function money(value){
+ return Number(value||0).toLocaleString("bn-BD")+" টাকা";
+}
+
+/*
+ আগের মাসের সর্বশেষ হিসাব বের করা।
+ একই এলাকা ও একই বিভাগের আগের মাসের রেকর্ড ব্যবহার হবে।
+*/
+async function loadMonthlyOpeningBalance(){
+
+ const section=el("section").value;
+
+ if(!["financeRecords","paymentRecords"].includes(section)){
+  monthlyOpeningBalance=0;
+  return;
+ }
+
+ const monthInput=el("f_month");
+ if(!monthInput)return;
+
+ const selectedMonth=monthInput.value;
+ const area=el("area").value;
+
+ if(!selectedMonth)return;
+
+ try{
+
+  const {data,error}=await db.from("app_data")
+   .select("id,data")
+   .eq("section",section)
+   .eq("area",area);
+
+  if(error)throw error;
+
+  const previous=(data||[])
+   .filter(r=>r.data?.month&&r.data.month<selectedMonth)
+   .sort((a,b)=>String(b.data.month).localeCompare(String(a.data.month)));
+
+  if(previous.length){
+
+   const previousData=previous[0].data||{};
+
+   monthlyOpeningBalance=section==="financeRecords"
+    ?Number(previousData.currentAmount||0)
+    :Number(previousData.due||0);
+
+  }else{
+
+   monthlyOpeningBalance=0;
+
+  }
+
+  updateCalculations();
+
+ }catch(error){
+
+  console.error("আগের মাসের হিসাব আনতে সমস্যা:",error);
+
+  monthlyOpeningBalance=0;
+  updateCalculations();
+ }
+}
+
+/* হিসাবের প্রিভিউ */
 function updateCalculations(){
 
  const s=el("section").value;
@@ -810,12 +815,19 @@ function updateCalculations(){
   const assessed=readNumber("f_assessed");
   const paid=readNumber("f_paid");
 
-  const due=Math.max(0,assessed-paid);
+  const due=Math.max(
+   0,
+   monthlyOpeningBalance+assessed-paid
+  );
 
   const preview=el("duePreview");
 
-  if(preview){
-   preview.textContent=due.toLocaleString("bn-BD")+" টাকা";
+  if(preview)preview.textContent=money(due);
+
+  const openingText=el("paymentOpeningText");
+
+  if(openingText){
+   openingText.textContent="আগের মাসের বকেয়া: "+money(monthlyOpeningBalance);
   }
  }
 
@@ -832,13 +844,20 @@ function updateCalculations(){
    extra=readNumber("f_studentWelfare");
   }
 
-  /* ঊর্ধ্বতন পরিশোধ বিয়োগ হবে */
-  const current=monthly+extra-higher;
+  const current=
+   monthlyOpeningBalance+
+   monthly+
+   extra-
+   higher;
 
   const preview=el("currentAmountPreview");
 
-  if(preview){
-   preview.textContent=current.toLocaleString("bn-BD")+" টাকা";
+  if(preview)preview.textContent=money(current);
+
+  const openingText=el("financeOpeningText");
+
+  if(openingText){
+   openingText.textContent="আগের মাসের বর্তমান অর্থ: "+money(monthlyOpeningBalance);
   }
  }
 }
@@ -875,17 +894,15 @@ function getFormData(){
   delete data.role;
  }
 
- /* ঊর্ধ্বতনের বকেয়া */
  if(data.assessed!==undefined){
-
   data.due=Math.max(
    0,
-   Number(data.assessed||0)-Number(data.paid||0)
+   monthlyOpeningBalance+
+   Number(data.assessed||0)-
+   Number(data.paid||0)
   );
-
  }
 
- /* বাইতুল মালের বর্তমান অর্থ */
  if(data.monthlyCollection!==undefined){
 
   const monthly=Number(data.monthlyCollection||0);
@@ -894,6 +911,7 @@ function getFormData(){
   if(el("area").value==="ওয়ার্ড"){
 
    data.currentAmount=
+    monthlyOpeningBalance+
     monthly+
     Number(data.branchHigherCollected||0)-
     higher;
@@ -901,6 +919,7 @@ function getFormData(){
   }else{
 
    data.currentAmount=
+    monthlyOpeningBalance+
     monthly+
     Number(data.studentWelfare||0)-
     higher;
@@ -915,16 +934,16 @@ function getFormData(){
 function clearForm(){
 
  el("editId").value="";
- renderFields();
+ monthlyOpeningBalance=0;
 
+ renderFields();
  hide("recordMsg");
 }
 
-/* ছবি Supabase Storage-এ আপলোড */
+/* ছবি আপলোড */
 async function uploadPersonPhoto(section,file){
 
  const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
-
  const filePath="people/"+section+"/"+Date.now()+"_"+safeName;
 
  const {error}=await db.storage
@@ -944,7 +963,7 @@ async function uploadPersonPhoto(section,file){
  return data.publicUrl;
 }
 
-/* একই এলাকার একই মাসের হিসাব খোঁজা */
+/* একই মাসের রেকর্ড খোঁজা */
 async function findMonthlyRecord(section,area,month){
 
  const {data,error}=await db.from("app_data")
@@ -954,11 +973,89 @@ async function findMonthlyRecord(section,area,month){
 
  if(error)throw error;
 
- const match=(data||[]).find(r=>
+ return (data||[]).find(r=>
   String(r.data?.month||"")===month
- );
+ )||null;
+}
 
- return match||null;
+/*
+ সব মাসের হিসাব আবার গণনা।
+ পুরোনো মাস পরিবর্তন হলে পরের মাসগুলোও আপডেট হবে।
+*/
+async function recalculateMonthlyRecords(section,area){
+
+ if(!["financeRecords","paymentRecords"].includes(section)){
+  return;
+ }
+
+ const {data,error}=await db.from("app_data")
+  .select("id,data")
+  .eq("section",section)
+  .eq("area",area);
+
+ if(error)throw error;
+
+ const records=(data||[])
+  .filter(r=>r.data?.month)
+  .sort((a,b)=>
+   String(a.data.month).localeCompare(String(b.data.month))
+  );
+
+ let runningBalance=0;
+
+ for(const record of records){
+
+  const d=record.data||{};
+  let newData={...d};
+
+  if(section==="financeRecords"){
+
+   const monthly=Number(d.monthlyCollection||0);
+   const higher=Number(d.higherPaid||0);
+
+   const extra=area==="ওয়ার্ড"
+    ?Number(d.branchHigherCollected||0)
+    :Number(d.studentWelfare||0);
+
+   runningBalance=
+    runningBalance+
+    monthly+
+    extra-
+    higher;
+
+   newData.currentAmount=runningBalance;
+
+  }else{
+
+   const assessed=Number(d.assessed||0);
+   const paid=Number(d.paid||0);
+
+   runningBalance=Math.max(
+    0,
+    runningBalance+assessed-paid
+   );
+
+   newData.due=runningBalance;
+
+  }
+
+  const oldValue=section==="financeRecords"
+   ?Number(d.currentAmount||0)
+   :Number(d.due||0);
+
+  if(Math.abs(oldValue-runningBalance)>0.001){
+
+   const {error:updateError}=await db.from("app_data")
+    .update({
+     data:newData,
+     updated_at:new Date().toISOString()
+    })
+    .eq("id",record.id);
+
+   if(updateError)throw updateError;
+
+  }
+ }
 }
 
 /* তথ্য সংরক্ষণ */
@@ -968,7 +1065,6 @@ async function saveRecord(){
  const area=el("area").value;
 
  let data=getFormData();
-
  let id=el("editId").value;
 
  try{
@@ -981,7 +1077,6 @@ async function saveRecord(){
    return;
   }
 
-  /* ছবি আপলোড */
   const photoInput=el("f_photo_file");
 
   if(photoInput&&photoInput.files.length){
@@ -1014,10 +1109,6 @@ async function saveRecord(){
 
   let query;
 
-  /*
-   বাইতুল মাল ও ঊর্ধ্বতন:
-   একটি এলাকা + একটি মাস = একটি রেকর্ড।
-  */
   if(["financeRecords","paymentRecords"].includes(section)){
 
    let existing=null;
@@ -1092,32 +1183,36 @@ async function saveRecord(){
 
   const {error}=await query;
 
-  if(error){
-   show("recordMsg","সংরক্ষণ ব্যর্থ: "+error.message);
-   return;
+  if(error)throw error;
+
+  /*
+   সংরক্ষণের পর ঐ এলাকার সব মাসের হিসাব
+   প্রথম মাস থেকে শেষ মাস পর্যন্ত পুনরায় গণনা হবে।
+  */
+  if(["financeRecords","paymentRecords"].includes(section)){
+
+   show("recordMsg","তথ্য সংরক্ষিত হয়েছে। মাসভিত্তিক হিসাব আপডেট হচ্ছে...");
+
+   await recalculateMonthlyRecords(section,area);
+
   }
 
-  show(
-   "recordMsg",
-   "✅ তথ্য সফলভাবে সংরক্ষিত হয়েছে।"
-  );
+  show("recordMsg","✅ তথ্য সফলভাবে সংরক্ষিত হয়েছে। পরবর্তী মাসগুলোর হিসাবও আপডেট হয়েছে।");
 
   el("editId").value="";
+  monthlyOpeningBalance=0;
+
   renderFields();
   loadRecords();
 
  }catch(error){
 
-  show(
-   "recordMsg",
-   "তথ্য সংরক্ষণ ব্যর্থ: "+error.message+
-   "। Storage upload permission পরীক্ষা করুন।"
-  );
+  show("recordMsg","তথ্য সংরক্ষণ ব্যর্থ: "+error.message);
 
  }
 }
 
-/* সংরক্ষিত তথ্য দেখানো */
+/* সংরক্ষিত তথ্য */
 async function loadRecords(){
 
  const section=el("filterSection").value;
@@ -1143,7 +1238,6 @@ async function loadRecords(){
  el("recordRows").innerHTML=(data||[]).map(r=>{
 
   const d=r.data||{};
-
   let summary="";
 
   if(section==="paymentRecords"){
@@ -1152,7 +1246,7 @@ async function loadRecords(){
     "মাস: "+monthLabel(d.month)+
     " | ধার্য: "+(d.assessed||0)+
     " | পরিশোধ: "+(d.paid||0)+
-    " | বকেয়া: "+(d.due||0);
+    " | মোট বকেয়া: "+(d.due||0);
 
   }else if(section==="financeRecords"){
 
@@ -1240,12 +1334,13 @@ async function editRecord(id){
   }
  }
 
+ if(["financeRecords","paymentRecords"].includes(data.section)){
+  await loadMonthlyOpeningBalance();
+ }
+
  updateCalculations();
 
- window.scrollTo({
-  top:0,
-  behavior:"smooth"
- });
+ window.scrollTo({top:0,behavior:"smooth"});
 }
 
 /* তথ্য মুছে ফেলা */
@@ -1253,14 +1348,31 @@ async function deleteRecord(id){
 
  if(!confirm("তথ্যটি মুছে ফেলবেন?"))return;
 
- const {error}=await db.from("app_data")
-  .delete()
-  .eq("id",id);
+ try{
 
- if(error){
-  alert(error.message);
- }else{
+  const {data,error:readError}=await db.from("app_data")
+   .select("section,area")
+   .eq("id",id)
+   .single();
+
+  if(readError)throw readError;
+
+  const {error}=await db.from("app_data")
+   .delete()
+   .eq("id",id);
+
+  if(error)throw error;
+
+  if(["financeRecords","paymentRecords"].includes(data.section)){
+   await recalculateMonthlyRecords(data.section,data.area);
+  }
+
   loadRecords();
+
+ }catch(error){
+
+  alert("মুছতে সমস্যা হয়েছে: "+error.message);
+
  }
 }
 
@@ -1395,7 +1507,7 @@ async function uploadLogo(){
    "logoMsg",
    notified
    ?"✅ লোগো আপলোড হয়েছে এবং মূল ওয়েবসাইটে আপডেটের বার্তা পাঠানো হয়েছে।"
-   :"✅ লোগো আপলোড হয়েছে। Realtime বার্তা পাঠানো যায়নি।"
+   :"✅ লোগো আপলোড হয়েছে।"
   );
 
   el("logoFile").value="";
@@ -1503,7 +1615,7 @@ async function uploadBackground(type){
    messageId,
    notified
    ?"✅ "+label+" ব্যাকগ্রাউন্ড আপলোড হয়েছে এবং মূল ওয়েবসাইটে আপডেটের বার্তা পাঠানো হয়েছে।"
-   :"✅ "+label+" ব্যাকগ্রাউন্ড আপলোড হয়েছে। Realtime বার্তা পাঠানো যায়নি।"
+   :"✅ "+label+" ব্যাকগ্রাউন্ড আপলোড হয়েছে।"
   );
 
   el(fileId).value="";
