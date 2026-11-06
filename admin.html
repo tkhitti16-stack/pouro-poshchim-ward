@@ -36,7 +36,29 @@ th,td{padding:10px;border-bottom:1px solid #ddd;text-align:left}
 th{background:#edf3f7}
 .smallbtn{padding:6px 9px;font-size:12px;margin:2px}
 .photo-preview{max-width:120px;max-height:120px;object-fit:cover;border-radius:9px;margin-top:10px;border:1px solid #ddd}
-@media(max-width:600px){.grid{grid-template-columns:1fr}.card{padding:13px}}
+.background-preview{
+width:100%;
+max-width:500px;
+height:160px;
+object-fit:cover;
+border-radius:10px;
+margin-top:12px;
+border:1px solid #ddd;
+display:block;
+background:#edf3f7;
+}
+.upload-info{
+background:#edf6f8;
+padding:12px;
+border-radius:8px;
+margin-top:12px;
+font-size:14px;
+line-height:1.7;
+}
+@media(max-width:600px){
+.grid{grid-template-columns:1fr}
+.card{padding:13px}
+}
 </style>
 </head>
 
@@ -51,8 +73,10 @@ th{background:#edf3f7}
 
 <div class="card" id="loginBox">
 <h3>অ্যাডমিন লগইন</h3>
+
 <label>ইমেইল</label>
 <input id="email" type="email">
+
 <label>পাসওয়ার্ড</label>
 <input id="password" type="password">
 
@@ -74,6 +98,7 @@ th{background:#edf3f7}
 <button class="active" onclick="openTab('records',this)">তথ্য ব্যবস্থাপনা</button>
 <button onclick="openTab('notices',this)">নোটিশ বোর্ড</button>
 <button onclick="openTab('logo',this)">লোগো আপলোড</button>
+<button onclick="openTab('backgrounds',this)">ব্যাকগ্রাউন্ড ছবি</button>
 </nav>
 
 <!-- তথ্য ব্যবস্থাপনা -->
@@ -198,6 +223,7 @@ th{background:#edf3f7}
 
 <!-- লোগো -->
 <div id="logo" class="tab hidden">
+
 <div class="card">
 <h3>ওয়েবসাইটের লোগো আপলোড</h3>
 <p>PNG অথবা JPG ছবি নির্বাচন করুন।</p>
@@ -213,6 +239,95 @@ th{background:#edf3f7}
 <p>Storage bucket: <b>site-assets</b></p>
 <p>Public bucket এবং অ্যাডমিনের upload/update policy প্রয়োজন।</p>
 </div>
+
+</div>
+
+<!-- ব্যাকগ্রাউন্ড ছবি -->
+<div id="backgrounds" class="tab hidden">
+
+<div class="card">
+<h3>ওয়েবসাইটের হেডার ব্যাকগ্রাউন্ড</h3>
+
+<p>ওয়েবসাইটের একদম উপরের অংশের ব্যাকগ্রাউন্ড ছবি এখানে আপলোড করুন।</p>
+
+<label>হেডার ব্যাকগ্রাউন্ড ছবি নির্বাচন করুন</label>
+
+<input
+type="file"
+id="headerBackgroundFile"
+accept="image/png,image/jpeg,image/webp"
+onchange="previewBackground('headerBackgroundFile','headerBackgroundPreview')"
+>
+
+<div id="headerBackgroundPreviewBox">
+<img
+id="headerBackgroundPreview"
+class="background-preview hidden"
+alt="হেডার ব্যাকগ্রাউন্ড প্রিভিউ"
+>
+</div>
+
+<div class="actions">
+<button class="success" onclick="uploadBackground('header')">
+হেডার ছবি আপলোড করুন
+</button>
+</div>
+
+<div id="headerBackgroundMsg" class="status hidden"></div>
+
+<div class="upload-info">
+<strong>Storage ফাইলের নাম:</strong> header-background<br>
+<strong>Storage bucket:</strong> site-assets
+</div>
+</div>
+
+<div class="card">
+<h3>কুরআনের আয়াতের ব্যাকগ্রাউন্ড</h3>
+
+<p>ওয়েবসাইটের কুরআনের আয়াত ও অর্থ প্রদর্শনের অংশের ব্যাকগ্রাউন্ড ছবি এখানে আপলোড করুন।</p>
+
+<label>আয়াতের ব্যাকগ্রাউন্ড ছবি নির্বাচন করুন</label>
+
+<input
+type="file"
+id="ayatBackgroundFile"
+accept="image/png,image/jpeg,image/webp"
+onchange="previewBackground('ayatBackgroundFile','ayatBackgroundPreview')"
+>
+
+<div id="ayatBackgroundPreviewBox">
+<img
+id="ayatBackgroundPreview"
+class="background-preview hidden"
+alt="আয়াতের ব্যাকগ্রাউন্ড প্রিভিউ"
+>
+</div>
+
+<div class="actions">
+<button class="success" onclick="uploadBackground('ayat')">
+আয়াতের ছবি আপলোড করুন
+</button>
+</div>
+
+<div id="ayatBackgroundMsg" class="status hidden"></div>
+
+<div class="upload-info">
+<strong>Storage ফাইলের নাম:</strong> ayat-background<br>
+<strong>Storage bucket:</strong> site-assets
+</div>
+</div>
+
+<div class="card">
+<h3>গুরুত্বপূর্ণ নির্দেশনা</h3>
+<p>
+১. হেডার ব্যাকগ্রাউন্ডের ছবি ওয়েবসাইটের উপরের অংশে দেখা যাবে।<br>
+২. আয়াতের ব্যাকগ্রাউন্ডের ছবি কুরআনের আয়াতের অংশে দেখা যাবে।<br>
+৩. নতুন ছবি আপলোড করলে আগের ছবিটি প্রতিস্থাপিত হবে।<br>
+৪. ছবি PNG, JPG অথবা WEBP ফরম্যাটে হতে হবে।<br>
+৫. ছবির সর্বোচ্চ সাইজ ৫ MB।
+</p>
+</div>
+
 </div>
 
 </div>
@@ -262,6 +377,112 @@ function loginMessage(msg){
 show("loginMsg",msg);
 }
 
+/* =====================================
+   SUPABASE REALTIME ASSET NOTIFICATION
+===================================== */
+
+let assetChannel=null;
+let assetChannelReady=null;
+
+function setupAssetChannel(){
+
+if(assetChannelReady){
+return assetChannelReady;
+}
+
+assetChannel=db.channel("site-assets-live");
+
+assetChannelReady=new Promise(resolve=>{
+
+let resolved=false;
+
+function finish(value){
+
+if(resolved)return;
+
+resolved=true;
+resolve(value);
+
+}
+
+assetChannel.subscribe(status=>{
+
+console.log("Asset channel status:",status);
+
+if(status==="SUBSCRIBED"){
+finish(true);
+}
+
+if(
+status==="CHANNEL_ERROR"||
+status==="TIMED_OUT"||
+status==="CLOSED"
+){
+finish(false);
+}
+
+});
+
+setTimeout(()=>{
+finish(false);
+},10000);
+
+});
+
+return assetChannelReady;
+
+}
+
+/* আপলোড করা ছবির পরিবর্তনের বার্তা পাঠানো */
+async function notifyAssetUpdated(path){
+
+try{
+
+const ready=await setupAssetChannel();
+
+if(!ready){
+
+console.warn("Realtime channel প্রস্তুত হয়নি।");
+
+return false;
+
+}
+
+const {error}=await assetChannel.send({
+
+type:"broadcast",
+
+event:"asset-updated",
+
+payload:{
+path:path,
+version:Date.now()
+}
+
+});
+
+if(error){
+
+console.error("Asset notification error:",error);
+
+return false;
+
+}
+
+console.log("Asset update notification sent:",path);
+
+return true;
+
+}catch(error){
+
+console.error("Asset notification failed:",error);
+
+return false;
+
+}
+
+}
+
 /* লগইন */
 async function login(){
 
@@ -295,11 +516,24 @@ el("userInfo").textContent=" লগইন: "+user.email;
 
 loadRecords();
 loadNotices();
+
+/* অ্যাডমিন লগইন হলে Realtime channel প্রস্তুত */
+setupAssetChannel();
+
 }
 
 async function logout(){
+
+if(assetChannel){
+await db.removeChannel(assetChannel);
+assetChannel=null;
+assetChannelReady=null;
+}
+
 await db.auth.signOut();
+
 location.reload();
+
 }
 
 async function checkLogin(){
@@ -342,6 +576,7 @@ x.classList.remove("active");
 btn.classList.add("active");
 
 if(id==="notices")loadNotices();
+
 }
 
 /* এলাকা */
@@ -384,6 +619,7 @@ y++;
 }
 
 return list;
+
 }
 
 /* ইনপুট ফিল্ড */
@@ -402,6 +638,7 @@ let input=options
 :`<input id="${id}" type="${type}">`;
 
 return `<div><label>${label}</label>${input}</div>`;
+
 }
 
 /* ছবি নির্বাচন */
@@ -423,6 +660,7 @@ onchange="previewPhoto()"
 <div id="photoPreviewBox"></div>
 </div>
 `;
+
 }
 
 /* ছবি প্রিভিউ */
@@ -439,6 +677,7 @@ alert("শুধু PNG, JPG অথবা WEBP ছবি নির্বাচ�
 el("f_photo_file").value="";
 
 return;
+
 }
 
 if(file.size>5*1024*1024){
@@ -448,6 +687,7 @@ alert("ছবির সাইজ ৫ MB-এর কম হতে হবে।");
 el("f_photo_file").value="";
 
 return;
+
 }
 
 let url=URL.createObjectURL(file);
@@ -617,12 +857,6 @@ data[key]=value;
 
 });
 
-/*
-গুরুত্বপূর্ণ সংশোধন:
-দায়িত্ব duty নামে সেভ হবে।
-responsibility ও role নামে সেভ হবে না।
-*/
-
 if(data.responsibility!==undefined){
 
 data.duty=data.responsibility;
@@ -689,7 +923,6 @@ let id=el("editId").value;
 
 try{
 
-/* নতুন ছবি থাকলে আপলোড */
 let photoInput=el("f_photo_file");
 
 if(photoInput && photoInput.files.length){
@@ -716,14 +949,16 @@ show("recordMsg","ছবি আপলোড হচ্ছে, অনুগ্র�
 
 data.photo=await uploadPersonPhoto(section,file);
 
+}else{
+
+let oldPhoto=el("f_photo");
+
+if(oldPhoto&&oldPhoto.value){
+data.photo=oldPhoto.value;
 }
 
-/*
-এখানে দায়িত্ব ইতোমধ্যে duty নামে রয়েছে।
-তাই role বা responsibility নামে আর সেভ করা হচ্ছে না।
-*/
+}
 
-/* Supabase-এ সংরক্ষণ */
 let query=id
 
 ?db.from("app_data").update({
@@ -845,13 +1080,8 @@ el("editId").value=id;
 
 let saved=data.data||{};
 
-/* সাধারণ তথ্য বসানো */
 Object.entries(saved).forEach(([key,value])=>{
 
-/*
-দায়িত্বের পুরোনো ও নতুন নাম আলাদাভাবে
-নিচে পরিচালনা করা হবে।
-*/
 if(["duty","role","responsibility","photo","phone"].includes(key)){
 return;
 }
@@ -869,7 +1099,6 @@ typeof value==="boolean"
 
 });
 
-/* দায়িত্বের তথ্য বসানো */
 let responsibilityInput=el("f_responsibility");
 
 if(responsibilityInput){
@@ -882,7 +1111,6 @@ saved.role ||
 
 }
 
-/* আগের ছবির URL ধরে রাখা */
 if(saved.photo){
 
 let photoInput=el("f_photo");
@@ -1079,6 +1307,18 @@ return;
 
 }
 
+if(file.size>5*1024*1024){
+
+show("logoMsg","ছবির সাইজ ৫ MB-এর বেশি হতে পারবে না।");
+
+return;
+
+}
+
+show("logoMsg","লোগো আপলোড হচ্ছে...");
+
+try{
+
 let {error}=await db.storage
 .from("site-assets")
 .upload("logo.png",file,{
@@ -1087,21 +1327,179 @@ contentType:file.type,
 cacheControl:"0"
 });
 
-if(error){
+if(error)throw error;
 
-show(
-"logoMsg",
-"আপলোড ব্যর্থ: "+error.message+"। Supabase Storage bucket ও policy পরীক্ষা করুন।"
-);
+/* মূল ওয়েবসাইটকে লোগো আপডেটের বার্তা */
+const notified=await notifyAssetUpdated("logo.png");
+
+if(notified){
+
+show("logoMsg","✅ লোগো সফলভাবে আপলোড হয়েছে। মূল ওয়েবসাইটে আপডেটের বার্তা পাঠানো হয়েছে।");
+
+}else{
+
+show("logoMsg","✅ লোগো আপলোড হয়েছে। Realtime বার্তা পাঠানো যায়নি; ওয়েবসাইটের স্বয়ংক্রিয় আপডেটে ছবিটি দেখা যাবে।");
+
+}
+
+el("logoFile").value="";
+
+}catch(error){
+
+show("logoMsg","আপলোড ব্যর্থ: "+error.message+"। Storage bucket ও policy পরীক্ষা করুন।");
+
+}
+
+}
+
+/* ব্যাকগ্রাউন্ড ছবির প্রিভিউ */
+function previewBackground(fileId,previewId){
+
+let file=el(fileId).files[0];
+
+let preview=el(previewId);
+
+if(!file){
+preview.classList.add("hidden");
+return;
+}
+
+if(!["image/png","image/jpeg","image/webp"].includes(file.type)){
+
+alert("শুধু PNG, JPG অথবা WEBP ছবি গ্রহণযোগ্য।");
+
+el(fileId).value="";
+preview.classList.add("hidden");
 
 return;
 
 }
 
-show("logoMsg","লোগো আপলোড সফল হয়েছে।");
+if(file.size>5*1024*1024){
+
+alert("ছবির সাইজ ৫ MB-এর বেশি হতে পারবে না।");
+
+el(fileId).value="";
+preview.classList.add("hidden");
+
+return;
 
 }
 
+if(preview.dataset.objectUrl){
+URL.revokeObjectURL(preview.dataset.objectUrl);
+}
+
+let url=URL.createObjectURL(file);
+
+preview.src=url;
+preview.dataset.objectUrl=url;
+preview.classList.remove("hidden");
+
+}
+
+/* হেডার ও আয়াতের ব্যাকগ্রাউন্ড আপলোড */
+async function uploadBackground(type){
+
+let fileId;
+let messageId;
+let storagePath;
+let label;
+
+if(type==="header"){
+
+fileId="headerBackgroundFile";
+messageId="headerBackgroundMsg";
+storagePath="header-background";
+label="হেডার";
+
+}else if(type==="ayat"){
+
+fileId="ayatBackgroundFile";
+messageId="ayatBackgroundMsg";
+storagePath="ayat-background";
+label="আয়াতের";
+
+}else{
+
+return;
+
+}
+
+let file=el(fileId).files[0];
+
+if(!file){
+
+show(messageId,"আগে একটি ছবি নির্বাচন করুন।");
+
+return;
+
+}
+
+if(!["image/png","image/jpeg","image/webp"].includes(file.type)){
+
+show(messageId,"শুধু PNG, JPG অথবা WEBP ছবি গ্রহণযোগ্য।");
+
+return;
+
+}
+
+if(file.size>5*1024*1024){
+
+show(messageId,"ছবির সাইজ ৫ MB-এর বেশি হতে পারবে না।");
+
+return;
+
+}
+
+show(messageId,label+" ব্যাকগ্রাউন্ড আপলোড হচ্ছে। অনুগ্রহ করে অপেক্ষা করুন...");
+
+try{
+
+let {error}=await db.storage
+.from("site-assets")
+.upload(storagePath,file,{
+upsert:true,
+contentType:file.type,
+cacheControl:"0"
+});
+
+if(error)throw error;
+
+/* মূল ওয়েবসাইটকে ছবি পরিবর্তনের বার্তা */
+const notified=await notifyAssetUpdated(storagePath);
+
+if(notified){
+
+show(
+messageId,
+"✅ "+label+" ব্যাকগ্রাউন্ড সফলভাবে আপলোড হয়েছে। মূল ওয়েবসাইটে আপডেটের বার্তা পাঠানো হয়েছে।"
+);
+
+}else{
+
+show(
+messageId,
+"✅ "+label+" ব্যাকগ্রাউন্ড আপলোড হয়েছে। Realtime বার্তা পাঠানো যায়নি; ওয়েবসাইটের স্বয়ংক্রিয় আপডেটে ছবিটি দেখা যাবে।"
+);
+
+}
+
+el(fileId).value="";
+
+}catch(error){
+
+show(
+messageId,
+"আপলোড ব্যর্থ: "+error.message+"। Storage bucket ও upload/update policy পরীক্ষা করুন।"
+);
+
+}
+
+}
+
+/* শুরু */
+renderFields();
 checkLogin();
 
 </script>
