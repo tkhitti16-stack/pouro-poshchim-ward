@@ -29,7 +29,6 @@ body{
  position:relative;
 }
 
-/* কাবা ঘরের জলছাপ */
 body:before{
  content:"";
  position:fixed;
@@ -43,12 +42,8 @@ body:before{
  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Cg fill='none' stroke='%23075c43' stroke-width='9' stroke-linejoin='round'%3E%3Cpath d='M105 170 L250 95 L395 170 L395 345 L250 425 L105 345 Z'/%3E%3Cpath d='M105 170 L250 250 L395 170 M250 250 V425 M105 345 L250 425 L395 345'/%3E%3Cpath d='M105 205 L250 285 L395 205' stroke-width='18'/%3E%3Cpath d='M105 230 L250 310 L395 230' stroke-width='5'/%3E%3Cpath d='M220 260 L280 292 L280 370 L220 338 Z' stroke-width='5'/%3E%3C/g%3E%3C/svg%3E");
 }
 
-body>*{
- position:relative;
- z-index:1;
-}
+body>*{position:relative;z-index:1}
 
-/* হেডার ব্যাকগ্রাউন্ড ছবি */
 header{
  background-color:var(--primary);
  background-image:
@@ -106,11 +101,6 @@ header h1{
  position:relative;
  z-index:2;
  filter:drop-shadow(0 5px 10px #0003);
-}
-
-.header-subtitle{
- position:relative;
- z-index:2;
 }
 
 .container{
@@ -175,9 +165,7 @@ h3{margin:12px 0}
  transition:.2s;
 }
 
-.menu-item:active{
- transform:scale(.97);
-}
+.menu-item:active{transform:scale(.97)}
 
 .menu-icon{
  width:65px;
@@ -191,10 +179,7 @@ h3{margin:12px 0}
  color:var(--primary);
 }
 
-.menu-item h3{
- font-size:15px;
- font-weight:600;
-}
+.menu-item h3{font-size:15px;font-weight:600}
 
 .notice{
  background:var(--soft);
@@ -217,11 +202,7 @@ th,td{
  text-align:center;
 }
 
-th{
- background:var(--soft);
- color:var(--primary);
-}
-
+th{background:var(--soft);color:var(--primary)}
 .table-wrap{overflow-x:auto}
 
 .timer{
@@ -234,12 +215,8 @@ th{
  box-shadow:0 4px 12px #00000012;
 }
 
-.timer strong{
- font-size:23px;
- color:#fff;
-}
+.timer strong{font-size:23px;color:#fff}
 
-/* কুরআনের আয়াতের ব্যাকগ্রাউন্ড ছবি */
 .quote{
  text-align:center;
  padding:24px 15px;
@@ -278,11 +255,7 @@ th{
  z-index:2;
 }
 
-#quoteText{
- position:relative;
- z-index:2;
- color:#fff;
-}
+#quoteText{position:relative;z-index:2;color:#fff}
 
 .settings-grid{
  display:grid;
@@ -300,9 +273,7 @@ th{
  font:inherit;
 }
 
-.theme-btn:active{
- transform:scale(.97);
-}
+.theme-btn:active{transform:scale(.97)}
 
 footer{
  text-align:center;
@@ -357,19 +328,9 @@ footer{
 }
 
 .rank-info{flex:1;min-width:0}
+.rank-points{font-size:19px;font-weight:bold;color:var(--primary);white-space:nowrap}
 
-.rank-points{
- font-size:19px;
- font-weight:bold;
- color:var(--primary);
- white-space:nowrap;
-}
-
-.loading{
- text-align:center;
- padding:18px;
- color:var(--primary);
-}
+.loading{text-align:center;padding:18px;color:var(--primary)}
 
 .subnav{
  display:grid;
@@ -387,26 +348,31 @@ footer{
  cursor:pointer;
 }
 
-.month-grid{
- display:grid;
- grid-template-columns:repeat(auto-fit,minmax(115px,1fr));
- gap:8px;
- margin-top:12px;
+.month-picker-wrap{
+ margin:14px 0;
 }
 
-.month-btn{
- padding:10px 6px;
- border:1px solid var(--border);
- background:var(--soft);
- border-radius:9px;
- color:var(--text);
- font:inherit;
- cursor:pointer;
-}
-
-.month-btn.active{
+.month-picker-btn{
+ width:100%;
+ padding:14px;
  background:var(--primary);
  color:white;
+ border:0;
+ border-radius:11px;
+ font:inherit;
+ font-size:17px;
+ cursor:pointer;
+ text-align:center;
+}
+
+.month-picker-btn:active{opacity:.85}
+
+.month-picker-input{
+ position:absolute;
+ width:1px;
+ height:1px;
+ opacity:0;
+ pointer-events:none;
 }
 
 .summary{
@@ -420,8 +386,9 @@ footer{
  background:var(--soft);
  border:1px solid var(--border);
  border-radius:12px;
- padding:13px;
+ padding:15px 10px;
  text-align:center;
+ line-height:1.8;
 }
 
 .summary b{
@@ -429,6 +396,7 @@ footer{
  font-size:20px;
  color:var(--primary);
  margin-top:5px;
+ overflow-wrap:anywhere;
 }
 
 .check-row{
@@ -466,7 +434,6 @@ select{
  .quote .arabic{font-size:22px}
 }
 </style>
-
 </head>
 
 <body>
@@ -475,7 +442,6 @@ select{
 <img id="logo" class="logo" alt="ওয়ার্ডের লোগো">
 <h1>পৌর সাংগঠনিক পশ্চিম ওয়ার্ড</h1>
 <h1>নীলফামারী</h1>
-<div class="header-subtitle">ঐক্য · শৃঙ্খলা · দায়িত্বশীলতা</div>
 </header>
 
 <div class="container">
@@ -671,6 +637,10 @@ function formatDate(v){
  return Number.isNaN(d.getTime())?esc(v):d.toLocaleDateString("bn-BD");
 }
 
+function money(v){
+ return Number(v||0).toLocaleString("bn-BD")+" টাকা";
+}
+
 function getSectionData(s){
  return appRecords.filter(r=>r.section===s).map(r=>({
  ...((r.data&&typeof r.data==="object")?r.data:{}),
@@ -706,12 +676,56 @@ function monthsFromNow(){
  const out=[];
  const now=new Date();
  let y=now.getFullYear(),m=now.getMonth()+1;
+
  while(y<2050||(y===2050&&m<=12)){
   out.push(y+"-"+String(m).padStart(2,"0"));
   m++;
   if(m===13){m=1;y++}
  }
+
  return out;
+}
+
+/* একটি বাটনে মাস ও সাল নির্বাচন */
+function monthPicker(prefix,key){
+ return `
+  <div class="month-picker-wrap">
+   <button type="button" class="month-picker-btn"
+    onclick="openMonthPicker('${prefix}')">
+    📅 ${monthText(key)} — মাস ও সাল নির্বাচন করুন
+   </button>
+   <input class="month-picker-input"
+    type="month"
+    id="${prefix}MonthInput"
+    value="${key}"
+    onchange="changeSelectedMonth('${prefix}',this.value)">
+  </div>
+ `;
+}
+
+function openMonthPicker(prefix){
+ const input=document.getElementById(prefix+"MonthInput");
+ if(!input)return;
+
+ if(input.showPicker){
+  input.showPicker();
+ }else{
+  input.click();
+ }
+}
+
+function changeSelectedMonth(prefix,value){
+ if(!value)return;
+
+ if(prefix==="payment"){
+  selectedPaymentMonth=value;
+  renderPayments();
+ }
+
+ if(prefix==="finance"){
+  selectedFinanceMonth=value;
+  renderFinance();
+ }
 }
 
 async function loadAppData(){
@@ -767,7 +781,6 @@ async function openPage(id){
  if(id==="program")renderPrograms();
  if(id==="payments")renderPayments();
  if(id==="finance")renderFinance();
- if(id==="notices")renderNotices();
  if(id==="usage")renderUsage();
  if(id==="project")renderProject();
  if(id==="student")renderStudents();
@@ -791,13 +804,15 @@ function renderNavigation(type){
   return;
  }
 
+ /* ওয়ার্ডের নিচে শুধু ওয়ার্ড সেক্রেটারিয়েট */
  if(type==="responsibility"&&area==="ওয়ার্ড"){
   box.innerHTML=`
    <button class="back" onclick="selectArea('responsibility','')">← আগের পেজ</button>
    <h3>ওয়ার্ড</h3>
    <div class="subnav">
-    <button onclick="selectArea('responsibility','ওয়ার্ড সেক্রেটারিয়েট')">👥<br>ওয়ার্ড সেক্রেটারিয়েট</button>
-    ${branches.map(a=>`<button onclick="selectArea('responsibility','${esc(a)}')">🕌<br>${esc(a)}</button>`).join("")}
+    <button onclick="selectArea('responsibility','ওয়ার্ড সেক্রেটারিয়েট')">
+     👥<br>ওয়ার্ড সেক্রেটারিয়েট
+    </button>
    </div>
   `;
   return;
@@ -827,7 +842,7 @@ function renderNavigation(type){
        <td>${esc(x.name)}</td>
        ${isSudhi?"":`
         <td>${esc(x.type||"—")}</td>
-        <td>${esc(x.duty||"—")}</td>
+        <td>${esc(x.duty||x.responsibility||"—")}</td>
         <td><button class="small-btn" onclick="showPersonDetails('${type}','${esc(area)}',${i})">দেখুন</button></td>
        `}
       </tr>
@@ -845,10 +860,11 @@ function selectArea(t,a){
 
 function showPersonDetails(t,a,i){
  const x=getAreaData(t,a)[i];
+
  if(x)alert(
   "নাম: "+(x.name||"—")+
   "\nমান: "+(x.type||"—")+
-  "\nদায়িত্ব: "+(x.duty||"—")+
+  "\nদায়িত্ব: "+(x.duty||x.responsibility||"—")+
   "\nবিস্তারিত: "+(x.details||"—")
  );
 }
@@ -947,7 +963,7 @@ function renderPrograms(){
   </div>
   <h3>${monthText(key)}</h3>
   ${list.map(name=>{
-   const rows=data.filter(x=>(x.programName||x.name)===name);
+   const rows=data.filter(x=>(x.programName||x.name||x.program)===name);
    const done=rows.some(x=>x.completed===true||x.completed==="true"||x.completed==="হ্যাঁ");
 
    return `<div class="notice"><b>${esc(name)}</b><br><span>${done?"✅ বাস্তবায়িত":"বাস্তবায়নের তথ্য নেই"}</span></div>`;
@@ -961,6 +977,9 @@ function chooseProgramArea(a){
  selectedProgramMonth=currentMonthKey();
  renderPrograms();
 }
+
+/* উর্ধ্বতন */
+let selectedPaymentArea="",selectedPaymentMonth=currentMonthKey();
 
 function renderPayments(){
  const box=document.getElementById("paymentList");
@@ -976,29 +995,38 @@ function renderPayments(){
  }
 
  const key=selectedPaymentMonth;
- const data=getAreaData("paymentRecords",selectedPaymentArea).filter(x=>rowMonth(x)===key);
+
+ const data=getAreaData("paymentRecords",selectedPaymentArea)
+  .filter(x=>rowMonth(x)===key);
+
+ const assessed=data.reduce((s,x)=>s+Number(x.assessed??x.amount??0),0);
+ const paid=data.reduce((s,x)=>s+Number(x.paid??0),0);
+
+ /* বকেয়া: ধার্যকৃত - পরিশোধ */
+ const due=Math.max(0,assessed-paid);
 
  box.innerHTML=`
   <button class="back" onclick="selectedPaymentArea='';renderPayments()">← আগের পেজ</button>
+
   <h3>${esc(selectedPaymentArea)} — উর্ধ্বতন</h3>
-  <div class="month-grid">
-   ${monthsFromNow().map(m=>`
-    <button class="month-btn ${m===key?"active":""}" onclick="selectedPaymentMonth='${m}';renderPayments()">${monthText(m)}</button>
-   `).join("")}
-  </div>
+
+  ${monthPicker("payment",key)}
+
   <h3>${monthText(key)}</h3>
-  ${data.map(x=>`
-   <div class="notice">
-    ধার্যকৃত: ${Number(x.assessed??x.amount??0).toLocaleString("bn-BD")} টাকা<br>
-    পরিশোধ: ${Number(x.paid??0).toLocaleString("bn-BD")} টাকা<br>
-    বকেয়া: ${Number(x.due??Math.max(0,Number(x.assessed??x.amount??0)-Number(x.paid??0))).toLocaleString("bn-BD")} টাকা
-    ${x.timely?"<br>সময়মতো জমা":""}
-   </div>
-  `).join("")||"এই মাসের কোনো তথ্য নেই"}
+
+  <div class="summary">
+   <div>ধার্যকৃত<b>${money(assessed)}</b></div>
+   <div>পরিশোধ<b>${money(paid)}</b></div>
+   <div>বকেয়া<b>${money(due)}</b></div>
+  </div>
+
+  ${data.map(x=>x.details?`
+   <div class="notice">${esc(x.details)}</div>
+  `:"").join("")}
+
+  ${data.length?"":"<div class='notice'>এই মাসের কোনো তথ্য নেই।</div>"}
  `;
 }
-
-let selectedPaymentArea="",selectedPaymentMonth=currentMonthKey();
 
 function choosePaymentArea(a){
  selectedPaymentArea=a;
@@ -1006,6 +1034,7 @@ function choosePaymentArea(a){
  renderPayments();
 }
 
+/* বাইতুল মাল */
 let selectedFinanceArea="",selectedFinanceMonth=currentMonthKey();
 
 function renderFinance(){
@@ -1022,36 +1051,107 @@ function renderFinance(){
  }
 
  const key=selectedFinanceMonth;
- const data=getAreaData("financeRecords",selectedFinanceArea).filter(x=>rowMonth(x)===key);
 
- const income=data.filter(x=>x.type==="আয়").reduce((s,x)=>s+Number(x.amount||0),0);
- const expense=data.filter(x=>x.type==="ব্যয়").reduce((s,x)=>s+Number(x.amount||0),0);
+ const data=getAreaData("financeRecords",selectedFinanceArea)
+  .filter(x=>rowMonth(x)===key);
+
+ /*
+  নতুন অ্যাডমিন প্যানেলের নির্ধারিত ফিল্ড:
+  monthlyCollection
+  studentWelfare
+  branchHigherCollected
+  higherPaid
+  currentAmount
+
+  পুরোনো তথ্য থাকলেও প্রদর্শনের জন্য fallback রাখা হয়েছে।
+ */
+
+ const total=(field,legacyType=null,legacySource=null)=>{
+  const modern=data.reduce((s,x)=>s+Number(x[field]||0),0);
+
+  if(modern!==0)return modern;
+
+  if(legacyType){
+   return data.filter(x=>
+    x.type===legacyType&&
+    (!legacySource||x.source===legacySource)
+   ).reduce((s,x)=>s+Number(x.amount||0),0);
+  }
+
+  return 0;
+ };
+
+ const monthlyCollection=total(
+  "monthlyCollection","আয়","এয়ানত"
+ );
+
+ const studentWelfare=total(
+  "studentWelfare","আয়","ছাত্রকল্যাণ"
+ );
+
+ const branchHigherCollected=total(
+  "branchHigherCollected"
+ );
+
+ const higherPaid=total(
+  "higherPaid","ব্যয়","ঊর্ধ্বতন"
+ );
+
+ const currentAmount=total("currentAmount");
+
+ const isWard=selectedFinanceArea==="ওয়ার্ড";
 
  box.innerHTML=`
   <button class="back" onclick="selectedFinanceArea='';renderFinance()">← আগের পেজ</button>
+
   <h3>${esc(selectedFinanceArea)} — বাইতুল মাল</h3>
-  <div class="month-grid">
-   ${monthsFromNow().map(m=>`
-    <button class="month-btn ${m===key?"active":""}" onclick="selectedFinanceMonth='${m}';renderFinance()">${monthText(m)}</button>
-   `).join("")}
-  </div>
+
+  ${monthPicker("finance",key)}
+
   <h3>${monthText(key)}</h3>
+
   <div class="summary">
-   <div>মোট আয়<b>${income.toLocaleString("bn-BD")} টাকা</b></div>
-   <div>মোট ব্যয়<b>${expense.toLocaleString("bn-BD")} টাকা</b></div>
-   <div>অবশিষ্ট<b>${(income-expense).toLocaleString("bn-BD")} টাকা</b></div>
-  </div>
-  <h3>আয়ের উৎস</h3>
-  <p>এয়ানত · ছাত্রকল্যাণ</p>
-  <h3>ব্যয়ের উৎস</h3>
-  <p>উর্ধ্বতন · অন্যান্য</p>
-  <div class="notice">জমার ধরন: সিঙ্গেল অথবা যৌথ।</div>
-  ${data.map(x=>`
-   <div class="notice">
-    ${esc(x.source||x.name||"—")} — ${esc(x.type||"")} — ${Number(x.amount||0).toLocaleString("bn-BD")} টাকা<br>
-    ${esc(x.mode||"")} ${x.date?"— "+formatDate(x.date):""}
+
+   <div>
+    মাসিক কালেকশন
+    <b>${money(monthlyCollection)}</b>
    </div>
-  `).join("")||"এই মাসের কোনো হিসাব নেই"}
+
+   ${isWard?`
+    <div>
+     উপশাখা থেকে ঊর্ধ্বতন আদায়
+     <b>${money(branchHigherCollected)}</b>
+    </div>
+    <div>
+     ঊর্ধ্বতন পরিশোধ
+     <b>${money(higherPaid)}</b>
+    </div>
+    <div>
+     বর্তমান অর্থের পরিমাণ
+     <b>${money(currentAmount)}</b>
+    </div>
+   `:`
+    <div>
+     ছাত্রকল্যাণ
+     <b>${money(studentWelfare)}</b>
+    </div>
+    <div>
+     ঊর্ধ্বতন পরিশোধ
+     <b>${money(higherPaid)}</b>
+    </div>
+    <div>
+     বর্তমান অর্থের পরিমাণ
+     <b>${money(currentAmount)}</b>
+    </div>
+   `}
+
+  </div>
+
+  ${data.map(x=>x.details?`
+   <div class="notice">${esc(x.details)}</div>
+  `:"").join("")}
+
+  ${data.length?"":"<div class='notice'>এই মাসের কোনো হিসাব নেই।</div>"}
  `;
 }
 
@@ -1136,7 +1236,9 @@ async function renderNotices(){
 }
 
 function showSyllabus(type){
- const d=getSectionData("syllabus").filter(x=>x.type===type);
+ const d=getSectionData("syllabus").filter(x=>
+  x.type===type||x.category===type
+ );
 
  document.getElementById("syllabusContent").innerHTML=`
   <h3>${esc(type)} সিলেবাস</h3>
@@ -1144,6 +1246,7 @@ function showSyllabus(type){
    <div class="notice">
     <b>${esc(x.name)}</b>
     ${x.details?"<br>"+esc(x.details):""}
+    ${x.url?`<br><a href="${esc(x.url)}" target="_blank">বই / PDF দেখুন</a>`:""}
    </div>
   `).join("")||"কোনো সিলেবাস যোগ করা হয়নি।"}
  `;
@@ -1191,14 +1294,14 @@ let qi=0;
 
 function rotateQuote(){
  const q=quotes[qi];
- const box=document.getElementById("quoteText");
 
- box.innerHTML=`
+ document.getElementById("quoteText").innerHTML=`
   <div class="arabic">${esc(q[0])}</div>
   <div>${esc(q[1])}</div>
  `;
 
  document.getElementById("quoteSource").textContent=q[2];
+
  qi=(qi+1)%quotes.length;
 }
 
@@ -1411,9 +1514,7 @@ function getAssetUrl(path){
  return data.publicUrl+"?v="+Date.now();
 }
 
-/* হেডার ব্যাকগ্রাউন্ড লোড */
 async function loadHeaderBackground(){
-
  try{
   const url=getAssetUrl("header-background");
 
@@ -1423,15 +1524,12 @@ async function loadHeaderBackground(){
     `url("${url}")`
    );
   }
-
  }catch(e){
   console.error("Header background load error:",e);
  }
 }
 
-/* কুরআনের আয়াতের ব্যাকগ্রাউন্ড লোড */
 async function loadQuoteBackground(){
-
  try{
   const url=getAssetUrl("ayat-background");
 
@@ -1441,15 +1539,12 @@ async function loadQuoteBackground(){
     `url("${url}")`
    );
   }
-
  }catch(e){
   console.error("Quote background load error:",e);
  }
 }
 
-/* লোগো লোড */
 async function loadLogo(){
-
  const img=document.getElementById("logo");
 
  try{
@@ -1467,39 +1562,20 @@ async function loadLogo(){
  }
 }
 
-/* অ্যাডমিন থেকে ছবি আপলোড হলে তাৎক্ষণিক আপডেট */
 function subscribeAssetUpdates(){
-
  supabaseClient
  .channel("site-assets-live")
  .on("broadcast",{event:"asset-updated"},async(payload)=>{
-
   const path=payload.payload?.path;
 
-  console.log("নতুন ছবি আপলোডের বার্তা:",path);
-
-  if(path==="header-background"){
-   await loadHeaderBackground();
-  }
-
-  if(path==="ayat-background"){
-   await loadQuoteBackground();
-  }
-
-  if(path==="logo.png"){
-   await loadLogo();
-  }
-
+  if(path==="header-background")await loadHeaderBackground();
+  if(path==="ayat-background")await loadQuoteBackground();
+  if(path==="logo.png")await loadLogo();
  })
- .subscribe((status)=>{
-  console.log("Asset realtime status:",status);
- });
-
+ .subscribe();
 }
 
-/* ওয়েবসাইট চালু */
 async function initialize(){
-
  makeThemes();
 
  const shape=localStorage.getItem("menuShape");
@@ -1520,9 +1596,7 @@ async function initialize(){
  subscribeAssetUpdates();
 }
 
-/* নিয়মিত আপডেট পরীক্ষা */
 setInterval(async()=>{
-
  await loadAppData();
 
  if(document.querySelector(".page.active")?.id==="home"){
@@ -1535,9 +1609,7 @@ setInterval(async()=>{
 
 },30000);
 
-/* Supabase Realtime: তথ্য ও নোটিশ */
 try{
-
  supabaseClient.channel("public-app-data-changes")
  .on("postgres_changes",{
   event:"*",schema:"public",table:"app_data"
