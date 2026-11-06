@@ -29,35 +29,24 @@ nav{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:15px}
 nav button{background:#e1ebf1;color:#123}
 nav button.active{background:#102a43;color:white}
 .hidden{display:none!important}
-.status{padding:10px;background:#eaf4f8;border-radius:8px;margin-top:10px}
+.status{padding:10px;background:#eaf4f8;border-radius:8px;margin-top:10px;white-space:pre-wrap}
 .tablewrap{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:14px}
-th,td{padding:10px;border-bottom:1px solid #ddd;text-align:left}
+th,td{padding:10px;border-bottom:1px solid #ddd;text-align:left;vertical-align:middle}
 th{background:#edf3f7}
 .smallbtn{padding:6px 9px;font-size:12px;margin:2px}
 .photo-preview{max-width:120px;max-height:120px;object-fit:cover;border-radius:9px;margin-top:10px;border:1px solid #ddd}
-.background-preview{
-width:100%;
-max-width:500px;
-height:160px;
-object-fit:cover;
-border-radius:10px;
-margin-top:12px;
-border:1px solid #ddd;
-display:block;
-background:#edf3f7;
-}
-.upload-info{
-background:#edf6f8;
-padding:12px;
-border-radius:8px;
-margin-top:12px;
-font-size:14px;
-line-height:1.7;
-}
+.background-preview{width:100%;max-width:500px;height:160px;object-fit:cover;border-radius:10px;margin-top:12px;border:1px solid #ddd;display:block;background:#edf3f7}
+.upload-info{background:#edf6f8;padding:12px;border-radius:8px;margin-top:12px;font-size:14px;line-height:1.7}
+.month-box{background:#edf6f8;padding:13px;border-radius:10px;margin:12px 0}
+.month-box input{background:white}
+.calculated{background:#e7f6ed;border:1px solid #b9dfc6;padding:13px;border-radius:9px;margin-top:12px;line-height:1.9}
+.calculated strong{font-size:20px;color:#087443}
+.help{font-size:13px;color:#526575;margin-top:5px;line-height:1.6}
 @media(max-width:600px){
 .grid{grid-template-columns:1fr}
 .card{padding:13px}
+header h2{font-size:21px}
 }
 </style>
 </head>
@@ -223,7 +212,6 @@ line-height:1.7;
 
 <!-- লোগো -->
 <div id="logo" class="tab hidden">
-
 <div class="card">
 <h3>ওয়েবসাইটের লোগো আপলোড</h3>
 <p>PNG অথবা JPG ছবি নির্বাচন করুন।</p>
@@ -239,7 +227,6 @@ line-height:1.7;
 <p>Storage bucket: <b>site-assets</b></p>
 <p>Public bucket এবং অ্যাডমিনের upload/update policy প্রয়োজন।</p>
 </div>
-
 </div>
 
 <!-- ব্যাকগ্রাউন্ড ছবি -->
@@ -247,30 +234,18 @@ line-height:1.7;
 
 <div class="card">
 <h3>ওয়েবসাইটের হেডার ব্যাকগ্রাউন্ড</h3>
-
 <p>ওয়েবসাইটের একদম উপরের অংশের ব্যাকগ্রাউন্ড ছবি এখানে আপলোড করুন।</p>
 
 <label>হেডার ব্যাকগ্রাউন্ড ছবি নির্বাচন করুন</label>
 
-<input
-type="file"
-id="headerBackgroundFile"
+<input type="file" id="headerBackgroundFile"
 accept="image/png,image/jpeg,image/webp"
-onchange="previewBackground('headerBackgroundFile','headerBackgroundPreview')"
->
+onchange="previewBackground('headerBackgroundFile','headerBackgroundPreview')">
 
-<div id="headerBackgroundPreviewBox">
-<img
-id="headerBackgroundPreview"
-class="background-preview hidden"
-alt="হেডার ব্যাকগ্রাউন্ড প্রিভিউ"
->
-</div>
+<img id="headerBackgroundPreview" class="background-preview hidden" alt="হেডার প্রিভিউ">
 
 <div class="actions">
-<button class="success" onclick="uploadBackground('header')">
-হেডার ছবি আপলোড করুন
-</button>
+<button class="success" onclick="uploadBackground('header')">হেডার ছবি আপলোড করুন</button>
 </div>
 
 <div id="headerBackgroundMsg" class="status hidden"></div>
@@ -283,30 +258,18 @@ alt="হেডার ব্যাকগ্রাউন্ড প্রিভি�
 
 <div class="card">
 <h3>কুরআনের আয়াতের ব্যাকগ্রাউন্ড</h3>
-
 <p>ওয়েবসাইটের কুরআনের আয়াত ও অর্থ প্রদর্শনের অংশের ব্যাকগ্রাউন্ড ছবি এখানে আপলোড করুন।</p>
 
 <label>আয়াতের ব্যাকগ্রাউন্ড ছবি নির্বাচন করুন</label>
 
-<input
-type="file"
-id="ayatBackgroundFile"
+<input type="file" id="ayatBackgroundFile"
 accept="image/png,image/jpeg,image/webp"
-onchange="previewBackground('ayatBackgroundFile','ayatBackgroundPreview')"
->
+onchange="previewBackground('ayatBackgroundFile','ayatBackgroundPreview')">
 
-<div id="ayatBackgroundPreviewBox">
-<img
-id="ayatBackgroundPreview"
-class="background-preview hidden"
-alt="আয়াতের ব্যাকগ্রাউন্ড প্রিভিউ"
->
-</div>
+<img id="ayatBackgroundPreview" class="background-preview hidden" alt="আয়াতের প্রিভিউ">
 
 <div class="actions">
-<button class="success" onclick="uploadBackground('ayat')">
-আয়াতের ছবি আপলোড করুন
-</button>
+<button class="success" onclick="uploadBackground('ayat')">আয়াতের ছবি আপলোড করুন</button>
 </div>
 
 <div id="ayatBackgroundMsg" class="status hidden"></div>
@@ -334,1168 +297,1222 @@ alt="আয়াতের ব্যাকগ্রাউন্ড প্রিভ�
 </div>
 
 <script>
+"use strict";
 
 const SUPABASE_URL="https://domfcgqrkmczrqvlnbwu.supabase.co";
 const SUPABASE_ANON_KEY="sb_publishable_V8v-tk6GjH7n9ihmC-NgGg_1Q--MKK2";
 const ADMIN_EMAIL="tkhitti16@gmail.com";
 
 const db=window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_ANON_KEY
+ SUPABASE_URL,
+ SUPABASE_ANON_KEY
 );
 
 const branches=[
-"বাজার উপশাখা",
-"আলিয়া উপশাখা",
-"মেলারডাঙ্গা উপশাখা",
-"এলএসডি উপশাখা",
-"গাছবাড়ি উপশাখা"
+ "বাজার উপশাখা",
+ "আলিয়া উপশাখা",
+ "মেলারডাঙ্গা উপশাখা",
+ "এলএসডি উপশাখা",
+ "গাছবাড়ি উপশাখা"
 ];
 
 const areas=["ওয়ার্ড",...branches];
 
+const monthNames=[
+ "জানুয়ারি","ফেব্রুয়ারি","মার্চ","এপ্রিল","মে","জুন",
+ "জুলাই","আগস্ট","সেপ্টেম্বর","অক্টোবর","নভেম্বর","ডিসেম্বর"
+];
+
 function el(id){
-return document.getElementById(id);
+ return document.getElementById(id);
 }
 
 function escapeHTML(value){
-return String(value??"").replace(/[&<>"']/g,c=>({
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#39;"
-}[c]));
+ return String(value??"").replace(/[&<>"']/g,c=>({
+  "&":"&amp;",
+  "<":"&lt;",
+  ">":"&gt;",
+  '"':"&quot;",
+  "'":"&#39;"
+ }[c]));
 }
 
 function show(id,msg){
-el(id).textContent=msg;
-el(id).classList.remove("hidden");
+ el(id).textContent=msg;
+ el(id).classList.remove("hidden");
+}
+
+function hide(id){
+ el(id).classList.add("hidden");
 }
 
 function loginMessage(msg){
-show("loginMsg",msg);
+ show("loginMsg",msg);
 }
 
-/* =====================================
-   SUPABASE REALTIME ASSET NOTIFICATION
-===================================== */
+/* বর্তমান মাস */
+function currentMonth(){
+ const d=new Date();
+ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");
+}
 
+function monthLabel(value){
+ if(!value)return "";
+
+ const [y,m]=value.split("-").map(Number);
+
+ return monthNames[m-1]+" "+y;
+}
+
+function getMonthInput(){
+ return `
+  <div class="month-box" style="grid-column:1/-1">
+   <label>মাস ও সাল নির্বাচন করুন</label>
+   <input type="month" id="f_month" value="${currentMonth()}" onchange="updateCalculations()">
+   <div class="help">এখানে শুধু মাস ও সাল নির্বাচন করবেন। দিনের তারিখ নির্বাচন করতে হবে না।</div>
+  </div>
+ `;
+}
+
+/* Realtime asset notification */
 let assetChannel=null;
 let assetChannelReady=null;
 
 function setupAssetChannel(){
 
-if(assetChannelReady){
-return assetChannelReady;
+ if(assetChannelReady)return assetChannelReady;
+
+ assetChannel=db.channel("site-assets-live");
+
+ assetChannelReady=new Promise(resolve=>{
+
+  let resolved=false;
+
+  function finish(value){
+   if(resolved)return;
+   resolved=true;
+   resolve(value);
+  }
+
+  assetChannel.subscribe(status=>{
+
+   if(status==="SUBSCRIBED")finish(true);
+
+   if(
+    status==="CHANNEL_ERROR"||
+    status==="TIMED_OUT"||
+    status==="CLOSED"
+   )finish(false);
+
+  });
+
+  setTimeout(()=>finish(false),10000);
+
+ });
+
+ return assetChannelReady;
 }
 
-assetChannel=db.channel("site-assets-live");
-
-assetChannelReady=new Promise(resolve=>{
-
-let resolved=false;
-
-function finish(value){
-
-if(resolved)return;
-
-resolved=true;
-resolve(value);
-
-}
-
-assetChannel.subscribe(status=>{
-
-console.log("Asset channel status:",status);
-
-if(status==="SUBSCRIBED"){
-finish(true);
-}
-
-if(
-status==="CHANNEL_ERROR"||
-status==="TIMED_OUT"||
-status==="CLOSED"
-){
-finish(false);
-}
-
-});
-
-setTimeout(()=>{
-finish(false);
-},10000);
-
-});
-
-return assetChannelReady;
-
-}
-
-/* আপলোড করা ছবির পরিবর্তনের বার্তা পাঠানো */
 async function notifyAssetUpdated(path){
 
-try{
+ try{
 
-const ready=await setupAssetChannel();
+  const ready=await setupAssetChannel();
 
-if(!ready){
+  if(!ready)return false;
 
-console.warn("Realtime channel প্রস্তুত হয়নি।");
+  const {error}=await assetChannel.send({
+   type:"broadcast",
+   event:"asset-updated",
+   payload:{
+    path:path,
+    version:Date.now()
+   }
+  });
 
-return false;
+  if(error)return false;
 
-}
+  return true;
 
-const {error}=await assetChannel.send({
-
-type:"broadcast",
-
-event:"asset-updated",
-
-payload:{
-path:path,
-version:Date.now()
-}
-
-});
-
-if(error){
-
-console.error("Asset notification error:",error);
-
-return false;
-
-}
-
-console.log("Asset update notification sent:",path);
-
-return true;
-
-}catch(error){
-
-console.error("Asset notification failed:",error);
-
-return false;
-
-}
-
+ }catch(error){
+  console.error(error);
+  return false;
+ }
 }
 
 /* লগইন */
 async function login(){
 
-let email=el("email").value.trim();
-let password=el("password").value;
+ const email=el("email").value.trim();
+ const password=el("password").value;
 
-let {data,error}=await db.auth.signInWithPassword({
-email,password
-});
+ if(!email||!password){
+  loginMessage("ইমেইল ও পাসওয়ার্ড লিখুন।");
+  return;
+ }
 
-if(error){
-loginMessage("লগইন ব্যর্থ: "+error.message);
-return;
-}
+ const {data,error}=await db.auth.signInWithPassword({
+  email,password
+ });
 
-if(data.user.email.toLowerCase()!==ADMIN_EMAIL){
-await db.auth.signOut();
-loginMessage("আপনার অ্যাডমিন অনুমতি নেই।");
-return;
-}
+ if(error){
+  loginMessage("লগইন ব্যর্থ: "+error.message);
+  return;
+ }
 
-openDashboard(data.user);
+ if(data.user.email.toLowerCase()!==ADMIN_EMAIL.toLowerCase()){
+  await db.auth.signOut();
+  loginMessage("আপনার অ্যাডমিন অনুমতি নেই।");
+  return;
+ }
+
+ openDashboard(data.user);
 }
 
 function openDashboard(user){
 
-el("loginBox").classList.add("hidden");
-el("dashboard").classList.remove("hidden");
+ el("loginBox").classList.add("hidden");
+ el("dashboard").classList.remove("hidden");
 
-el("userInfo").textContent=" লগইন: "+user.email;
+ el("userInfo").textContent=" লগইন: "+user.email;
 
-loadRecords();
-loadNotices();
-
-/* অ্যাডমিন লগইন হলে Realtime channel প্রস্তুত */
-setupAssetChannel();
-
+ loadRecords();
+ loadNotices();
+ setupAssetChannel();
 }
 
 async function logout(){
 
-if(assetChannel){
-await db.removeChannel(assetChannel);
-assetChannel=null;
-assetChannelReady=null;
-}
+ if(assetChannel){
+  await db.removeChannel(assetChannel);
+  assetChannel=null;
+  assetChannelReady=null;
+ }
 
-await db.auth.signOut();
-
-location.reload();
-
+ await db.auth.signOut();
+ location.reload();
 }
 
 async function checkLogin(){
 
-let {data:{session}}=await db.auth.getSession();
+ const {data:{session}}=await db.auth.getSession();
 
-if(session){
+ if(session){
 
-if(session.user.email.toLowerCase()===ADMIN_EMAIL){
-openDashboard(session.user);
-}else{
-await db.auth.signOut();
+  if(session.user.email.toLowerCase()===ADMIN_EMAIL.toLowerCase()){
+   openDashboard(session.user);
+  }else{
+   await db.auth.signOut();
+  }
+ }
 }
 
-}
-}
-
-db.auth.onAuthStateChange((event)=>{
-
-if(event==="SIGNED_OUT"){
-el("dashboard").classList.add("hidden");
-el("loginBox").classList.remove("hidden");
-}
-
+db.auth.onAuthStateChange(event=>{
+ if(event==="SIGNED_OUT"){
+  el("dashboard").classList.add("hidden");
+  el("loginBox").classList.remove("hidden");
+ }
 });
 
 /* ট্যাব */
 function openTab(id,btn){
 
-document.querySelectorAll(".tab").forEach(x=>{
-x.classList.add("hidden");
-});
+ document.querySelectorAll(".tab").forEach(x=>{
+  x.classList.add("hidden");
+ });
 
-el(id).classList.remove("hidden");
+ el(id).classList.remove("hidden");
 
-document.querySelectorAll("nav button").forEach(x=>{
-x.classList.remove("active");
-});
+ document.querySelectorAll("nav button").forEach(x=>{
+  x.classList.remove("active");
+ });
 
-btn.classList.add("active");
+ btn.classList.add("active");
 
-if(id==="notices")loadNotices();
-
+ if(id==="notices")loadNotices();
 }
 
 /* এলাকা */
 function fillAreas(){
 
-el("area").innerHTML=areas.map(x=>
-`<option value="${escapeHTML(x)}">${escapeHTML(x)}</option>`
-).join("");
+ el("area").innerHTML=areas.map(x=>
+  `<option value="${escapeHTML(x)}">${escapeHTML(x)}</option>`
+ ).join("");
 
-el("filterArea").innerHTML=
-'<option value="">সব এলাকা</option>'+
-areas.map(x=>
-`<option value="${escapeHTML(x)}">${escapeHTML(x)}</option>`
-).join("");
-
+ el("filterArea").innerHTML=
+  '<option value="">সব এলাকা</option>'+
+  areas.map(x=>
+   `<option value="${escapeHTML(x)}">${escapeHTML(x)}</option>`
+  ).join("");
 }
 
 fillAreas();
 
-/* মাস */
-function months(){
-
-let list=[];
-let d=new Date();
-
-let y=d.getFullYear();
-let m=d.getMonth()+1;
-
-while(y<=2050){
-
-list.push(y+"-"+String(m).padStart(2,"0"));
-
-m++;
-
-if(m===13){
-m=1;
-y++;
-}
-
-}
-
-return list;
-
-}
-
 /* ইনপুট ফিল্ড */
 function inputField(label,key,type="text",options=null){
 
-let id="f_"+key;
+ const id="f_"+key;
 
-let input=options
-?`<select id="${id}">${options.map(x=>
-`<option value="${escapeHTML(x)}">${escapeHTML(x)}</option>`
-).join("")}</select>`
+ const input=options
+ ?`<select id="${id}" onchange="updateCalculations()">
+   ${options.map(x=>
+    `<option value="${escapeHTML(x)}">${escapeHTML(x)}</option>`
+   ).join("")}
+  </select>`
 
-:type==="textarea"
-?`<textarea id="${id}"></textarea>`
+ :type==="textarea"
+ ?`<textarea id="${id}"></textarea>`
 
-:`<input id="${id}" type="${type}">`;
+ :`<input id="${id}" type="${type}" ${type==="number"?'min="0" step="0.01"':''} oninput="updateCalculations()">`;
 
-return `<div><label>${label}</label>${input}</div>`;
-
+ return `<div><label>${label}</label>${input}</div>`;
 }
 
 /* ছবি নির্বাচন */
 function photoField(){
 
-return `
-<div>
-<label>ছবি নির্বাচন করুন</label>
-
-<input
-type="file"
-id="f_photo_file"
-accept="image/png,image/jpeg,image/webp"
-onchange="previewPhoto()"
->
-
-<input type="hidden" id="f_photo">
-
-<div id="photoPreviewBox"></div>
-</div>
-`;
-
+ return `
+ <div>
+  <label>ছবি নির্বাচন করুন</label>
+  <input type="file" id="f_photo_file" accept="image/png,image/jpeg,image/webp" onchange="previewPhoto()">
+  <input type="hidden" id="f_photo">
+  <div id="photoPreviewBox"></div>
+ </div>
+ `;
 }
 
-/* ছবি প্রিভিউ */
 function previewPhoto(){
 
-let file=el("f_photo_file").files[0];
+ const file=el("f_photo_file").files[0];
 
-if(!file)return;
+ if(!file)return;
 
-if(!["image/png","image/jpeg","image/webp"].includes(file.type)){
+ if(!["image/png","image/jpeg","image/webp"].includes(file.type)){
+  alert("শুধু PNG, JPG অথবা WEBP ছবি নির্বাচন করুন।");
+  el("f_photo_file").value="";
+  return;
+ }
 
-alert("শুধু PNG, JPG অথবা WEBP ছবি নির্বাচন করুন।");
+ if(file.size>5*1024*1024){
+  alert("ছবির সাইজ ৫ MB-এর কম হতে হবে।");
+  el("f_photo_file").value="";
+  return;
+ }
 
-el("f_photo_file").value="";
+ const url=URL.createObjectURL(file);
 
-return;
-
-}
-
-if(file.size>5*1024*1024){
-
-alert("ছবির সাইজ ৫ MB-এর কম হতে হবে।");
-
-el("f_photo_file").value="";
-
-return;
-
-}
-
-let url=URL.createObjectURL(file);
-
-el("photoPreviewBox").innerHTML=
-`<img class="photo-preview" src="${url}" alt="নির্বাচিত ছবি">`;
-
+ el("photoPreviewBox").innerHTML=
+  `<img class="photo-preview" src="${url}" alt="নির্বাচিত ছবি">`;
 }
 
 /* ফর্ম তৈরি */
 function renderFields(){
 
-let s=el("section").value;
-let a=el("area").value;
+ const s=el("section").value;
+ const a=el("area").value;
 
-let html="";
-let monthList=months();
+ let html="";
 
-/* দায়িত্বশীলবর্গ */
-if(s==="responsibility"){
+ /* দায়িত্বশীলবর্গ */
+ if(s==="responsibility"){
 
-html+=inputField("নাম","name");
+  html+=inputField("নাম","name");
+  html+=inputField("দায়িত্ব","responsibility");
+  html+=photoField();
+ }
 
-html+=inputField("দায়িত্ব","responsibility");
+ /* জনশক্তি */
+ if(s==="manpower"){
 
-html+=photoField();
+  html+=inputField("নাম","name");
 
+  html+=inputField(
+   "ধরন",
+   "type",
+   "text",
+   ["সাথী","কর্মী","সমর্থক"]
+  );
+
+  html+=inputField("দায়িত্ব","responsibility");
+  html+=photoField();
+ }
+
+ /* সুধী */
+ if(s==="sudhi"){
+
+  html+=inputField("নাম","name");
+  html+=inputField("মোবাইল","phone","tel");
+ }
+
+ /* ছাত্রকল্যাণ */
+ if(s==="students"){
+
+  html+=inputField("নাম","name");
+  html+=inputField("শ্রেণি / প্রতিষ্ঠান","class");
+  html+=inputField("মোবাইল","phone","tel");
+ }
+
+ /* কর্মসূচি */
+ if(s==="programRecords"){
+
+  const names=a==="ওয়ার্ড"
+   ?["সেক্রেটারিয়েট বৈঠক","কর্মী বৈঠক","সাধারণ সভা","কুরআন তালিম"]
+   :["কর্মী বৈঠক","সাধারণ সভা","কুরআন তালিম","সামষ্টিক পাঠ"];
+
+  html+=getMonthInput();
+
+  html+=inputField("কর্মসূচি","program","text",names);
+
+  html+=inputField(
+   "সম্পন্ন হয়েছে?",
+   "completed",
+   "text",
+   ["হ্যাঁ","না"]
+  );
+
+  html+=inputField("বিবরণ","details","textarea");
+ }
+
+ /* বাইতুল মাল */
+ if(s==="financeRecords"){
+
+  html+=getMonthInput();
+
+  html+=`<div class="calculated" style="grid-column:1/-1">
+   <b>বাইতুল মালের হিসাব</b><br>
+   ${a==="ওয়ার্ড"
+    ?"এখানে ওয়ার্ডের মাসিক কালেকশন, উপশাখা থেকে ঊর্ধ্বতন আদায় এবং ঊর্ধ্বতন পরিশোধের হিসাব লিখবেন।"
+    :"এখানে উপশাখার মাসিক কালেকশন, ছাত্রকল্যাণের চালের টাকার মূল্য এবং ঊর্ধ্বতন পরিশোধের হিসাব লিখবেন।"
+   }
+  </div>`;
+
+  html+=inputField("মাসিক কালেকশন (টাকা)","monthlyCollection","number");
+
+  if(a==="ওয়ার্ড"){
+
+   html+=inputField(
+    "উপশাখা থেকে ঊর্ধ্বতন আদায় (টাকা)",
+    "branchHigherCollected",
+    "number"
+   );
+
+  }else{
+
+   html+=inputField(
+    "ছাত্রকল্যাণ — চালের মূল্য (টাকা)",
+    "studentWelfare",
+    "number"
+   );
+
+  }
+
+  html+=inputField(
+   "ঊর্ধ্বতন পরিশোধ (টাকা)",
+   "higherPaid",
+   "number"
+  );
+
+  html+=`
+   <div class="calculated" style="grid-column:1/-1">
+    <b>বর্তমান অর্থের পরিমাণ</b><br>
+    <strong id="currentAmountPreview">০ টাকা</strong>
+    <div class="help">
+     বর্তমান অর্থ = মাসিক কালেকশন + অতিরিক্ত আদায়/চালের মূল্য − ঊর্ধ্বতন পরিশোধ।
+     হিসাবটি স্বয়ংক্রিয়ভাবে তৈরি হবে।
+    </div>
+   </div>
+  `;
+
+  html+=inputField("বিবরণ","details","textarea");
+ }
+
+ /* ঊর্ধ্বতন */
+ if(s==="paymentRecords"){
+
+  html+=getMonthInput();
+
+  html+=inputField("ধার্যকৃত টাকা","assessed","number");
+
+  html+=inputField("পরিশোধ টাকা","paid","number");
+
+  html+=`
+   <div class="calculated" style="grid-column:1/-1">
+    <b>স্বয়ংক্রিয় বকেয়া হিসাব</b><br>
+    <strong id="duePreview">০ টাকা</strong>
+    <div class="help">বকেয়া = ধার্যকৃত টাকা − পরিশোধ টাকা।</div>
+   </div>
+  `;
+
+  html+=inputField(
+   "সময়মতো পরিশোধ?",
+   "timely",
+   "text",
+   ["হ্যাঁ","না"]
+  );
+
+  html+=inputField("বিবরণ","details","textarea");
+ }
+
+ /* প্রজেক্ট */
+ if(s==="projects"){
+
+  html+=inputField("প্রজেক্টের নাম","name");
+
+  html+=inputField(
+   "অবস্থা",
+   "status",
+   "text",
+   ["পরিকল্পনা","বাস্তবায়নাধীন","সম্পন্ন"]
+  );
+
+  html+=inputField(
+   "বড় প্রজেক্ট?",
+   "bigProject",
+   "text",
+   ["না","হ্যাঁ"]
+  );
+
+  html+=inputField("বিবরণ","details","textarea");
+ }
+
+ /* সিলেবাস */
+ if(s==="syllabus"){
+
+  html+=inputField(
+   "শ্রেণি",
+   "category",
+   "text",
+   ["সাথী","কর্মী","সমর্থক"]
+  );
+
+  html+=inputField("বইয়ের নাম","name");
+  html+=inputField("PDF / বইয়ের লিংক","url");
+  html+=inputField("বিবরণ","details","textarea");
+ }
+
+ el("fields").innerHTML=html;
+
+ updateCalculations();
 }
 
-/* জনশক্তি তালিকা */
-if(s==="manpower"){
-
-html+=inputField("নাম","name");
-
-html+=inputField(
-"ধরন",
-"type",
-"text",
-["সাথী","কর্মী","সমর্থক"]
-);
-
-html+=inputField("দায়িত্ব","responsibility");
-
-html+=photoField();
-
+/* টাকা হিসাব */
+function readNumber(id){
+ const input=el(id);
+ return input?Math.max(0,Number(input.value||0)):0;
 }
 
-/* সুধী */
-if(s==="sudhi"){
+function updateCalculations(){
 
-html+=inputField("নাম","name");
-html+=inputField("মোবাইল","phone","tel");
+ const s=el("section").value;
 
-}
+ if(s==="paymentRecords"){
 
-/* ছাত্রকল্যাণ */
-if(s==="students"){
+  const assessed=readNumber("f_assessed");
+  const paid=readNumber("f_paid");
 
-html+=inputField("নাম","name");
-html+=inputField("শ্রেণি / প্রতিষ্ঠান","class");
-html+=inputField("মোবাইল","phone","tel");
+  const due=Math.max(0,assessed-paid);
 
-}
+  const preview=el("duePreview");
 
-/* কর্মসূচি */
-if(s==="programRecords"){
+  if(preview){
+   preview.textContent=due.toLocaleString("bn-BD")+" টাকা";
+  }
+ }
 
-let names=a==="ওয়ার্ড"
-?["সেক্রেটারিয়েট বৈঠক","কর্মী বৈঠক","সাধারণ সভা","কুরআন তালিম"]
-:["কর্মী বৈঠক","সাধারণ সভা","কুরআন তালিম","সামষ্টিক পাঠ"];
+ if(s==="financeRecords"){
 
-html+=inputField("মাস","month","text",monthList);
+  const monthly=readNumber("f_monthlyCollection");
+  const higher=readNumber("f_higherPaid");
 
-html+=inputField("কর্মসূচি","program","text",names);
+  let extra=0;
 
-html+=inputField("সম্পন্ন হয়েছে?","completed","text",["হ্যাঁ","না"]);
+  if(el("area").value==="ওয়ার্ড"){
+   extra=readNumber("f_branchHigherCollected");
+  }else{
+   extra=readNumber("f_studentWelfare");
+  }
 
-html+=inputField("বিবরণ","details","textarea");
+  /* ঊর্ধ্বতন পরিশোধ বিয়োগ হবে */
+  const current=monthly+extra-higher;
 
-}
+  const preview=el("currentAmountPreview");
 
-/* বাইতুল মাল */
-if(s==="financeRecords"){
-
-html+=inputField("মাস","month","text",monthList);
-
-html+=inputField("ধরন","type","text",["আয়","ব্যয়"]);
-
-html+=inputField("খাত","source","text",["এয়ানত","ছাত্রকল্যাণ","ঊর্ধ্বতন","অন্যান্য"]);
-
-html+=inputField("পদ্ধতি","mode","text",["সিঙ্গেল","যৌথ"]);
-
-html+=inputField("টাকার পরিমাণ","amount","number");
-
-html+=inputField("বিবরণ","details","textarea");
-
-}
-
-/* ঊর্ধ্বতন */
-if(s==="paymentRecords"){
-
-html+=inputField("মাস","month","text",monthList);
-
-html+=inputField("ধার্যকৃত টাকা","assessed","number");
-
-html+=inputField("পরিশোধ টাকা","paid","number");
-
-html+=inputField("বকেয়া টাকা","due","number");
-
-html+=inputField("সময়মতো পরিশোধ?","timely","text",["হ্যাঁ","না"]);
-
-html+=inputField("বিবরণ","details","textarea");
-
-}
-
-/* প্রজেক্ট */
-if(s==="projects"){
-
-html+=inputField("প্রজেক্টের নাম","name");
-
-html+=inputField("অবস্থা","status","text",["পরিকল্পনা","বাস্তবায়নাধীন","সম্পন্ন"]);
-
-html+=inputField("বড় প্রজেক্ট?","bigProject","text",["না","হ্যাঁ"]);
-
-html+=inputField("বিবরণ","details","textarea");
-
-}
-
-/* সিলেবাস */
-if(s==="syllabus"){
-
-html+=inputField("শ্রেণি","category","text",["সাথী","কর্মী","সমর্থক"]);
-
-html+=inputField("বইয়ের নাম","name");
-
-html+=inputField("PDF / বইয়ের লিংক","url");
-
-html+=inputField("বিবরণ","details","textarea");
-
-}
-
-el("fields").innerHTML=html;
-
+  if(preview){
+   preview.textContent=current.toLocaleString("bn-BD")+" টাকা";
+  }
+ }
 }
 
 /* ফর্মের তথ্য সংগ্রহ */
 function getFormData(){
 
-let data={};
+ const data={};
 
-el("fields").querySelectorAll(
-"input:not([type=file]),select,textarea"
-).forEach(x=>{
+ el("fields").querySelectorAll(
+  "input:not([type=file]),select,textarea"
+ ).forEach(x=>{
 
-let key=x.id.substring(2);
-let value=x.value;
+  const key=x.id.substring(2);
+  let value=x.value;
 
-if(["completed","timely","bigProject"].includes(key)){
-value=value==="হ্যাঁ";
-}
+  if(["completed","timely","bigProject"].includes(key)){
+   value=value==="হ্যাঁ";
+  }
 
-if(["amount","assessed","paid","due"].includes(key)){
-value=Number(value||0);
-}
+  if([
+   "amount","assessed","paid","monthlyCollection",
+   "studentWelfare","branchHigherCollected","higherPaid"
+  ].includes(key)){
+   value=Math.max(0,Number(value||0));
+  }
 
-data[key]=value;
+  data[key]=value;
+ });
 
-});
+ if(data.responsibility!==undefined){
+  data.duty=data.responsibility;
+  delete data.responsibility;
+  delete data.role;
+ }
 
-if(data.responsibility!==undefined){
+ /* ঊর্ধ্বতনের বকেয়া */
+ if(data.assessed!==undefined){
 
-data.duty=data.responsibility;
+  data.due=Math.max(
+   0,
+   Number(data.assessed||0)-Number(data.paid||0)
+  );
 
-delete data.responsibility;
-delete data.role;
+ }
 
-}
+ /* বাইতুল মালের বর্তমান অর্থ */
+ if(data.monthlyCollection!==undefined){
 
-if(data.assessed!==undefined && data.due===undefined){
+  const monthly=Number(data.monthlyCollection||0);
+  const higher=Number(data.higherPaid||0);
 
-data.due=Math.max(0,data.assessed-(data.paid||0));
+  if(el("area").value==="ওয়ার্ড"){
 
-}
+   data.currentAmount=
+    monthly+
+    Number(data.branchHigherCollected||0)-
+    higher;
 
-return data;
+  }else{
 
+   data.currentAmount=
+    monthly+
+    Number(data.studentWelfare||0)-
+    higher;
+
+  }
+ }
+
+ return data;
 }
 
 /* ফর্ম পরিষ্কার */
 function clearForm(){
 
-el("editId").value="";
+ el("editId").value="";
+ renderFields();
 
-renderFields();
-
+ hide("recordMsg");
 }
 
 /* ছবি Supabase Storage-এ আপলোড */
 async function uploadPersonPhoto(section,file){
 
-let safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
+ const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
 
-let filePath=
-"people/"+section+"/"+Date.now()+"_"+safeName;
+ const filePath="people/"+section+"/"+Date.now()+"_"+safeName;
 
-let {error}=await db.storage
-.from("site-assets")
-.upload(filePath,file,{
-upsert:false,
-contentType:file.type,
-cacheControl:"3600"
-});
+ const {error}=await db.storage
+  .from("site-assets")
+  .upload(filePath,file,{
+   upsert:false,
+   contentType:file.type,
+   cacheControl:"3600"
+  });
 
-if(error)throw error;
+ if(error)throw error;
 
-let {data}=db.storage
-.from("site-assets")
-.getPublicUrl(filePath);
+ const {data}=db.storage
+  .from("site-assets")
+  .getPublicUrl(filePath);
 
-return data.publicUrl;
+ return data.publicUrl;
+}
 
+/* একই এলাকার একই মাসের হিসাব খোঁজা */
+async function findMonthlyRecord(section,area,month){
+
+ const {data,error}=await db.from("app_data")
+  .select("id,data")
+  .eq("section",section)
+  .eq("area",area);
+
+ if(error)throw error;
+
+ const match=(data||[]).find(r=>
+  String(r.data?.month||"")===month
+ );
+
+ return match||null;
 }
 
 /* তথ্য সংরক্ষণ */
 async function saveRecord(){
 
-let section=el("section").value;
-let area=el("area").value;
+ const section=el("section").value;
+ const area=el("area").value;
 
-let data=getFormData();
+ let data=getFormData();
 
-let id=el("editId").value;
+ let id=el("editId").value;
 
-try{
+ try{
 
-let photoInput=el("f_photo_file");
+  if(
+   ["financeRecords","paymentRecords"].includes(section)&&
+   !data.month
+  ){
+   show("recordMsg","মাস ও সাল নির্বাচন করুন।");
+   return;
+  }
 
-if(photoInput && photoInput.files.length){
+  /* ছবি আপলোড */
+  const photoInput=el("f_photo_file");
 
-let file=photoInput.files[0];
+  if(photoInput&&photoInput.files.length){
 
-if(!["image/png","image/jpeg","image/webp"].includes(file.type)){
+   const file=photoInput.files[0];
 
-show("recordMsg","ছবির ফরম্যাট সঠিক নয়। PNG, JPG অথবা WEBP ব্যবহার করুন।");
+   if(!["image/png","image/jpeg","image/webp"].includes(file.type)){
+    show("recordMsg","ছবির ফরম্যাট সঠিক নয়।");
+    return;
+   }
 
-return;
+   if(file.size>5*1024*1024){
+    show("recordMsg","ছবির সাইজ ৫ MB-এর বেশি হতে পারবে না।");
+    return;
+   }
 
-}
+   show("recordMsg","ছবি আপলোড হচ্ছে...");
 
-if(file.size>5*1024*1024){
+   data.photo=await uploadPersonPhoto(section,file);
 
-show("recordMsg","ছবির সাইজ ৫ MB-এর বেশি হতে পারবে না।");
+  }else{
 
-return;
+   const oldPhoto=el("f_photo");
 
-}
+   if(oldPhoto&&oldPhoto.value){
+    data.photo=oldPhoto.value;
+   }
 
-show("recordMsg","ছবি আপলোড হচ্ছে, অনুগ্রহ করে অপেক্ষা করুন...");
+  }
 
-data.photo=await uploadPersonPhoto(section,file);
+  let query;
 
-}else{
+  /*
+   বাইতুল মাল ও ঊর্ধ্বতন:
+   একটি এলাকা + একটি মাস = একটি রেকর্ড।
+  */
+  if(["financeRecords","paymentRecords"].includes(section)){
 
-let oldPhoto=el("f_photo");
+   let existing=null;
 
-if(oldPhoto&&oldPhoto.value){
-data.photo=oldPhoto.value;
-}
+   if(id){
 
-}
+    const {data:oldRecord,error:oldError}=await db.from("app_data")
+     .select("id,data")
+     .eq("id",id)
+     .maybeSingle();
 
-let query=id
+    if(oldError)throw oldError;
 
-?db.from("app_data").update({
-section,
-area,
-data,
-updated_at:new Date().toISOString()
-}).eq("id",id)
+    existing=oldRecord;
 
-:db.from("app_data").insert({
-section,
-area,
-data
-});
+    if(!existing||existing.data?.month!==data.month){
 
-let {error}=await query;
+     const monthRecord=await findMonthlyRecord(
+      section,area,data.month
+     );
 
-if(error){
+     if(monthRecord&&monthRecord.id!==id){
+      existing=monthRecord;
+     }
+    }
 
-show("recordMsg","সংরক্ষণ ব্যর্থ: "+error.message);
+   }else{
 
-return;
+    existing=await findMonthlyRecord(
+     section,area,data.month
+    );
 
-}
+   }
 
-show("recordMsg","তথ্য সফলভাবে সংরক্ষিত হয়েছে।");
+   if(existing){
 
-clearForm();
+    query=db.from("app_data").update({
+     section,
+     area,
+     data,
+     updated_at:new Date().toISOString()
+    }).eq("id",existing.id);
 
-loadRecords();
+   }else{
 
-}catch(error){
+    query=db.from("app_data").insert({
+     section,
+     area,
+     data
+    });
 
-show(
-"recordMsg",
-"ছবি বা তথ্য সংরক্ষণ ব্যর্থ: "+error.message+"। Storage upload permission পরীক্ষা করুন।"
-);
+   }
 
-}
+  }else if(id){
 
+   query=db.from("app_data").update({
+    section,
+    area,
+    data,
+    updated_at:new Date().toISOString()
+   }).eq("id",id);
+
+  }else{
+
+   query=db.from("app_data").insert({
+    section,
+    area,
+    data
+   });
+
+  }
+
+  const {error}=await query;
+
+  if(error){
+   show("recordMsg","সংরক্ষণ ব্যর্থ: "+error.message);
+   return;
+  }
+
+  show(
+   "recordMsg",
+   "✅ তথ্য সফলভাবে সংরক্ষিত হয়েছে।"
+  );
+
+  el("editId").value="";
+  renderFields();
+  loadRecords();
+
+ }catch(error){
+
+  show(
+   "recordMsg",
+   "তথ্য সংরক্ষণ ব্যর্থ: "+error.message+
+   "। Storage upload permission পরীক্ষা করুন।"
+  );
+
+ }
 }
 
 /* সংরক্ষিত তথ্য দেখানো */
 async function loadRecords(){
 
-let section=el("filterSection").value;
-let area=el("filterArea").value;
+ const section=el("filterSection").value;
+ const area=el("filterArea").value;
 
-let query=db.from("app_data")
-.select("id,section,area,data,created_at")
-.eq("section",section)
-.order("created_at",{ascending:false});
+ let query=db.from("app_data")
+  .select("id,section,area,data,created_at,updated_at")
+  .eq("section",section)
+  .order("created_at",{ascending:false});
 
-if(area){
-query=query.eq("area",area);
-}
+ if(area)query=query.eq("area",area);
 
-let {data,error}=await query;
+ const {data,error}=await query;
 
-if(error){
+ if(error){
 
-el("recordRows").innerHTML=
-`<tr><td colspan="4">${escapeHTML(error.message)}</td></tr>`;
+  el("recordRows").innerHTML=
+   `<tr><td colspan="4">${escapeHTML(error.message)}</td></tr>`;
 
-return;
+  return;
+ }
 
-}
+ el("recordRows").innerHTML=(data||[]).map(r=>{
 
-el("recordRows").innerHTML=(data||[]).map(r=>`
+  const d=r.data||{};
 
-<tr>
+  let summary="";
 
-<td>${escapeHTML(r.area)}</td>
+  if(section==="paymentRecords"){
 
-<td>${escapeHTML(JSON.stringify(r.data))}</td>
+   summary=
+    "মাস: "+monthLabel(d.month)+
+    " | ধার্য: "+(d.assessed||0)+
+    " | পরিশোধ: "+(d.paid||0)+
+    " | বকেয়া: "+(d.due||0);
 
-<td>
-${r.created_at
-?new Date(r.created_at).toLocaleDateString("bn-BD")
-:"—"}
-</td>
+  }else if(section==="financeRecords"){
 
-<td>
+   summary=
+    "মাস: "+monthLabel(d.month)+
+    " | মাসিক কালেকশন: "+(d.monthlyCollection||0)+
+    " | বর্তমান অর্থ: "+(d.currentAmount||0);
 
-<button class="smallbtn" onclick="editRecord('${r.id}')">
-সম্পাদনা
-</button>
+  }else{
 
-<button class="smallbtn danger" onclick="deleteRecord('${r.id}')">
-মুছুন
-</button>
+   summary=JSON.stringify(d);
 
-</td>
+  }
 
-</tr>
+  return `
+   <tr>
+    <td>${escapeHTML(r.area)}</td>
+    <td>${escapeHTML(summary)}</td>
+    <td>${r.created_at?new Date(r.created_at).toLocaleDateString("bn-BD"):"—"}</td>
+    <td>
+     <button class="smallbtn" onclick="editRecord('${r.id}')">সম্পাদনা</button>
+     <button class="smallbtn danger" onclick="deleteRecord('${r.id}')">মুছুন</button>
+    </td>
+   </tr>
+  `;
 
-`).join("")||'<tr><td colspan="4">কোনো তথ্য নেই।</td></tr>';
-
+ }).join("")||'<tr><td colspan="4">কোনো তথ্য নেই।</td></tr>';
 }
 
 /* তথ্য সম্পাদনা */
 async function editRecord(id){
 
-let {data,error}=await db.from("app_data")
-.select("*")
-.eq("id",id)
-.single();
+ const {data,error}=await db.from("app_data")
+  .select("*")
+  .eq("id",id)
+  .single();
 
-if(error){
-return alert(error.message);
-}
+ if(error)return alert(error.message);
 
-el("section").value=data.section;
-el("area").value=data.area;
+ el("section").value=data.section;
+ el("area").value=data.area;
 
-renderFields();
+ renderFields();
 
-el("editId").value=id;
+ el("editId").value=id;
 
-let saved=data.data||{};
+ const saved=data.data||{};
 
-Object.entries(saved).forEach(([key,value])=>{
+ Object.entries(saved).forEach(([key,value])=>{
 
-if(["duty","role","responsibility","photo","phone"].includes(key)){
-return;
-}
+  const input=el("f_"+key);
 
-let input=el("f_"+key);
+  if(input&&input.type!=="file"){
+   input.value=
+    typeof value==="boolean"
+    ?(value?"হ্যাঁ":"না")
+    :value;
+  }
 
-if(input && input.type!=="file"){
+ });
 
-input.value=
-typeof value==="boolean"
-?(value?"হ্যাঁ":"না")
-:value;
+ const responsibilityInput=el("f_responsibility");
 
-}
+ if(responsibilityInput){
+  responsibilityInput.value=
+   saved.duty||
+   saved.responsibility||
+   saved.role||
+   "";
+ }
 
-});
+ if(saved.photo){
 
-let responsibilityInput=el("f_responsibility");
+  const photoInput=el("f_photo");
 
-if(responsibilityInput){
+  if(photoInput)photoInput.value=saved.photo;
 
-responsibilityInput.value=
-saved.duty ||
-saved.responsibility ||
-saved.role ||
-"";
+  const box=el("photoPreviewBox");
 
-}
+  if(box){
+   box.innerHTML=`
+    <p>বর্তমান ছবি:</p>
+    <img class="photo-preview" src="${escapeHTML(saved.photo)}" alt="বর্তমান ছবি">
+   `;
+  }
+ }
 
-if(saved.photo){
+ updateCalculations();
 
-let photoInput=el("f_photo");
-
-if(photoInput){
-photoInput.value=saved.photo;
-}
-
-let box=el("photoPreviewBox");
-
-if(box){
-
-box.innerHTML=`
-<p>বর্তমান ছবি:</p>
-<img
-class="photo-preview"
-src="${escapeHTML(saved.photo)}"
-alt="বর্তমান ছবি"
->
-`;
-
-}
-
-}
-
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
-
+ window.scrollTo({
+  top:0,
+  behavior:"smooth"
+ });
 }
 
 /* তথ্য মুছে ফেলা */
 async function deleteRecord(id){
 
-if(!confirm("তথ্যটি মুছে ফেলবেন?"))return;
+ if(!confirm("তথ্যটি মুছে ফেলবেন?"))return;
 
-let {error}=await db.from("app_data")
-.delete()
-.eq("id",id);
+ const {error}=await db.from("app_data")
+  .delete()
+  .eq("id",id);
 
-if(error){
-alert(error.message);
-}else{
-loadRecords();
-}
-
+ if(error){
+  alert(error.message);
+ }else{
+  loadRecords();
+ }
 }
 
 /* নোটিশ */
 function clearNotice(){
 
-el("noticeTitle").value="";
-el("noticeContent").value="";
-el("noticeId").value="";
-
+ el("noticeTitle").value="";
+ el("noticeContent").value="";
+ el("noticeId").value="";
 }
 
 async function saveNotice(){
 
-let title=el("noticeTitle").value.trim();
-let content=el("noticeContent").value.trim();
+ const title=el("noticeTitle").value.trim();
+ const content=el("noticeContent").value.trim();
+ const id=el("noticeId").value;
 
-let id=el("noticeId").value;
+ if(!title||!content){
+  show("noticeMsg","শিরোনাম ও বিস্তারিত লিখুন।");
+  return;
+ }
 
-if(!title||!content){
+ const query=id
+ ?db.from("posts").update({title,content}).eq("id",id)
+ :db.from("posts").insert({title,content});
 
-show("noticeMsg","শিরোনাম ও বিস্তারিত লিখুন।");
+ const {error}=await query;
 
-return;
+ if(error){
+  show("noticeMsg","নোটিশ সংরক্ষণ ব্যর্থ: "+error.message);
+  return;
+ }
 
-}
+ show("noticeMsg","নোটিশ প্রকাশিত হয়েছে।");
 
-let query=id
-
-?db.from("posts").update({
-title,content
-}).eq("id",id)
-
-:db.from("posts").insert({
-title,content
-});
-
-let {error}=await query;
-
-if(error){
-
-show("noticeMsg","নোটিশ সংরক্ষণ ব্যর্থ: "+error.message);
-
-return;
-
-}
-
-show("noticeMsg","নোটিশ প্রকাশিত হয়েছে।");
-
-clearNotice();
-
-loadNotices();
-
+ clearNotice();
+ loadNotices();
 }
 
 async function loadNotices(){
 
-let {data,error}=await db.from("posts")
-.select("id,title,content,created_at")
-.order("created_at",{ascending:false});
+ const {data,error}=await db.from("posts")
+  .select("id,title,content,created_at")
+  .order("created_at",{ascending:false});
 
-if(error){
+ if(error){
+  el("noticeRows").innerHTML=
+   `<tr><td colspan="3">${escapeHTML(error.message)}</td></tr>`;
+  return;
+ }
 
-el("noticeRows").innerHTML=
-`<tr><td colspan="3">${escapeHTML(error.message)}</td></tr>`;
-
-return;
-
-}
-
-el("noticeRows").innerHTML=(data||[]).map(n=>`
-
-<tr>
-
-<td>${escapeHTML(n.title)}</td>
-
-<td>${escapeHTML(n.content)}</td>
-
-<td>
-
-<button class="smallbtn" onclick="editNotice('${n.id}')">
-সম্পাদনা
-</button>
-
-<button class="smallbtn danger" onclick="deleteNotice('${n.id}')">
-মুছুন
-</button>
-
-</td>
-
-</tr>
-
-`).join("")||'<tr><td colspan="3">কোনো নোটিশ নেই।</td></tr>';
-
+ el("noticeRows").innerHTML=(data||[]).map(n=>`
+  <tr>
+   <td>${escapeHTML(n.title)}</td>
+   <td>${escapeHTML(n.content)}</td>
+   <td>
+    <button class="smallbtn" onclick="editNotice('${n.id}')">সম্পাদনা</button>
+    <button class="smallbtn danger" onclick="deleteNotice('${n.id}')">মুছুন</button>
+   </td>
+  </tr>
+ `).join("")||'<tr><td colspan="3">কোনো নোটিশ নেই।</td></tr>';
 }
 
 async function editNotice(id){
 
-let {data,error}=await db.from("posts")
-.select("*")
-.eq("id",id)
-.single();
+ const {data,error}=await db.from("posts")
+  .select("*")
+  .eq("id",id)
+  .single();
 
-if(error)return alert(error.message);
+ if(error)return alert(error.message);
 
-el("noticeId").value=id;
-el("noticeTitle").value=data.title;
-el("noticeContent").value=data.content;
+ el("noticeId").value=id;
+ el("noticeTitle").value=data.title;
+ el("noticeContent").value=data.content;
 
-document.querySelectorAll("nav button")[1].click();
-
+ document.querySelectorAll("nav button")[1].click();
 }
 
 async function deleteNotice(id){
 
-if(!confirm("নোটিশ মুছে ফেলবেন?"))return;
+ if(!confirm("নোটিশ মুছে ফেলবেন?"))return;
 
-let {error}=await db.from("posts")
-.delete()
-.eq("id",id);
+ const {error}=await db.from("posts")
+  .delete()
+  .eq("id",id);
 
-if(error){
-alert(error.message);
-}else{
-loadNotices();
-}
-
+ if(error){
+  alert(error.message);
+ }else{
+  loadNotices();
+ }
 }
 
 /* লোগো আপলোড */
 async function uploadLogo(){
 
-let file=el("logoFile").files[0];
+ const file=el("logoFile").files[0];
 
-if(!file){
+ if(!file){
+  show("logoMsg","আগে একটি ছবি নির্বাচন করুন।");
+  return;
+ }
 
-show("logoMsg","আগে একটি ছবি নির্বাচন করুন।");
+ if(!["image/png","image/jpeg"].includes(file.type)){
+  show("logoMsg","শুধু PNG অথবা JPG ছবি গ্রহণযোগ্য।");
+  return;
+ }
 
-return;
+ if(file.size>5*1024*1024){
+  show("logoMsg","ছবির সাইজ ৫ MB-এর বেশি হতে পারবে না।");
+  return;
+ }
 
+ show("logoMsg","লোগো আপলোড হচ্ছে...");
+
+ try{
+
+  const {error}=await db.storage
+   .from("site-assets")
+   .upload("logo.png",file,{
+    upsert:true,
+    contentType:file.type,
+    cacheControl:"0"
+   });
+
+  if(error)throw error;
+
+  const notified=await notifyAssetUpdated("logo.png");
+
+  show(
+   "logoMsg",
+   notified
+   ?"✅ লোগো আপলোড হয়েছে এবং মূল ওয়েবসাইটে আপডেটের বার্তা পাঠানো হয়েছে।"
+   :"✅ লোগো আপলোড হয়েছে। Realtime বার্তা পাঠানো যায়নি।"
+  );
+
+  el("logoFile").value="";
+
+ }catch(error){
+
+  show("logoMsg","আপলোড ব্যর্থ: "+error.message);
+
+ }
 }
 
-if(!["image/png","image/jpeg"].includes(file.type)){
-
-show("logoMsg","শুধু PNG অথবা JPG ছবি গ্রহণযোগ্য।");
-
-return;
-
-}
-
-if(file.size>5*1024*1024){
-
-show("logoMsg","ছবির সাইজ ৫ MB-এর বেশি হতে পারবে না।");
-
-return;
-
-}
-
-show("logoMsg","লোগো আপলোড হচ্ছে...");
-
-try{
-
-let {error}=await db.storage
-.from("site-assets")
-.upload("logo.png",file,{
-upsert:true,
-contentType:file.type,
-cacheControl:"0"
-});
-
-if(error)throw error;
-
-/* মূল ওয়েবসাইটকে লোগো আপডেটের বার্তা */
-const notified=await notifyAssetUpdated("logo.png");
-
-if(notified){
-
-show("logoMsg","✅ লোগো সফলভাবে আপলোড হয়েছে। মূল ওয়েবসাইটে আপডেটের বার্তা পাঠানো হয়েছে।");
-
-}else{
-
-show("logoMsg","✅ লোগো আপলোড হয়েছে। Realtime বার্তা পাঠানো যায়নি; ওয়েবসাইটের স্বয়ংক্রিয় আপডেটে ছবিটি দেখা যাবে।");
-
-}
-
-el("logoFile").value="";
-
-}catch(error){
-
-show("logoMsg","আপলোড ব্যর্থ: "+error.message+"। Storage bucket ও policy পরীক্ষা করুন।");
-
-}
-
-}
-
-/* ব্যাকগ্রাউন্ড ছবির প্রিভিউ */
+/* ব্যাকগ্রাউন্ড প্রিভিউ */
 function previewBackground(fileId,previewId){
 
-let file=el(fileId).files[0];
+ const file=el(fileId).files[0];
+ const preview=el(previewId);
 
-let preview=el(previewId);
+ if(!file){
+  preview.classList.add("hidden");
+  return;
+ }
 
-if(!file){
-preview.classList.add("hidden");
-return;
+ if(!["image/png","image/jpeg","image/webp"].includes(file.type)){
+  alert("শুধু PNG, JPG অথবা WEBP ছবি গ্রহণযোগ্য।");
+  el(fileId).value="";
+  preview.classList.add("hidden");
+  return;
+ }
+
+ if(file.size>5*1024*1024){
+  alert("ছবির সাইজ ৫ MB-এর বেশি হতে পারবে না।");
+  el(fileId).value="";
+  preview.classList.add("hidden");
+  return;
+ }
+
+ if(preview.dataset.objectUrl){
+  URL.revokeObjectURL(preview.dataset.objectUrl);
+ }
+
+ const url=URL.createObjectURL(file);
+
+ preview.src=url;
+ preview.dataset.objectUrl=url;
+ preview.classList.remove("hidden");
 }
 
-if(!["image/png","image/jpeg","image/webp"].includes(file.type)){
-
-alert("শুধু PNG, JPG অথবা WEBP ছবি গ্রহণযোগ্য।");
-
-el(fileId).value="";
-preview.classList.add("hidden");
-
-return;
-
-}
-
-if(file.size>5*1024*1024){
-
-alert("ছবির সাইজ ৫ MB-এর বেশি হতে পারবে না।");
-
-el(fileId).value="";
-preview.classList.add("hidden");
-
-return;
-
-}
-
-if(preview.dataset.objectUrl){
-URL.revokeObjectURL(preview.dataset.objectUrl);
-}
-
-let url=URL.createObjectURL(file);
-
-preview.src=url;
-preview.dataset.objectUrl=url;
-preview.classList.remove("hidden");
-
-}
-
-/* হেডার ও আয়াতের ব্যাকগ্রাউন্ড আপলোড */
+/* ব্যাকগ্রাউন্ড আপলোড */
 async function uploadBackground(type){
 
-let fileId;
-let messageId;
-let storagePath;
-let label;
+ let fileId,messageId,storagePath,label;
 
-if(type==="header"){
+ if(type==="header"){
 
-fileId="headerBackgroundFile";
-messageId="headerBackgroundMsg";
-storagePath="header-background";
-label="হেডার";
+  fileId="headerBackgroundFile";
+  messageId="headerBackgroundMsg";
+  storagePath="header-background";
+  label="হেডার";
 
-}else if(type==="ayat"){
+ }else if(type==="ayat"){
 
-fileId="ayatBackgroundFile";
-messageId="ayatBackgroundMsg";
-storagePath="ayat-background";
-label="আয়াতের";
+  fileId="ayatBackgroundFile";
+  messageId="ayatBackgroundMsg";
+  storagePath="ayat-background";
+  label="আয়াতের";
 
-}else{
+ }else{
+  return;
+ }
 
-return;
+ const file=el(fileId).files[0];
 
-}
+ if(!file){
+  show(messageId,"আগে একটি ছবি নির্বাচন করুন।");
+  return;
+ }
 
-let file=el(fileId).files[0];
+ if(!["image/png","image/jpeg","image/webp"].includes(file.type)){
+  show(messageId,"শুধু PNG, JPG অথবা WEBP ছবি গ্রহণযোগ্য।");
+  return;
+ }
 
-if(!file){
+ if(file.size>5*1024*1024){
+  show(messageId,"ছবির সাইজ ৫ MB-এর বেশি হতে পারবে না।");
+  return;
+ }
 
-show(messageId,"আগে একটি ছবি নির্বাচন করুন।");
+ show(messageId,label+" ব্যাকগ্রাউন্ড আপলোড হচ্ছে...");
 
-return;
+ try{
 
-}
+  const {error}=await db.storage
+   .from("site-assets")
+   .upload(storagePath,file,{
+    upsert:true,
+    contentType:file.type,
+    cacheControl:"0"
+   });
 
-if(!["image/png","image/jpeg","image/webp"].includes(file.type)){
+  if(error)throw error;
 
-show(messageId,"শুধু PNG, JPG অথবা WEBP ছবি গ্রহণযোগ্য।");
+  const notified=await notifyAssetUpdated(storagePath);
 
-return;
+  show(
+   messageId,
+   notified
+   ?"✅ "+label+" ব্যাকগ্রাউন্ড আপলোড হয়েছে এবং মূল ওয়েবসাইটে আপডেটের বার্তা পাঠানো হয়েছে।"
+   :"✅ "+label+" ব্যাকগ্রাউন্ড আপলোড হয়েছে। Realtime বার্তা পাঠানো যায়নি।"
+  );
 
-}
+  el(fileId).value="";
 
-if(file.size>5*1024*1024){
+ }catch(error){
 
-show(messageId,"ছবির সাইজ ৫ MB-এর বেশি হতে পারবে না।");
+  show(messageId,"আপলোড ব্যর্থ: "+error.message);
 
-return;
-
-}
-
-show(messageId,label+" ব্যাকগ্রাউন্ড আপলোড হচ্ছে। অনুগ্রহ করে অপেক্ষা করুন...");
-
-try{
-
-let {error}=await db.storage
-.from("site-assets")
-.upload(storagePath,file,{
-upsert:true,
-contentType:file.type,
-cacheControl:"0"
-});
-
-if(error)throw error;
-
-/* মূল ওয়েবসাইটকে ছবি পরিবর্তনের বার্তা */
-const notified=await notifyAssetUpdated(storagePath);
-
-if(notified){
-
-show(
-messageId,
-"✅ "+label+" ব্যাকগ্রাউন্ড সফলভাবে আপলোড হয়েছে। মূল ওয়েবসাইটে আপডেটের বার্তা পাঠানো হয়েছে।"
-);
-
-}else{
-
-show(
-messageId,
-"✅ "+label+" ব্যাকগ্রাউন্ড আপলোড হয়েছে। Realtime বার্তা পাঠানো যায়নি; ওয়েবসাইটের স্বয়ংক্রিয় আপডেটে ছবিটি দেখা যাবে।"
-);
-
-}
-
-el(fileId).value="";
-
-}catch(error){
-
-show(
-messageId,
-"আপলোড ব্যর্থ: "+error.message+"। Storage bucket ও upload/update policy পরীক্ষা করুন।"
-);
-
-}
-
+ }
 }
 
 /* শুরু */
