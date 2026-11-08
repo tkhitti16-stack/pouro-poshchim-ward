@@ -295,7 +295,12 @@ onchange="previewBackground('ayatBackgroundFile','ayatBackgroundPreview')">
 
 const SUPABASE_URL="https://domfcgqrkmczrqvlnbwu.supabase.co";
 const SUPABASE_ANON_KEY="sb_publishable_V8v-tk6GjH7n9ihmC-NgGg_1Q--MKK2";
-const ADMIN_EMAIL="tkhitti16@gmail.com";
+
+/* দুইজন অনুমোদিত অ্যাডমিন */
+const ADMIN_EMAILS=[
+ "tkhitti16@gmail.com",
+ "mdsamiursami15@gmail.com"
+];
 
 const db=window.supabase.createClient(
  SUPABASE_URL,
@@ -317,7 +322,6 @@ const monthNames=[
  "জুলাই","আগস্ট","সেপ্টেম্বর","অক্টোবর","নভেম্বর","ডিসেম্বর"
 ];
 
-/* বর্তমান মাসের প্রারম্ভিক অর্থ */
 let monthlyOpeningBalance=0;
 
 function el(id){
@@ -350,7 +354,6 @@ function currentMonth(){
 
 function monthLabel(value){
  if(!value)return "";
-
  const [y,m]=value.split("-").map(Number);
  return monthNames[m-1]+" "+y;
 }
@@ -366,7 +369,6 @@ function getMonthInput(){
  `;
 }
 
-/* Realtime asset notification */
 let assetChannel=null;
 let assetChannelReady=null;
 
@@ -427,6 +429,13 @@ async function notifyAssetUpdated(path){
  }
 }
 
+/* অ্যাডমিন ইমেইল যাচাই */
+function isAdmin(email){
+ return ADMIN_EMAILS.some(adminEmail=>
+  String(email||"").toLowerCase()===adminEmail.toLowerCase()
+ );
+}
+
 /* লগইন */
 async function login(){
 
@@ -447,7 +456,7 @@ async function login(){
   return;
  }
 
- if(data.user.email.toLowerCase()!==ADMIN_EMAIL.toLowerCase()){
+ if(!isAdmin(data.user.email)){
   await db.auth.signOut();
   show("loginMsg","আপনার অ্যাডমিন অনুমতি নেই।");
   return;
@@ -486,7 +495,7 @@ async function checkLogin(){
 
  if(session){
 
-  if(session.user.email.toLowerCase()===ADMIN_EMAIL.toLowerCase()){
+  if(isAdmin(session.user.email)){
    openDashboard(session.user);
   }else{
    await db.auth.signOut();
@@ -641,7 +650,6 @@ function renderFields(){
   html+=inputField("বিবরণ","details","textarea");
  }
 
- /* বাইতুল মাল */
  if(s==="financeRecords"){
 
   html+=getMonthInput();
@@ -688,7 +696,6 @@ function renderFields(){
   html+=inputField("বিবরণ","details","textarea");
  }
 
- /* ঊর্ধ্বতন */
  if(s==="paymentRecords"){
 
   html+=getMonthInput();
@@ -746,10 +753,6 @@ function money(value){
  return Number(value||0).toLocaleString("bn-BD")+" টাকা";
 }
 
-/*
- আগের মাসের সর্বশেষ হিসাব বের করা।
- একই এলাকা ও একই বিভাগের আগের মাসের রেকর্ড ব্যবহার হবে।
-*/
 async function loadMonthlyOpeningBalance(){
 
  const section=el("section").value;
@@ -963,7 +966,6 @@ async function uploadPersonPhoto(section,file){
  return data.publicUrl;
 }
 
-/* একই মাসের রেকর্ড খোঁজা */
 async function findMonthlyRecord(section,area,month){
 
  const {data,error}=await db.from("app_data")
@@ -978,10 +980,6 @@ async function findMonthlyRecord(section,area,month){
  )||null;
 }
 
-/*
- সব মাসের হিসাব আবার গণনা।
- পুরোনো মাস পরিবর্তন হলে পরের মাসগুলোও আপডেট হবে।
-*/
 async function recalculateMonthlyRecords(section,area){
 
  if(!["financeRecords","paymentRecords"].includes(section)){
@@ -1185,10 +1183,6 @@ async function saveRecord(){
 
   if(error)throw error;
 
-  /*
-   সংরক্ষণের পর ঐ এলাকার সব মাসের হিসাব
-   প্রথম মাস থেকে শেষ মাস পর্যন্ত পুনরায় গণনা হবে।
-  */
   if(["financeRecords","paymentRecords"].includes(section)){
 
    show("recordMsg","তথ্য সংরক্ষিত হয়েছে। মাসভিত্তিক হিসাব আপডেট হচ্ছে...");
