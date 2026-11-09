@@ -295,7 +295,7 @@ onchange="previewBackground('ayatBackgroundFile','ayatBackgroundPreview')">
 
 const SUPABASE_URL="https://domfcgqrkmczrqvlnbwu.supabase.co";
 const SUPABASE_ANON_KEY="sb_publishable_V8v-tk6GjH7n9ihmC-NgGg_1Q--MKK2";
-const ADMIN_EMAIL="tkhitti16@gmail.com";
+const ADMIN_EMAILS=["tkhitti16@gmail.com","mdsamiursami15@gmail.com"];
 
 const db=window.supabase.createClient(
  SUPABASE_URL,
@@ -447,7 +447,7 @@ async function login(){
   return;
  }
 
- if(data.user.email.toLowerCase()!==ADMIN_EMAIL.toLowerCase()){
+ if(!ADMIN_EMAILS.includes((data.user.email||"").toLowerCase())){
   await db.auth.signOut();
   show("loginMsg","আপনার অ্যাডমিন অনুমতি নেই।");
   return;
@@ -486,7 +486,7 @@ async function checkLogin(){
 
  if(session){
 
-  if(session.user.email.toLowerCase()===ADMIN_EMAIL.toLowerCase()){
+  if(ADMIN_EMAILS.includes((session.user.email||"").toLowerCase())){
    openDashboard(session.user);
   }else{
    await db.auth.signOut();
