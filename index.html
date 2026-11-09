@@ -290,6 +290,61 @@ footer{
  border:2px solid var(--border);
 }
 
+.person-card-list{
+ display:grid;
+ gap:13px;
+ margin-top:12px;
+}
+
+.person-card{
+ display:grid;
+ grid-template-columns: minmax(105px, 38%) 1fr;
+ gap:14px;
+ align-items:stretch;
+ padding:12px;
+ background:var(--card);
+ border:1px solid var(--border);
+ border-radius:14px;
+ box-shadow:0 3px 12px #153d2b0c;
+}
+
+.person-card-photo{
+ width:100%;
+ height:100%;
+ min-height:145px;
+ max-height:190px;
+ object-fit:cover;
+ border-radius:11px;
+ background:var(--soft);
+}
+
+.person-card-photo-placeholder{
+ width:100%;
+ min-height:145px;
+ height:100%;
+ border-radius:11px;
+ background:var(--soft);
+ display:grid;
+ place-items:center;
+ font-size:34px;
+ color:var(--primary);
+}
+
+.person-card-info{min-width:0;display:flex;flex-direction:column;gap:7px}
+.person-card-serial{
+ align-self:flex-start;
+ min-width:34px;
+ padding:5px 11px;
+ border-radius:8px;
+ background:var(--primary);
+ color:#fff;
+ text-align:center;
+ font-weight:bold;
+}
+.person-card-info h4{font-size:17px;line-height:1.5;overflow-wrap:anywhere}
+.person-card-info p{font-size:14px;line-height:1.6;overflow-wrap:anywhere}
+.person-card-info strong{color:var(--primary)}
+
 .person-table{min-width:680px}
 .person-table td{vertical-align:middle}
 
@@ -430,6 +485,10 @@ select{
  .person-table{font-size:13px}
  .person-table th,.person-table td{padding:6px}
  .person-photo{width:38px;height:38px}
+ .person-card{grid-template-columns:105px 1fr;gap:10px;padding:9px}
+ .person-card-photo,.person-card-photo-placeholder{min-height:125px;max-height:160px}
+ .person-card-info h4{font-size:15px}
+ .person-card-info p{font-size:13px}
  .ranking-card{padding:11px}
  .quote .arabic{font-size:22px}
 }
@@ -717,6 +776,11 @@ function openMonthPicker(prefix){
 function changeSelectedMonth(prefix,value){
  if(!value)return;
 
+ if(prefix==="program"){
+  selectedProgramMonth=value;
+  renderPrograms();
+ }
+
  if(prefix==="payment"){
   selectedPaymentMonth=value;
   renderPayments();
@@ -818,48 +882,56 @@ function renderNavigation(type){
   return;
  }
 
- const data=getAreaData(type,area);
+ const data=(type==="responsibility"&&area==="ওয়ার্ড সেক্রেটারিয়েট")
+  ?[...getAreaData(type,"ওয়ার্ড"),...getAreaData(type,"ওয়ার্ড সেক্রেটারিয়েট")]
+  :getAreaData(type,area);
  const isSudhi=type==="sudhi";
+
+ if(!isSudhi){
+  box.innerHTML=`
+   <button class="back" onclick="selectArea('${type}','${area==="ওয়ার্ড সেক্রেটারিয়েট"?"ওয়ার্ড":""}')">← আগের পেজ</button>
+   <h3>${esc(area)}</h3>
+   <div class="person-card-list">
+    ${data.map((x,i)=>`
+     <article class="person-card">
+      ${x.photo?`<img class="person-card-photo" src="${esc(x.photo)}" alt="ছবি" onerror="this.style.display='none'">`:`<div class="person-card-photo-placeholder">👤</div>`}
+      <div class="person-card-info">
+       <span class="person-card-serial">${i+1}</span>
+       <h4>${esc(x.name||"নাম নেই")}</h4>
+       <p><strong>মান:</strong> ${esc(x.type||x.level||"—")}</p>
+       <p><strong>দায়িত্ব:</strong> ${esc(x.duty||x.responsibility||"—")}</p>
+       <button class="small-btn" onclick="showPersonDetails('${type}','${esc(area)}',${i})">বিস্তারিত দেখুন</button>
+      </div>
+     </article>
+    `).join("")||'<p>কোনো তথ্য নেই</p>'}
+   </div>
+  `;
+  return;
+ }
 
  box.innerHTML=`
   <button class="back" onclick="selectArea('${type}','')">← আগের পেজ</button>
   <h3>${esc(area)}</h3>
   <div class="table-wrap">
    <table class="person-table">
-    <thead>
-     <tr>
-      <th>সিরিয়াল</th>
-      ${isSudhi?"":"<th>ছবি</th>"}
-      <th>নাম</th>
-      ${isSudhi?"":"<th>মান</th><th>দায়িত্ব</th><th>বিস্তারিত</th>"}
-     </tr>
-    </thead>
+    <thead><tr><th>সিরিয়াল</th><th>নাম</th><th>মোবাইল</th></tr></thead>
     <tbody>
-     ${data.map((x,i)=>`
-      <tr>
-       <td>${i+1}</td>
-       ${isSudhi?"":`<td>${x.photo?`<img class="person-photo" src="${esc(x.photo)}" alt="ছবি" onerror="this.style.display='none'">`:"—"}</td>`}
-       <td>${esc(x.name)}</td>
-       ${isSudhi?"":`
-        <td>${esc(x.type||"—")}</td>
-        <td>${esc(x.duty||x.responsibility||"—")}</td>
-        <td><button class="small-btn" onclick="showPersonDetails('${type}','${esc(area)}',${i})">দেখুন</button></td>
-       `}
-      </tr>
-     `).join("")||`<tr><td colspan="${isSudhi?2:6}">কোনো তথ্য নেই</td></tr>`}
+     ${data.map((x,i)=>`<tr><td>${i+1}</td><td>${esc(x.name)}</td><td>${esc(x.phone||"—")}</td></tr>`).join("")||'<tr><td colspan="3">কোনো তথ্য নেই</td></tr>'}
     </tbody>
    </table>
   </div>
  `;
 }
-
 function selectArea(t,a){
  areaState[t]=a;
  renderNavigation(t);
 }
 
 function showPersonDetails(t,a,i){
- const x=getAreaData(t,a)[i];
+ const rows=(t==="responsibility"&&a==="ওয়ার্ড সেক্রেটারিয়েট")
+  ?[...getAreaData(t,"ওয়ার্ড"),...getAreaData(t,"ওয়ার্ড সেক্রেটারিয়েট")]
+  :getAreaData(t,a);
+ const x=rows[i];
 
  if(x)alert(
   "নাম: "+(x.name||"—")+
@@ -956,11 +1028,7 @@ function renderPrograms(){
  box.innerHTML=`
   <button class="back" onclick="selectedProgramArea='';renderPrograms()">← আগের পেজ</button>
   <h3>${esc(selectedProgramArea)} — কর্মসূচি</h3>
-  <div class="month-grid">
-   ${monthsFromNow().map(m=>`
-    <button class="month-btn ${m===key?"active":""}" onclick="selectedProgramMonth='${m}';renderPrograms()">${monthText(m)}</button>
-   `).join("")}
-  </div>
+  ${monthPicker("program",key)}
   <h3>${monthText(key)}</h3>
   ${list.map(name=>{
    const rows=data.filter(x=>(x.programName||x.name||x.program)===name);
